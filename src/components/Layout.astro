@@ -7,36 +7,32 @@ const account = {
 const cart = Array(0).fill(0);
 const wishlist = Array(5).fill(0);
 
-const breadcrumbs = [
-	{ href: "/", label: "Home", iconName: "home" },
-	...(Astro.url.pathname !== "/"
-		? Astro.url.pathname
-				.split("/")
-				.slice(1)
-				.map((path: any) => {
-					if (path === "") {
-						return {
-							href: "/",
-							label: "Home",
-							iconName: "home",
-						};
-					}
-					if (path === "cart") {
-						return {
-							href: "/cart",
-							label: "Cart",
-							iconName: "cart",
-						};
-					} else if (path === "wishlist") {
-						return {
-							href: "/wishlist",
-							label: "Wishlist",
-							iconName: "heart",
-						};
-					}
-				})
-		: []),
-];
+let pathname: string = Astro.url.pathname;
+if (pathname.at(-1) === "/") {
+	pathname = pathname.slice(0, pathname.length - 1);
+}
+
+const breadcrumbs = pathname.split("/").map((path: string) => {
+	if (path === "cart") {
+		return {
+			href: "/cart",
+			label: "Cart",
+			iconName: "cart",
+		};
+	} else if (path === "wishlist") {
+		return {
+			href: "/wishlist",
+			label: "Wishlist",
+			iconName: "heart",
+		};
+	} else {
+		return {
+			href: "/",
+			label: "Home",
+			iconName: "home",
+		};
+	}
+});
 ---
 
 <!DOCTYPE html>
