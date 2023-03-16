@@ -25,6 +25,18 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 			label: "Wishlist",
 			iconName: "heart",
 		};
+	} else if (path === "shop") {
+		return {
+			href: "/shop",
+			label: "Shop",
+			iconName: "shop",
+		};
+	} else if (path === "product") {
+		return {
+			href: "/product",
+			label: "Product",
+			iconName: "cart",
+		};
 	} else {
 		return {
 			href: "/",
@@ -51,39 +63,41 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 				<div class="container">
 					<nav class="flex justify-end items-center gap-4 pt-2">
 						<div class="flex items-center gap-2">
-							<label class="swap">
+							<label class="swap btn btn-sm btn-ghost">
 								<input id="theme" type="checkbox" />
-								<Icon class="swap-on fill-secondary h-8" pack="mdi" name="white-balance-sunny" />
-								<Icon class="swap-off fill-secondary h-8" pack="mdi" name="moon-waning-crescent" />
+								<Icon class="swap-on fill-secondary h-6" pack="mdi" name="white-balance-sunny" />
+								<Icon class="swap-off fill-secondary h-6" pack="mdi" name="moon-waning-crescent" />
 							</label>
 							<div class="dropdown dropdown-end">
-								<label tabindex="0" class="btn btn-sm">
-									English
-									<Icon class="h-4" pack="mdi" name="expand-more" />
+								<label tabindex="0" class="btn btn-sm btn-ghost flex items-center">
+									<Icon class="h-6" pack="mdi" name="translate" />
+									<Icon class="h-6" pack="mdi" name="expand-more" />
 								</label>
 								<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-200 rounded-box mt-1">
+									<li><a class="py-1 btn btn-sm btn-ghost">english</a></li>
 									<li><a class="py-1 btn btn-sm btn-ghost">ukrainian</a></li>
 								</ul>
 							</div>
 						</div>
 					</nav>
 					<div class="divider my-0"></div>
-					<div class="flex-1 flex justify-between items-center gap-4 py-2">
+					<div class="flex-1 flex justify-between items-center gap-2 py-2">
 						<div class="sm:block hidden">
-							<a class="btn gap-2">
-								<Icon class="h-6" pack="mdi" name="world" />
-								Hello
-							</a>
+							<a class="btn bt gap-2" href="/">buy shit</a>
 						</div>
-						<div class="flex-1">
-							<label class="input-group">
-								<span class="btn btn-primary">
-									All
-									<Icon class="w-6" pack="mdi" name="expand-more" />
-								</span>
-								<input type="text" placeholder="Search..." class="input w-full input-bordered" />
-							</label>
-						</div>
+						<input type="text" placeholder="Search..." class="input w-full input-bordered" />
+						<!-- <div class="flex flex-1 items-center">
+							<div class="flex items-center flex-1">
+								<label>
+									<span class="btn btn-primary dropdown">
+										All
+										<Icon class="w-6" pack="mdi" name="expand-more" />
+										<div class="dropdown-content">asdf</div>
+									</span>
+								</label>
+							</div>
+							<input type="text" placeholder="Search..." class="input w-full input-bordered" />
+						</div> -->
 						<div class="sm:flex hidden items-center gap-2">
 							<div class="flex items-center">
 								<label for="modal-account" class="indicator btn btn-ghost btn-circle">
@@ -97,7 +111,7 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 									<Icon class="h-full p-1.5 btn btn-ghost btn-circle" pack="mdi" name="heart" />
 									<div
 										tabindex={0}
-										class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box w-[500px] min-h-[150px] overflow-auto max-h-[800px] mt-12"
+										class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[425px] min-h-[150px] overflow-auto max-h-[800px] mt-12"
 									>
 										<div class="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-10">
 											<h4 class="text-3xl font-bold">My Wishlist <span class="text-xs font-normal opacity-80">({wishlist.length})</span></h4>
@@ -115,9 +129,7 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 												wishlist.map((_) => {
 													return (
 														<div class="flex items-center gap-4">
-															<div class="">
-																<img width="161" height="136" class="object-cover rounded-lg" src="https://fakeimg.pl/150x150/" />
-															</div>
+															<img width="115" height="115" class="object-cover rounded-lg" src="https://fakeimg.pl/115x115/" />
 															<div>
 																<h4 class="text-sm font-bold opacity-80">BASEBALL PACK</h4>
 																<h3 class="text-xl font-bold">STANDOUT BACKPACK</h3>
@@ -164,7 +176,7 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 									<Icon class="h-full p-1.5 btn btn-ghost btn-circle" pack="mdi" name="cart" />
 									<div
 										tabindex={0}
-										class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box w-[500px] min-h-[150px] overflow-auto max-h-[800px] mt-12"
+										class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[425px] min-h-[150px] overflow-auto max-h-[800px] mt-12"
 									>
 										<div class="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-1">
 											<h4 class="text-3xl font-bold">My Cart <span class="text-xs font-normal opacity-80">({cart.length})</span></h4>
@@ -183,7 +195,7 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 													return (
 														<div class="flex items-center gap-4">
 															<div class="">
-																<img width="161" height="136" class="object-cover rounded-lg" src="https://fakeimg.pl/150x150/" />
+																<img width="115" height="115" class="object-cover rounded-lg" src="https://fakeimg.pl/115x115/" />
 															</div>
 															<div>
 																<h4 class="text-sm font-bold opacity-80">BASEBALL PACK</h4>
@@ -249,7 +261,7 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 						</ul>
 					</div>
 				</div>
-				<main class="flex-1 py-2">
+				<main class="flex-1 pb-8">
 					<slot />
 				</main>
 				<footer class="bg-base-300 py-4">
@@ -325,10 +337,23 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 					</li>
 				</ul>
 			</div>
+			<div class="btm-nav sm:hidden">
+				<a class="active" href="/">
+					<Icon class="h-8" pack="mdi" name="home" />
+				</a>
+				<a href="/cart">
+					<Icon class="h-8" pack="mdi" name="cart" />
+				</a>
+				<a href="#">
+					<label for="modal-account">
+						<Icon class="h-8" pack="mdi" name="account" />
+					</label>
+				</a>
+			</div>
 		</div>
 	</body>
 	<input type="checkbox" id="modal-account" class="modal-toggle" />
-	<label for="modal-account" class="modal modal-bottom sm:modal-middle cursor-pointer">
+	<label for="modal-account" class="modal sm:modal-middle cursor-pointer">
 		<label class="modal-box m-4 mb-0 sm:m-0 relative" for="">
 			<label class="absolute top-2 right-2 btn btn-sm btn-circle" for="modal-account">✕</label>
 			<h4 class="font-bold text-3xl">Login</h4>

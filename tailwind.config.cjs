@@ -6,11 +6,14 @@ module.exports = {
 			container: {
 				center: true,
 				screens: {
-					"2xl": "1200px",
+					"2xl": "1440px",
 				},
 				padding: {
 					DEFAULT: "1rem",
 				},
+			},
+			extend: {
+				display: ["group-hover"],
 			},
 		},
 	},

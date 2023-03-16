@@ -23,13 +23,11 @@ const wishlist = Array(5).fill(0);
 		}
 		{
 			wishlist.length !== 0 && (
-				<table class="table table-zebra w-full mt-6">
+				<table class="table w-full mt-6">
 					<thead>
 						<tr>
 							<th>
-								<label>
-									<input type="checkbox" class="checkbox" />
-								</label>
+								<label class="cursor-pointer">✕</label>
 							</th>
 							<th>Name</th>
 							<th>Quantity</th>
@@ -42,9 +40,7 @@ const wishlist = Array(5).fill(0);
 							return (
 								<tr class="hover">
 									<th>
-										<label>
-											<input type="checkbox" class="checkbox" />
-										</label>
+										<label class="cursor-pointer">✕</label>
 									</th>
 									<td>
 										<div class="flex items-center space-x-3">
@@ -81,7 +77,9 @@ const wishlist = Array(5).fill(0);
 							<th />
 							<th>Name</th>
 							<th>Quantity</th>
-							<th>Price</th>
+							<th>
+								<p class="font-bold text-3xl">$52.59</p>
+							</th>
 							<th />
 						</tr>
 					</tfoot>

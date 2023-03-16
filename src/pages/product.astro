@@ -1,0 +1,99 @@
+---
+import { Icon } from "astro-icon";
+import Layout from "../components/Layout.astro";
+---
+
+<Layout>
+	<div class="container">
+		<div class="flex gap-12 flex-col md:flex-row">
+			<div class="flex-1 justify-center">
+				<div class="rounded-lg">
+					<img width="600" height="700" class="object-cover max-h-[700px] w-full rounded-[inherit]" src="https://fakeimg.pl/1000x1200/" />
+				</div>
+				<div class="carousel carousel-center mt-4 gap-4">
+					{
+						Array(10)
+							.fill(0)
+							.map(() => {
+								return (
+									<div class="carousel-item rounded-lg">
+										<img width="600" height="700" class="object-cover max-h-[700px] w-full rounded-[inherit]" src="https://fakeimg.pl/300x200/" />
+									</div>
+								);
+							})
+					}
+				</div>
+			</div>
+			<div class="flex-1">
+				<h1 class="text-5xl font-bold">Apple iPhone 14 Pro Max</h1>
+				<div class="rating mt-2">
+					<input type="radio" name="rating-1" class="mask mask-star" />
+					<input type="radio" name="rating-1" class="mask mask-star" checked />
+					<input type="radio" name="rating-1" class="mask mask-star" />
+					<input type="radio" name="rating-1" class="mask mask-star" />
+					<input type="radio" name="rating-1" class="mask mask-star" />
+					<div class="flex items-center">
+						<div class="divider divider-horizontal mx-0"></div>
+						<p class="opacity-60 text-sm">54 rated</p>
+						<div class="divider divider-horizontal mx-0"></div>
+						<p class="opacity-60 text-sm">4 comments</p>
+					</div>
+				</div>
+				<!-- <div>
+					<span class="badge badge-success cursor-pointer">in stock</span>
+					<span class="badge cursor-pointer">Smartphone</span>
+					<span class="badge cursor-pointer">Wi-Fi 6</span>
+					<span class="badge cursor-pointer">LTPO</span>
+					<span class="badge cursor-pointer">FaceID</span>
+					<span class="badge cursor-pointer">2022</span>
+					<span class="badge cursor-pointer">without microSD</span>
+				</div> -->
+				<p class="mt-2">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, repellat quam! Quidem iure architecto labore quas minus reiciendis!
+					Accusantium, doloremque labore quod consequuntur ipsam necessitatibus ipsum recusandae molestiae iste fugit?
+				</p>
+				<div class="divider"></div>
+				<div class="flex flex-wrap gap-2 mt-4">
+					<div class="btn-group">
+						<input type="radio" name="x" data-title="red" class="btn btn-sm" />
+						<input type="radio" disabled name="x" data-title="white" class="btn btn-sm" />
+					</div>
+					<div class="btn-group">
+						<input type="radio" name="colors" data-title="red" class="btn btn-sm" />
+						<input type="radio" disabled name="colors" data-title="white" class="btn btn-sm" />
+						<input type="radio" disabled name="colors" data-title="black" class="btn btn-sm" />
+						<input type="radio" name="colors" data-title="blue" class="btn btn-sm" />
+					</div>
+					<div class="btn-group">
+						<input type="radio" name="options" data-title="16 gb" class="btn btn-sm" />
+						<input type="radio" name="options" data-title="32 gb" class="btn btn-sm" />
+						<input type="radio" disabled name="options" data-title="64 gb" class="btn btn-sm" />
+						<input type="radio" name="options" data-title="128 gb" class="btn btn-sm" />
+					</div>
+					<div class="btn-group">
+						<input type="radio" name="some" data-title="16 gb" class="btn btn-sm" />
+						<input type="radio" disabled name="some" data-title="32 gb" class="btn btn-sm" />
+						<input type="radio" name="some" data-title="64 gb" class="btn btn-sm" />
+						<input type="radio" name="some" data-title="128 gb" class="btn btn-sm" />
+					</div>
+				</div>
+				<div class="divider"></div>
+				<p class="text-4xl font-bold">
+					$29.59 <span class="font-normal">or</span>
+					$5.99/month
+				</p>
+				<div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2">
+					<button class="btn btn-sm btn-primary">add to cart</button>
+					<button class="btn btn-sm btn-primary">
+						<Icon class="h-full p-0.5" pack="mdi" name="heart" />
+						add to wishlist
+					</button>
+					<button class="btn btn-sm btn-primary">
+						<Icon class="h-full p-0.5" pack="mdi" name="compare-horizontal" />
+						add to compare
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
