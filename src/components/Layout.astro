@@ -60,190 +60,178 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 		<div class="drawer drawer-end">
 			<input id="my-drawer" type="checkbox" class="drawer-toggle" />
 			<div class="drawer-content overflow-hidden flex flex-col min-h-screen">
-				<div class="container">
-					<nav class="flex justify-end items-center gap-4 pt-2">
-						<div class="flex items-center gap-2">
-							<label class="swap btn btn-sm btn-ghost">
-								<input id="theme" type="checkbox" />
-								<Icon class="swap-on fill-secondary h-6" pack="mdi" name="white-balance-sunny" />
-								<Icon class="swap-off fill-secondary h-6" pack="mdi" name="moon-waning-crescent" />
+				<nav class="flex justify-end items-center gap-4 pt-2 container">
+					<div class="flex items-center gap-2">
+						<label class="swap btn btn-sm btn-ghost">
+							<input id="theme" type="checkbox" />
+							<Icon class="swap-on fill-secondary h-6" pack="mdi" name="white-balance-sunny" />
+							<Icon class="swap-off fill-secondary h-6" pack="mdi" name="moon-waning-crescent" />
+						</label>
+						<div class="dropdown dropdown-end">
+							<label tabindex="0" class="btn btn-sm btn-ghost flex items-center">
+								<Icon class="h-6" pack="mdi" name="translate" />
+								<Icon class="h-6" pack="mdi" name="expand-more" />
 							</label>
-							<div class="dropdown dropdown-end">
-								<label tabindex="0" class="btn btn-sm btn-ghost flex items-center">
-									<Icon class="h-6" pack="mdi" name="translate" />
-									<Icon class="h-6" pack="mdi" name="expand-more" />
-								</label>
-								<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-200 rounded-box mt-1">
-									<li><a class="py-1 btn btn-sm btn-ghost">english</a></li>
-									<li><a class="py-1 btn btn-sm btn-ghost">ukrainian</a></li>
-								</ul>
-							</div>
+							<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-200 rounded-box mt-1">
+								<li><a class="py-1 btn btn-sm btn-ghost">english</a></li>
+								<li><a class="py-1 btn btn-sm btn-ghost">ukrainian</a></li>
+							</ul>
 						</div>
-					</nav>
-					<div class="divider my-0"></div>
-					<div class="flex-1 flex justify-between items-center gap-2 py-2">
-						<div class="sm:block hidden">
-							<a class="btn bt gap-2" href="/">buy shit</a>
+					</div>
+				</nav>
+				<div class="divider my-0 container"></div>
+				<div class="flex-1 flex justify-between items-center gap-2 py-2 sticky top-0 z-10 container bg-base-100">
+					<div class="sm:block hidden">
+						<a class="btn bt gap-2" href="/">buy shit</a>
+					</div>
+					<input type="text" placeholder="Search..." class="input w-full input-bordered" />
+					<div class="sm:flex hidden items-center gap-2">
+						<div class="flex items-center">
+							<label for="modal-account" class="indicator btn btn-ghost btn-circle">
+								{Boolean(account.messages.length) && <span class="indicator-item badg  mt-1 mr-1e">{account.messages.length}</span>}
+								<Icon class="h-full p-1.5 btn btn-ghost btn-circle" pack="mdi" name="account" />
+							</label>
 						</div>
-						<input type="text" placeholder="Search..." class="input w-full input-bordered" />
-						<!-- <div class="flex flex-1 items-center">
-							<div class="flex items-center flex-1">
-								<label>
-									<span class="btn btn-primary dropdown">
-										All
-										<Icon class="w-6" pack="mdi" name="expand-more" />
-										<div class="dropdown-content">asdf</div>
-									</span>
-								</label>
-							</div>
-							<input type="text" placeholder="Search..." class="input w-full input-bordered" />
-						</div> -->
-						<div class="sm:flex hidden items-center gap-2">
-							<div class="flex items-center">
-								<label for="modal-account" class="indicator btn btn-ghost btn-circle">
-									{Boolean(account.messages.length) && <span class="indicator-item badge">{account.messages.length}</span>}
-									<Icon class="h-full p-1.5 btn btn-ghost btn-circle" pack="mdi" name="account" />
-								</label>
-							</div>
-							<div class="dropdown dropdown-end relative flex items-center">
-								<label tabindex="0" class="indicator">
-									{Boolean(wishlist.length) && <span class="indicator-item badge">{wishlist.length}</span>}
-									<Icon class="h-full p-1.5 btn btn-ghost btn-circle" pack="mdi" name="heart" />
-									<div
-										tabindex={0}
-										class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[425px] min-h-[150px] overflow-auto max-h-[800px] mt-12"
-									>
-										<div class="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-10">
-											<h4 class="text-3xl font-bold">My Wishlist <span class="text-xs font-normal opacity-80">({wishlist.length})</span></h4>
-											<a href="/wishlist" class="text-primary">View All</a>
-										</div>
-										<div class="flex flex-1 flex-col gap-4">
-											{
-												wishlist.length === 0 && (
-													<div class="flex justify-center items-center flex-1">
-														<h1 class="font-bold text-3xl">Go to shop</h1>
+						<div class="dropdown dropdown-end relative flex items-center">
+							<label tabindex="0" class="indicator">
+								{Boolean(wishlist.length) && <span class="indicator-item badge mt-1 mr-1">{wishlist.length}</span>}
+								<Icon class="h-full p-1.5 btn btn-ghost btn-circle" pack="mdi" name="heart" />
+								<div
+									tabindex={0}
+									class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[425px] min-h-[150px] overflow-auto max-h-[800px] mt-12"
+								>
+									<div class="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-10">
+										<h4 class="text-3xl font-bold">My Wishlist <span class="text-xs font-normal opacity-80">({wishlist.length})</span></h4>
+										<a href="/wishlist" class="text-primary">View All</a>
+									</div>
+									<div class="flex flex-1 flex-col gap-4">
+										{
+											wishlist.length === 0 && (
+												<div class="flex justify-center items-center flex-1">
+													<h1 class="font-bold text-3xl">Go to shop</h1>
+												</div>
+											)
+										}
+										{
+											wishlist.map((_) => {
+												return (
+													<div class="flex items-center gap-4">
+														<img width="115" height="115" class="object-cover rounded-lg" src="https://fakeimg.pl/115x115/" />
+														<div>
+															<h4 class="text-sm font-bold opacity-80">BASEBALL PACK</h4>
+															<h3 class="text-xl font-bold">STANDOUT BACKPACK</h3>
+															<div class="flex flex-wrap gap-x-4 text-sm my-2">
+																{[
+																	{ name: "size", value: "large" },
+																	{ name: "color", value: "white" },
+																	{ name: "color", value: "white" },
+																].map(({ name, value }) => {
+																	return (
+																		<div>
+																			<p class="space-x-1">
+																				<>
+																					<span class="opacity-80">{name}:</span>
+																					<span>{value}</span>
+																				</>
+																			</p>
+																		</div>
+																	);
+																})}
+															</div>
+															<div class="flex items-center justify-between">
+																<div class="flex gap-2">
+																	<button class="btn btn-square btn-xs">-</button>
+																	<input class="input text-center input-xs bg-base-200 w-16" type="text" value="1" />
+																	<button class="btn btn-square btn-xs">+</button>
+																</div>
+																<div>
+																	<p class="font-bold text-3xl">$12.59</p>
+																</div>
+															</div>
+														</div>
 													</div>
-												)
-											}
-											{
-												wishlist.map((_) => {
-													return (
-														<div class="flex items-center gap-4">
+												);
+											})
+										}
+									</div>
+								</div>
+							</label>
+						</div>
+						<div class="dropdown dropdown-end relative flex items-center">
+							<label tabindex="0" class="indicator">
+								{Boolean(cart.length) && <span class="indicator-item badge">{cart.length}</span>}
+								<Icon class="h-full p-1.5 btn btn-ghost btn-circle" pack="mdi" name="cart" />
+								<div
+									tabindex={0}
+									class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[425px] min-h-[150px] overflow-auto max-h-[800px] mt-12"
+								>
+									<div class="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-1">
+										<h4 class="text-3xl font-bold">My Cart <span class="text-xs font-normal opacity-80">({cart.length})</span></h4>
+										<a href="cart" class="text-primary">View All</a>
+									</div>
+									<div class="flex flex-1 flex-col gap-4">
+										{
+											cart.length === 0 && (
+												<div class="flex justify-center items-center flex-1">
+													<h1 class="font-bold text-3xl">Go to shop</h1>
+												</div>
+											)
+										}
+										{
+											cart.map((_) => {
+												return (
+													<div class="flex items-center gap-4">
+														<div class="">
 															<img width="115" height="115" class="object-cover rounded-lg" src="https://fakeimg.pl/115x115/" />
-															<div>
-																<h4 class="text-sm font-bold opacity-80">BASEBALL PACK</h4>
-																<h3 class="text-xl font-bold">STANDOUT BACKPACK</h3>
-																<div class="flex flex-wrap gap-x-4 text-sm my-2">
-																	{[
-																		{ name: "size", value: "large" },
-																		{ name: "color", value: "white" },
-																		{ name: "color", value: "white" },
-																	].map(({ name, value }) => {
-																		return (
-																			<div>
-																				<p class="space-x-1">
-																					<>
-																						<span class="opacity-80">{name}:</span>
-																						<span>{value}</span>
-																					</>
-																				</p>
-																			</div>
-																		);
-																	})}
+														</div>
+														<div>
+															<h4 class="text-sm font-bold opacity-80">BASEBALL PACK</h4>
+															<h3 class="text-xl font-bold">STANDOUT BACKPACK</h3>
+															<div class="flex flex-wrap gap-x-4 text-sm my-2">
+																{[
+																	{ name: "size", value: "large" },
+																	{ name: "color", value: "white" },
+																	{ name: "color", value: "white" },
+																].map(({ name, value }) => {
+																	return (
+																		<div>
+																			<p class="space-x-1">
+																				<>
+																					<span class="opacity-80">{name}:</span>
+																					<span>{value}</span>
+																				</>
+																			</p>
+																		</div>
+																	);
+																})}
+															</div>
+															<div class="flex items-center justify-between">
+																<div class="flex gap-2">
+																	<button class="btn btn-square btn-xs">-</button>
+																	<input class="input text-center input-xs bg-base-200 w-16" type="text" value="1" />
+																	<button class="btn btn-square btn-xs">+</button>
 																</div>
-																<div class="flex items-center justify-between">
-																	<div class="flex gap-2">
-																		<button class="btn btn-square btn-xs">-</button>
-																		<input class="input text-center input-xs bg-base-200 w-16" type="text" value="1" />
-																		<button class="btn btn-square btn-xs">+</button>
-																	</div>
-																	<div>
-																		<p class="font-bold text-3xl">$12.59</p>
-																	</div>
+																<div>
+																	<p class="font-bold text-3xl">$12.59</p>
 																</div>
 															</div>
 														</div>
-													);
-												})
-											}
-										</div>
-									</div>
-								</label>
-							</div>
-							<div class="dropdown dropdown-end relative flex items-center">
-								<label tabindex="0" class="indicator">
-									{Boolean(cart.length) && <span class="indicator-item badge">{cart.length}</span>}
-									<Icon class="h-full p-1.5 btn btn-ghost btn-circle" pack="mdi" name="cart" />
-									<div
-										tabindex={0}
-										class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[425px] min-h-[150px] overflow-auto max-h-[800px] mt-12"
-									>
-										<div class="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-1">
-											<h4 class="text-3xl font-bold">My Cart <span class="text-xs font-normal opacity-80">({cart.length})</span></h4>
-											<a href="cart" class="text-primary">View All</a>
-										</div>
-										<div class="flex flex-1 flex-col gap-4">
-											{
-												cart.length === 0 && (
-													<div class="flex justify-center items-center flex-1">
-														<h1 class="font-bold text-3xl">Go to shop</h1>
 													</div>
-												)
-											}
-											{
-												cart.map((_) => {
-													return (
-														<div class="flex items-center gap-4">
-															<div class="">
-																<img width="115" height="115" class="object-cover rounded-lg" src="https://fakeimg.pl/115x115/" />
-															</div>
-															<div>
-																<h4 class="text-sm font-bold opacity-80">BASEBALL PACK</h4>
-																<h3 class="text-xl font-bold">STANDOUT BACKPACK</h3>
-																<div class="flex flex-wrap gap-x-4 text-sm my-2">
-																	{[
-																		{ name: "size", value: "large" },
-																		{ name: "color", value: "white" },
-																		{ name: "color", value: "white" },
-																	].map(({ name, value }) => {
-																		return (
-																			<div>
-																				<p class="space-x-1">
-																					<>
-																						<span class="opacity-80">{name}:</span>
-																						<span>{value}</span>
-																					</>
-																				</p>
-																			</div>
-																		);
-																	})}
-																</div>
-																<div class="flex items-center justify-between">
-																	<div class="flex gap-2">
-																		<button class="btn btn-square btn-xs">-</button>
-																		<input class="input text-center input-xs bg-base-200 w-16" type="text" value="1" />
-																		<button class="btn btn-square btn-xs">+</button>
-																	</div>
-																	<div>
-																		<p class="font-bold text-3xl">$12.59</p>
-																	</div>
-																</div>
-															</div>
-														</div>
-													);
-												})
-											}
-										</div>
+												);
+											})
+										}
 									</div>
-								</label>
-							</div>
-						</div>
-						<div class="block sm:hidden">
-							<label for="my-drawer" class="btn btn-circle">
-								<Icon class="h-full p-1.5" pack="mdi" name="menu" />
+								</div>
 							</label>
 						</div>
 					</div>
+					<div class="block sm:hidden">
+						<label for="my-drawer" class="btn btn-circle">
+							<Icon class="h-full p-1.5" pack="mdi" name="menu" />
+						</label>
+					</div>
+				</div>
+				<div class="container">
 					<div class="breadcrumbs">
 						<ul class="text-sm breadcrumbs-items">
 							{
