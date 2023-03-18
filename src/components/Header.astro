@@ -1,0 +1,275 @@
+---
+import { Icon } from "astro-icon";
+
+const account = {
+	messages: Array(0).fill(0),
+};
+const cart = Array(0).fill(0);
+const wishlist = Array(5).fill(0);
+
+const languages = [
+	{ image: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ec-1f1e7.svg", label: "English", isActive: true },
+	{ image: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ea-1f1f8.svg", label: "Español", isActive: false },
+	{ image: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1eb-1f1f7.svg", label: "Français", isActive: false },
+];
+---
+
+<div class="bg-base-200">
+	<nav class="flex justify-between items-center gap-4 py-2 container">
+		<a href="/">
+			<Icon class="btn btn-sm btn-primary" pack="mdi" name="skull" />
+		</a>
+		<div class="flex items-center">
+			<label class="swap btn btn-sm btn-ghost gap-1">
+				<input id="theme" type="checkbox" />
+				<Icon class="swap-on h-6" pack="mdi" name="white-balance-sunny" />
+				<Icon class="swap-off h-6" pack="mdi" name="moon-waning-crescent" />
+			</label>
+			<div class="dropdown dropdown-end">
+				<div tabindex="0" class="btn btn-sm btn-ghost gap-1">
+					<Icon class="h-5 fill-current" pack="mdi" name="translate" />
+					<Icon class="h-5 fill-current opacity-60" pack="mdi" name="chevron-down" />
+				</div>
+				<div class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 w-56 overflow-y-auto shadow-2xl">
+					<ul class="menu gap-1 p-3" tabindex="0">
+						{
+							languages.map(({ label, image, isActive }) => {
+								return (
+									<li>
+										<button class:list={["flex", { active: isActive }]}>
+											<img loading="lazy" width="20" height="20" alt="English" src={image} />
+											<span class="flex flex-1 justify-between">{label}</span>
+										</button>
+									</li>
+								);
+							})
+						}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+</div>
+
+<div class="bg-base-300 sticky top-0 z-10">
+	<div class="flex justify-between items-center gap-2 py-2 container">
+		<div class="dropdown">
+			<label tabindex="0" class="btn btn-ghost hidden sm:flex">
+				category
+				<Icon class="opacity-60 h-6" pack="mdi" name="expand-more" />
+			</label>
+			<ul tabindex="0" class="dropdown-content menu p-2 bg-base-100 rounded-box min-w-full">
+				{
+					Array(5)
+						.fill(0)
+						.map(() => {
+							return (
+								<li tabindex="0" class="dropdown dropdown-hover dropdown-right">
+									<label class="flex gap-2">
+										<Icon class="h-6" pack="mdi" name="computer" />
+										<p class="flex-1 whitespace-nowrap">Computer</p>
+										<Icon class="h-6 -rotate-90" pack="mdi" name="expand-more" />
+									</label>
+									<ul tabindex="0" class="dropdown-content top-0 menu p-2 bg-base-100 rounded-box">
+										<li>
+											<a>Item 1</a>
+										</li>
+										<li>
+											<a>Item 2</a>
+										</li>
+									</ul>
+								</li>
+							);
+						})
+				}
+			</ul>
+		</div>
+		<div class="flex flex-1">
+			<label class="input-group">
+				<span class="bg-base-100 border-r-2 border-r-base-200">
+					<Icon class="h-6" pack="mdi" name="search" />
+				</span>
+				<input type="text" placeholder="Search..." class="input w-full" />
+			</label>
+		</div>
+		<div class="sm:flex hidden items-center gap-2">
+			<div class="flex items-center">
+				<label for="modal-account" class="indicator btn btn-ghost btn-circle">
+					{Boolean(account.messages.length) && <span class="indicator-item badg mt-1 mr-1e">{account.messages.length}</span>}
+					<div class="btn btn-ghost btn-circle">
+						<Icon class="h-full p-1.5" pack="mdi" name="account" />
+					</div>
+				</label>
+			</div>
+			<div class="dropdown dropdown-end relative flex items-center">
+				<label tabindex="0" class="indicator">
+					{Boolean(wishlist.length) && <span class="indicator-item badge mt-1 mr-1">{wishlist.length}</span>}
+					<div class="btn btn-ghost btn-circle">
+						<Icon class="h-full p-1.5" pack="mdi" name="heart" />
+					</div>
+					<div
+						tabindex={0}
+						class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[425px] min-h-[150px] overflow-auto max-h-[800px] mt-12"
+					>
+						<div class="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-10">
+							<h4 class="text-3xl font-bold">My Wishlist <span class="text-xs font-normal opacity-80">({wishlist.length})</span></h4>
+							<a href="/wishlist" class="text-primary">View All</a>
+						</div>
+						<div class="flex flex-1 flex-col gap-4">
+							{
+								wishlist.length === 0 && (
+									<div class="flex justify-center items-center flex-1">
+										<h1 class="font-bold text-3xl">Go to shop</h1>
+									</div>
+								)
+							}
+							{
+								wishlist.map((_) => {
+									return (
+										<div class="flex items-center gap-4">
+											<img width="115" height="115" class="object-cover rounded-lg" src="https://fakeimg.pl/115x115/" />
+											<div>
+												<h4 class="text-sm font-bold opacity-80">BASEBALL PACK</h4>
+												<h3 class="text-xl font-bold">STANDOUT BACKPACK</h3>
+												<div class="flex flex-wrap gap-x-4 text-sm my-2">
+													{[
+														{ name: "size", value: "large" },
+														{ name: "color", value: "white" },
+														{ name: "color", value: "white" },
+													].map(({ name, value }) => {
+														return (
+															<div>
+																<p class="space-x-1">
+																	<>
+																		<span class="opacity-80">{name}:</span>
+																		<span>{value}</span>
+																	</>
+																</p>
+															</div>
+														);
+													})}
+												</div>
+												<div class="flex items-center justify-between">
+													<div class="flex gap-2">
+														<button class="btn btn-square btn-xs">-</button>
+														<input class="input text-center input-xs bg-base-200 w-16" type="text" value="1" />
+														<button class="btn btn-square btn-xs">+</button>
+													</div>
+													<div>
+														<p class="font-bold text-3xl">$12.59</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									);
+								})
+							}
+						</div>
+					</div>
+				</label>
+			</div>
+			<div class="dropdown dropdown-end relative flex items-center">
+				<label tabindex="0" class="indicator">
+					{Boolean(cart.length) && <span class="indicator-item badge">{cart.length}</span>}
+					<div class="btn btn-ghost btn-circle">
+						<Icon class="h-full p-1.5" pack="mdi" name="cart" />
+					</div>
+					<div
+						tabindex={0}
+						class="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[425px] overflow-auto max-h-[800px] mt-12"
+					>
+						<div class="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-1">
+							<h4 class="text-3xl font-bold">My Cart <span class="text-xs font-normal opacity-80">({cart.length})</span></h4>
+							<a href="cart" class="text-primary">View All</a>
+						</div>
+						<div class="flex flex-1 flex-col gap-4">
+							{
+								cart.length === 0 && (
+									<div class="flex justify-center items-center flex-1 py-4">
+										<h1 class="font-bold text-3xl">Go to shop</h1>
+									</div>
+								)
+							}
+							{
+								cart.map((_) => {
+									return (
+										<div class="flex items-center gap-4">
+											<div class="">
+												<img width="115" height="115" class="object-cover rounded-lg" src="https://fakeimg.pl/115x115/" />
+											</div>
+											<div>
+												<h4 class="text-sm font-bold opacity-80">BASEBALL PACK</h4>
+												<h3 class="text-xl font-bold">STANDOUT BACKPACK</h3>
+												<div class="flex flex-wrap gap-x-4 text-sm my-2">
+													{[
+														{ name: "size", value: "large" },
+														{ name: "color", value: "white" },
+														{ name: "color", value: "white" },
+													].map(({ name, value }) => {
+														return (
+															<div>
+																<p class="space-x-1">
+																	<>
+																		<span class="opacity-80">{name}:</span>
+																		<span>{value}</span>
+																	</>
+																</p>
+															</div>
+														);
+													})}
+												</div>
+												<div class="flex items-center justify-between">
+													<div class="flex gap-2">
+														<button class="btn btn-square btn-xs">-</button>
+														<input class="input text-center input-xs bg-base-200 w-16" type="text" value="1" />
+														<button class="btn btn-square btn-xs">+</button>
+													</div>
+													<div>
+														<p class="font-bold text-3xl">$12.59</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									);
+								})
+							}
+						</div>
+					</div>
+				</label>
+			</div>
+		</div>
+		<div class="block sm:hidden">
+			<label for="my-drawer" class="btn btn-circle">
+				<Icon class="h-full p-1.5" pack="mdi" name="menu" />
+			</label>
+		</div>
+	</div>
+</div>
+
+<script>
+	const html = document.querySelector("html");
+	const theme_checkbox = document.querySelector("#theme");
+	const theme = window.localStorage.getItem("theme");
+	const prefersLight = window.matchMedia("(prefers-color-scheme: light)");
+	const isLight = theme !== null && theme === "light";
+
+	theme_checkbox.checked = isLight;
+	html.setAttribute("data-theme", isLight ? "light" : "dark");
+
+	window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", (event) => {
+		const theme = window.localStorage.getItem("theme");
+		const isLight = !!event.matches;
+		theme_checkbox.checked = isLight;
+		if (typeof theme === "string") {
+			window.localStorage.setItem("theme", isLight ? "light" : "dark");
+		} else {
+			html.setAttribute("data-theme", isLight ? "light" : "dark");
+		}
+	});
+
+	theme_checkbox.addEventListener("change", (e) => {
+		const currentTheme = e.target.checked ? "light" : "dark";
+		localStorage.setItem("theme", currentTheme);
+		html.setAttribute("data-theme", currentTheme);
+	});
+</script>

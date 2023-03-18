@@ -3,71 +3,72 @@ import { Icon } from "astro-icon";
 import Layout from "../components/Layout.astro";
 ---
 
+<!-- <img width="566" height="368" class="hidden mx-auto w-full sm:block object-cover rounded-lg" src="https://fakeimg.pl/566x368/" /> -->
 <Layout>
 	<div class="container">
-		<div class="flex flex-col-reverse lg:flex-row gap-4 p-4 bg-base-200 rounded-lg">
-			<div class="flex flex-col justify-center items-start flex-1">
-				<div class="badge">Electronics</div>
-				<h2 class="text-5xl font-bold mt-4">Life Advice Looking Through A Window</h2>
-				<p class="text-lg opacity-80 mt-2">it won't be a bigger problem to find one video game lover in your neighbor</p>
-				<button class="btn btn-primary btn-lg mt-4">Buy now</button>
+		<div class="gap-2">
+			<div class="bg-base-200 rounded-lg min-h-[500px]">
+				<div class="flex-1 bg-base-200 p-2 rounded-lg"></div>
 			</div>
-			<div>
-				<img width="566" height="368" class="hidden mx-auto w-full sm:block object-cover rounded-lg" src="https://fakeimg.pl/566x368/" />
-			</div>
-		</div>
-		<div class="space-y-12 my-12">
-			{
-				Array(3)
-					.fill(0)
-					.map(() => {
-						return (
-							<div>
-								<h3 class="text-3xl font-bold">Popular Caterogies</h3>
-								<div class="carousel gap-6 mt-2">
-									{Array(5)
-										.fill(0)
-										.map(() => {
-											return (
-												<a href="/product" class="carousel-item flex flex-col bg-base-200 rounded-lg relative group">
-													<div class="indicator m-6 mb-0">
-														<Icon class="h-8 indicator-item absolute top-0 right-0 hidden group-hover:block cursor-pointer" pack="mdi" name="heart" />
-														<div class="flex justify-center items-center">
-															<img
-																width="300"
-																height="200"
-																class="object-contain rounded-lg w-[300px] h-[200px] p-2"
-																src="https://fakeimg.pl/1500x200/"
+			<div class="space-y-6 mt-6">
+				{
+					Array(2)
+						.fill(0)
+						.map(() => {
+							return (
+								<div>
+									<h3 class="text-4xl font-bold">Popular Caterogies</h3>
+									<div class="carousel gap-4 mt-2">
+										{Array(5)
+											.fill(0)
+											.map(() => {
+												return (
+													<a href="/product" class="carousel-item flex flex-col bg-base-200 rounded-lg relative group">
+														<div class="indicator m-6 mb-0">
+															<Icon
+																class="h-8 indicator-item absolute top-0 right-0 hidden group-hover:block cursor-pointer"
+																pack="mdi"
+																name="heart"
 															/>
+															<div class="flex justify-center items-center">
+																<img
+																	width="300"
+																	height="200"
+																	class="object-contain rounded-lg w-[300px] h-[200px] p-2"
+																	src="https://fakeimg.pl/1500x200/"
+																/>
+															</div>
 														</div>
-													</div>
-													<div class="p-2">
-														<p class="opacity-60">Electronics</p>
-														<p class="font-bold">asdfiasdf kasd faisf</p>
-														<div class="flex justify-between items-center">
-															<div class="flex items-center">
-																<div class="rating items-center">
-																	<input type="radio" name="rating-1" class="mask mask-star" />
-																	<input type="radio" name="rating-1" class="mask mask-star" checked />
-																	<input type="radio" name="rating-1" class="mask mask-star" />
-																	<input type="radio" name="rating-1" class="mask mask-star" />
-																	<input type="radio" name="rating-1" class="mask mask-star" />
-																</div>
+														<div class="flex items-center p-4">
+															<div class="flex-1">
+																<p class="opacity-60">Electronics</p>
+																<p class="font-bold">asdfiasdf kasd faisf</p>
 																<div class="flex items-center">
-																	<p class="opacity-60 text-sm ml-1">103 view</p>
+																	<div class="rating items-center">
+																		<input type="radio" name="rating-1" class="mask mask-star" />
+																		<input type="radio" name="rating-1" class="mask mask-star" checked />
+																		<input type="radio" name="rating-1" class="mask mask-star" />
+																		<input type="radio" name="rating-1" class="mask mask-star" />
+																		<input type="radio" name="rating-1" class="mask mask-star" />
+																	</div>
+																	<div class="flex items-center">
+																		<p class="opacity-60 text-sm ml-1">103 view</p>
+																	</div>
 																</div>
 															</div>
-															<p class="font-bold text-3xl">$29.49</p>
+															<div>
+																<p class="text-3xl font-bold">$29.59</p>
+															</div>
 														</div>
-													</div>
-												</a>
-											);
-										})}
+													</a>
+												);
+											})}
+									</div>
 								</div>
-							</div>
-						);
-					})
-			}
+							);
+						})
+				}
+			</div>
 		</div>
 	</div>
 </Layout>
