@@ -20,10 +20,10 @@ const languages = [
 			<Icon class="btn btn-sm btn-primary" pack="mdi" name="skull" />
 		</a>
 		<div class="flex items-center">
-			<label class="swap btn btn-sm btn-ghost gap-1">
-				<input id="theme" type="checkbox" />
-				<Icon class="swap-on h-6" pack="mdi" name="white-balance-sunny" />
-				<Icon class="swap-off h-6" pack="mdi" name="moon-waning-crescent" />
+			<label class="swap gap-1">
+				<input type="checkbox" data-toggle-theme="dark,light" data-act-class="pl-4" />
+				<Icon class="swap btn btn-sm btn-ghost swap-on h-6" pack="mdi" name="white-balance-sunny" />
+				<Icon class="swap btn btn-sm btn-ghost swap-off h-6" pack="mdi" name="moon-waning-crescent" />
 			</label>
 			<div class="dropdown dropdown-end">
 				<div tabindex="0" class="btn btn-sm btn-ghost gap-1">
@@ -95,7 +95,7 @@ const languages = [
 		<div class="sm:flex hidden items-center gap-2">
 			<div class="flex items-center">
 				<label for="modal-account" class="indicator btn btn-ghost btn-circle">
-					{Boolean(account.messages.length) && <span class="indicator-item badg mt-1 mr-1e">{account.messages.length}</span>}
+					{Boolean(account.messages.length) && <span class="indicator-item badge mt-1 mr-1">{account.messages.length}</span>}
 					<div class="btn btn-ghost btn-circle">
 						<Icon class="h-full p-1.5" pack="mdi" name="account" />
 					</div>
@@ -245,31 +245,3 @@ const languages = [
 		</div>
 	</div>
 </div>
-
-<script>
-	const html = document.querySelector("html");
-	const theme_checkbox = document.querySelector("#theme");
-	const theme = window.localStorage.getItem("theme");
-	const prefersLight = window.matchMedia("(prefers-color-scheme: light)");
-	const isLight = theme !== null && theme === "light";
-
-	theme_checkbox.checked = isLight;
-	html.setAttribute("data-theme", isLight ? "light" : "dark");
-
-	window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", (event) => {
-		const theme = window.localStorage.getItem("theme");
-		const isLight = !!event.matches;
-		theme_checkbox.checked = isLight;
-		if (typeof theme === "string") {
-			window.localStorage.setItem("theme", isLight ? "light" : "dark");
-		} else {
-			html.setAttribute("data-theme", isLight ? "light" : "dark");
-		}
-	});
-
-	theme_checkbox.addEventListener("change", (e) => {
-		const currentTheme = e.target.checked ? "light" : "dark";
-		localStorage.setItem("theme", currentTheme);
-		html.setAttribute("data-theme", currentTheme);
-	});
-</script>

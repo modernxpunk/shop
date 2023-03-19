@@ -3,12 +3,38 @@ import { Icon } from "astro-icon";
 import Layout from "../components/Layout.astro";
 ---
 
-<!-- <img width="566" height="368" class="hidden mx-auto w-full sm:block object-cover rounded-lg" src="https://fakeimg.pl/566x368/" /> -->
 <Layout>
 	<div class="container">
 		<div class="gap-2">
-			<div class="bg-base-200 rounded-lg min-h-[500px]">
-				<div class="flex-1 bg-base-200 p-2 rounded-lg"></div>
+			<div class="h-[700px] carousel carousel-center gap-4">
+				{
+					Array(5)
+						.fill(0)
+						.map(() => {
+							return (
+								<div class="carousel-item grid grid-rows-3 grid-cols-6 gap-4 w-full [&>a]:bg-base-200 [&>a]:transition-shadow [&>a]:rounded-lg [&>a]:bg-red">
+									<a href="/product" class="row-span-1 col-span-2 ">
+										<img class="w-full h-full object-cover rounded-[inherit]" src="https://fakeimg.pl/300/" />
+									</a>
+									<a href="/product" class="row-span-1 col-span-2 ">
+										<img class="w-full h-full object-cover rounded-[inherit]" src="https://fakeimg.pl/300/" />
+									</a>
+									<a href="/product" class="row-span-2 col-span-2 ">
+										<img class="w-full h-full object-cover rounded-[inherit]" src="https://fakeimg.pl/300/" />
+									</a>
+									<a href="/product" class="row-span-1 col-span-4 ">
+										<img class="w-full h-full object-cover rounded-[inherit]" src="https://fakeimg.pl/300/" />
+									</a>
+									<a href="/product" class="row-span-1 col-span-2 ">
+										<img class="w-full h-full object-cover rounded-[inherit]" src="https://fakeimg.pl/300/" />
+									</a>
+									<a href="/product" class="row-span-1 col-span-4 ">
+										<img class="w-full h-full object-cover rounded-[inherit]" src="https://fakeimg.pl/300/" />
+									</a>
+								</div>
+							);
+						})
+				}
 			</div>
 			<div class="space-y-6 mt-6">
 				{
@@ -18,7 +44,7 @@ import Layout from "../components/Layout.astro";
 							return (
 								<div>
 									<h3 class="text-4xl font-bold">Popular Caterogies</h3>
-									<div class="carousel gap-4 mt-2">
+									<div class="carousel gap-4 mt-2 overflow-auto">
 										{Array(5)
 											.fill(0)
 											.map(() => {
