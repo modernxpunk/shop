@@ -1,11 +1,14 @@
 ---
-import { Icon } from "astro-icon";
+import { Sprite } from "astro-icon";
 ---
 
 <input type="checkbox" id="modal-account" class="modal-toggle" />
 <label for="modal-account" class="modal sm:modal-middle cursor-pointer">
 	<label class="modal-box m-4 mb-0 sm:m-0 relative" for="">
-		<label class="absolute top-2 right-2 btn btn-sm btn-circle" for="modal-account">✕</label>
+		<label
+			class="absolute top-2 right-2 btn btn-sm btn-circle"
+			for="modal-account">✕</label
+		>
 		<h4 class="font-bold text-3xl">Login</h4>
 		<form>
 			<div class="form-control gap-4 mt-6">
@@ -13,29 +16,35 @@ import { Icon } from "astro-icon";
 					<label class="opacity-70 text-sm font-bold" for="email">EMAIL</label>
 					<label class="input-group mt-2">
 						<span class="opacity-80 text-sm font-bold">
-							<Icon class="h-8" pack="mdi" name="email" />
+							<Sprite class="w-6 h-6" name="mdi:account" />
 						</span>
 						<input class="input input-bordered w-full" type="text" />
 					</label>
 				</div>
 				<div class="flex flex-col">
-					<label class="opacity-70 text-sm font-bold" for="password">PASSWORD</label>
+					<label class="opacity-70 text-sm font-bold" for="password">
+						PASSWORD
+					</label>
 					<label class="input-group mt-2">
 						<span class="opacity-80 text-sm font-bold">
-							<Icon class="h-8" pack="mdi" name="lock" />
+							<Sprite class="w-6 h-6" name="mdi:account" />
 						</span>
 						<input class="input input-bordered w-full" type="password" />
 					</label>
 					<label class="label py-0 mt-2">
-						<a class="label-text-alt underline" href="#">Don't have an account?</a>
-						<a class="label-text-alt underline text-right" href="#">Forgot password?</a>
+						<a class="label-text-alt underline" href="#">
+							Don't have an account?
+						</a>
+						<a class="label-text-alt underline text-right" href="#">
+							Forgot password?
+						</a>
 					</label>
 				</div>
 			</div>
 			<input class="btn btn-primary w-full mt-4" type="submit" value="LOGIN" />
 			<div class="divider">or</div>
 			<button class="btn btn-outline w-full gap-2">
-				<Icon class="h-6" pack="mdi" name="google" />
+				<Sprite class="w-6 h-6" name="mdi:account" />
 				Continue with Google
 			</button>
 		</form>

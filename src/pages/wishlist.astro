@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import { Sprite } from "astro-icon";
 import Layout from "../components/Layout.astro";
 
 const wishlist = Array(5).fill(0);
@@ -11,7 +11,7 @@ const wishlist = Array(5).fill(0);
 		{
 			wishlist.length === 0 && (
 				<div class="flex flex-col justify-center items-center">
-					<Icon class="w-32 h-32" pack="mdi" name="heart" />
+					<Sprite class="w-32 h-32" name="mdi:heart" />
 					<h1 class="text-3xl font-bold text-center">
 						Oops, your wishlist is empty! Go to
 						<a class="text-primary underline" href="/">

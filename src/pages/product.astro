@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import { Sprite } from "astro-icon";
 import Layout from "../components/Layout.astro";
 ---
 
@@ -47,7 +47,7 @@ import Layout from "../components/Layout.astro";
 						<p class="opacity-60 text-sm">54 rated</p>
 						<div class="divider divider-horizontal mx-0"></div>
 						<div class="flex items-center gap-1">
-							<Icon class="h-4" pack="mdi" name="comment" />
+							<Sprite class="w-4 h-4" name="mdi:comment" />
 							<p class="flex opacity-60 text-sm whitespace-nowrap">
 								4 comments
 							</p>
@@ -170,13 +170,16 @@ import Layout from "../components/Layout.astro";
 					$5.99/month
 				</p>
 				<div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2">
-					<button class="btn btn-sm btn-primary">add to cart</button>
 					<button class="btn btn-sm btn-primary">
-						<Icon class="h-full p-0.5" pack="mdi" name="heart" />
+						<Sprite class="w-6 h-6 p-0.5" name="mdi:cart" />
+						add to cart
+					</button>
+					<button class="btn btn-sm btn-primary">
+						<Sprite class="w-6 h-6 p-0.5" name="mdi:heart" />
 						add to wishlist
 					</button>
 					<button class="btn btn-sm btn-primary">
-						<Icon class="h-full p-0.5" pack="mdi" name="compare-horizontal" />
+						<Sprite class="w-6 h-6 p-0.5" name="mdi:compare-horizontal" />
 						add to compare
 					</button>
 				</div>
@@ -193,7 +196,7 @@ import Layout from "../components/Layout.astro";
 											.map(() => {
 												return (
 													<div class="flex gap-2">
-														<Icon class="h-8" pack="mdi" name="cart" />
+														<Sprite class="w-8 h-8" name="mdi:cart" />
 														<div class="flex-1">
 															<h4 class="font-bold text-lg">
 																asdfadf asdf as f
@@ -229,8 +232,8 @@ import Layout from "../components/Layout.astro";
 									class="carousel-item flex flex-col bg-base-200 rounded-lg relative group"
 								>
 									<div class="indicator m-6 mb-0">
-										<Icon
-											class="h-8 indicator-item absolute top-0 right-0 hidden group-hover:block cursor-pointer"
+										<Sprite
+											class="w-8 h-8 indicator-item absolute top-0 right-0 hidden group-hover:block cursor-pointer"
 											pack="mdi"
 											name="heart"
 										/>

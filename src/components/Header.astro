@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import { Icon, Sprite } from "astro-icon";
 
 const account = {
 	messages: Array(0).fill(0),
@@ -32,31 +32,27 @@ const languages = [
 <div class="bg-base-200">
 	<nav class="flex justify-between items-center gap-4 py-2 container">
 		<a href="/">
-			<Icon class="btn btn-sm btn-primary" pack="mdi" name="skull" />
+			<Sprite class="w-16 h-8 btn btn-sm btn-primary" name="mdi:skull" />
 		</a>
-		<div class="flex items-center">
+		<div class="flex items-center gap-2">
 			<label class="swap gap-1">
-				<input
-					type="checkbox"
-					data-toggle-theme="dark,light"
-					data-act-class="pl-4"
-				/>
-				<Icon
-					class="swap btn btn-sm btn-ghost swap-on h-6"
+				<input type="checkbox" data-toggle-theme="dark,light" />
+				<Sprite
+					class="w-16 h-8 swap btn btn-sm btn-ghost swap-on"
 					pack="mdi"
 					name="white-balance-sunny"
 				/>
-				<Icon
-					class="swap btn btn-sm btn-ghost swap-off h-6"
+				<Sprite
+					class="w-16 h-8 swap btn btn-sm btn-ghost swap-off"
 					pack="mdi"
 					name="moon-waning-crescent"
 				/>
 			</label>
-			<div class="dropdown dropdown-end">
-				<div tabindex="0" class="btn btn-sm btn-ghost gap-1">
-					<Icon class="h-5 fill-current" pack="mdi" name="translate" />
-					<Icon
-						class="h-5 fill-current opacity-60"
+			<div class="dropdown dropdown-end flex items-center">
+				<div tabindex="0" class="btn btn-sm btn-ghost gap-2">
+					<Sprite class="w-6 h-6 fill-current" name="mdi:translate" />
+					<Sprite
+						class="w-4 h-4 fill-current opacity-60"
 						pack="mdi"
 						name="chevron-down"
 					/>
@@ -92,10 +88,10 @@ const languages = [
 
 <div class="bg-base-300 sticky top-0 z-10">
 	<div class="flex justify-between items-center gap-2 py-2 container">
-		<div class="dropdown">
-			<label tabindex="0" class="btn btn-ghost hidden sm:flex">
+		<div class="dropdown hidden sm:inline-block">
+			<label tabindex="0" class="btn btn-ghost">
 				category
-				<Icon class="opacity-60 h-6" pack="mdi" name="expand-more" />
+				<Sprite class="w-6 h-6 opacity-60" name="mdi:expand-more" />
 			</label>
 			<ul
 				tabindex="0"
@@ -108,10 +104,10 @@ const languages = [
 							return (
 								<li tabindex="0" class="dropdown dropdown-hover dropdown-right">
 									<label class="flex gap-2">
-										<Icon class="h-6" pack="mdi" name="computer" />
+										<Sprite class="w-6 h-6" name="mdi:computer" />
 										<p class="flex-1 whitespace-nowrap">Computer</p>
-										<Icon
-											class="h-6 -rotate-90"
+										<Sprite
+											class="w-4 h-4 -rotate-90"
 											pack="mdi"
 											name="expand-more"
 										/>
@@ -136,7 +132,7 @@ const languages = [
 		<div class="flex flex-1">
 			<label class="input-group">
 				<span class="bg-base-100 border-r-2 border-r-base-200">
-					<Icon class="h-6" pack="mdi" name="search" />
+					<Sprite class="w-6 h-6" name="mdi:search" />
 				</span>
 				<input type="text" placeholder="Search..." class="input w-full" />
 			</label>
@@ -152,7 +148,7 @@ const languages = [
 						)
 					}
 					<div class="btn btn-ghost btn-circle">
-						<Icon class="h-full p-1.5" pack="mdi" name="account" />
+						<Sprite class="w-12 h-12 p-1.5" name="mdi:account" />
 					</div>
 				</label>
 			</div>
@@ -166,7 +162,7 @@ const languages = [
 						)
 					}
 					<div class="btn btn-ghost btn-circle">
-						<Icon class="h-full p-1.5" pack="mdi" name="heart" />
+						<Sprite class="w-12 h-12 p-1.5" name="mdi:heart" />
 					</div>
 					<div
 						tabindex={0}
@@ -177,7 +173,8 @@ const languages = [
 						>
 							<h4 class="text-3xl font-bold">
 								My Wishlist <span class="text-xs font-normal opacity-80"
-									>({wishlist.length})</span>
+									>({wishlist.length})</span
+								>
 							</h4>
 							<a href="/wishlist" class="text-primary">View All</a>
 						</div>
@@ -253,7 +250,7 @@ const languages = [
 						)
 					}
 					<div class="btn btn-ghost btn-circle">
-						<Icon class="h-full p-1.5" pack="mdi" name="cart" />
+						<Sprite class="w-12 h-12 p-1.5" name="mdi:cart" />
 					</div>
 					<div
 						tabindex={0}
@@ -264,7 +261,8 @@ const languages = [
 						>
 							<h4 class="text-3xl font-bold">
 								My Cart <span class="text-xs font-normal opacity-80"
-									>({cart.length})</span>
+									>({cart.length})</span
+								>
 							</h4>
 							<a href="cart" class="text-primary">View All</a>
 						</div>
@@ -335,9 +333,9 @@ const languages = [
 				</label>
 			</div>
 		</div>
-		<div class="block sm:hidden">
+		<div class="flex items-center sm:hidden">
 			<label for="my-drawer" class="btn btn-circle">
-				<Icon class="h-full p-1.5" pack="mdi" name="menu" />
+				<Sprite class="w-12 h-12 p-1.5" name="mdi:menu" />
 			</label>
 		</div>
 	</div>

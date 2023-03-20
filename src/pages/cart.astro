@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import { Sprite } from "astro-icon";
 
 import Layout from "../components/Layout.astro";
 
@@ -12,7 +12,7 @@ const cart = Array(0).fill(0);
 		{
 			cart.length === 0 && (
 				<div class="flex flex-col justify-center items-center">
-					<Icon class="w-32 h-32" pack="mdi" name="cart" />
+					<Sprite class="w-32 h-32" name="mdi:cart" />
 					<h1 class="text-3xl font-bold text-center">
 						Oops, your cart is empty! Go to
 						<a class="text-primary underline" href="/">

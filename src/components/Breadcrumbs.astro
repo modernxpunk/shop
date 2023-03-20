@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import { Sprite } from "astro-icon";
 
 let pathname: string = Astro.url.pathname;
 if (pathname.at(-1) === "/") {
@@ -49,7 +49,7 @@ const breadcrumbs = pathname.split("/").map((path: string) => {
 					return (
 						<li>
 							<a href={href}>
-								<Icon class="h-4 mr-1" pack="mdi" name={iconName} />
+								<Sprite class="w-4 h-4 mr-1" pack="mdi" name={iconName} />
 								{label}
 							</a>
 						</li>

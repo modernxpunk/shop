@@ -1,4 +1,6 @@
 ---
+import { Sprite } from "astro-icon";
+
 import Breadcrumbs from "./Breadcrumbs.astro";
 import DrawerSide from "./DrawerSide.astro";
 import Footer from "./Footer.astro";
@@ -32,18 +34,25 @@ if (pathname.at(-1) === "/") {
 		<title>Document</title>
 	</head>
 	<body>
-		<div class="drawer drawer-end">
-			<input id="my-drawer" type="checkbox" class="drawer-toggle rating" />
-			<div class="drawer-content overflow-hidden flex flex-col min-h-screen">
-				<Header />
-				<Breadcrumbs />
-				<main class="flex-1 pb-8">
-					<slot />
-				</main>
-				<Footer />
+		<Sprite.Provider>
+			<div class="drawer drawer-end">
+				<input id="my-drawer" type="checkbox" class="drawer-toggle rating" />
+				<div
+					class="drawer-content flex flex-col min-h-screen"
+					style={{
+						overflow: "overlay",
+					}}
+				>
+					<Header />
+					<Breadcrumbs />
+					<main class="flex-1 pb-8">
+						<slot />
+					</main>
+					<Footer />
+				</div>
+				<DrawerSide />
 			</div>
-			<DrawerSide />
-		</div>
+		</Sprite.Provider>
 	</body>
 	<ModalAccount />
 </html>
