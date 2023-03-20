@@ -8,7 +8,12 @@ import Layout from "../components/Layout.astro";
 		<div class="flex gap-12 flex-col md:flex-row">
 			<div class="flex-1 justify-center">
 				<div class="rounded-lg">
-					<img width="600" height="700" class="object-cover max-h-[700px] w-full rounded-[inherit]" src="https://fakeimg.pl/1000x1200/" />
+					<img
+						width="600"
+						height="700"
+						class="object-cover max-h-[700px] w-full rounded-[inherit]"
+						src="https://fakeimg.pl/1000x1200/"
+					/>
 				</div>
 				<div class="carousel carousel-center mt-4 gap-4">
 					{
@@ -17,7 +22,12 @@ import Layout from "../components/Layout.astro";
 							.map(() => {
 								return (
 									<div class="carousel-item rounded-lg">
-										<img width="600" height="700" class="object-cover max-h-[700px] w-full rounded-[inherit]" src="https://fakeimg.pl/300x200/" />
+										<img
+											width="600"
+											height="700"
+											class="object-cover max-h-[700px] w-full rounded-[inherit]"
+											src="https://fakeimg.pl/300x200/"
+										/>
 									</div>
 								);
 							})
@@ -38,7 +48,9 @@ import Layout from "../components/Layout.astro";
 						<div class="divider divider-horizontal mx-0"></div>
 						<div class="flex items-center gap-1">
 							<Icon class="h-4" pack="mdi" name="comment" />
-							<p class="flex opacity-60 text-sm whitespace-nowrap">4 comments</p>
+							<p class="flex opacity-60 text-sm whitespace-nowrap">
+								4 comments
+							</p>
 						</div>
 					</div>
 				</div>
@@ -52,32 +64,104 @@ import Layout from "../components/Layout.astro";
 					<span class="badge cursor-pointer">without microSD</span>
 				</div> -->
 				<p class="mt-2">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, repellat quam! Quidem iure architecto labore quas minus reiciendis!
-					Accusantium, doloremque labore quod consequuntur ipsam necessitatibus ipsum recusandae molestiae iste fugit?
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque,
+					repellat quam! Quidem iure architecto labore quas minus reiciendis!
+					Accusantium, doloremque labore quod consequuntur ipsam necessitatibus
+					ipsum recusandae molestiae iste fugit?
 				</p>
 				<div class="divider"></div>
 				<div class="flex flex-wrap gap-2 mt-4">
 					<div class="btn-group">
 						<input type="radio" name="x" data-title="red" class="btn btn-sm" />
-						<input type="radio" disabled name="x" data-title="white" class="btn btn-sm" />
+						<input
+							type="radio"
+							disabled
+							name="x"
+							data-title="white"
+							class="btn btn-sm"
+						/>
 					</div>
 					<div class="btn-group">
-						<input type="radio" name="colors" data-title="red" class="btn btn-sm" />
-						<input type="radio" disabled name="colors" data-title="white" class="btn btn-sm" />
-						<input type="radio" disabled name="colors" data-title="black" class="btn btn-sm" />
-						<input type="radio" name="colors" data-title="blue" class="btn btn-sm" />
+						<input
+							type="radio"
+							name="colors"
+							data-title="red"
+							class="btn btn-sm"
+						/>
+						<input
+							type="radio"
+							disabled
+							name="colors"
+							data-title="white"
+							class="btn btn-sm"
+						/>
+						<input
+							type="radio"
+							disabled
+							name="colors"
+							data-title="black"
+							class="btn btn-sm"
+						/>
+						<input
+							type="radio"
+							name="colors"
+							data-title="blue"
+							class="btn btn-sm"
+						/>
 					</div>
 					<div class="btn-group">
-						<input type="radio" name="options" data-title="16 gb" class="btn btn-sm" />
-						<input type="radio" name="options" data-title="32 gb" class="btn btn-sm" />
-						<input type="radio" disabled name="options" data-title="64 gb" class="btn btn-sm" />
-						<input type="radio" name="options" data-title="128 gb" class="btn btn-sm" />
+						<input
+							type="radio"
+							name="options"
+							data-title="16 gb"
+							class="btn btn-sm"
+						/>
+						<input
+							type="radio"
+							name="options"
+							data-title="32 gb"
+							class="btn btn-sm"
+						/>
+						<input
+							type="radio"
+							disabled
+							name="options"
+							data-title="64 gb"
+							class="btn btn-sm"
+						/>
+						<input
+							type="radio"
+							name="options"
+							data-title="128 gb"
+							class="btn btn-sm"
+						/>
 					</div>
 					<div class="btn-group">
-						<input type="radio" name="some" data-title="16 gb" class="btn btn-sm" />
-						<input type="radio" disabled name="some" data-title="32 gb" class="btn btn-sm" />
-						<input type="radio" name="some" data-title="64 gb" class="btn btn-sm" />
-						<input type="radio" name="some" data-title="128 gb" class="btn btn-sm" />
+						<input
+							type="radio"
+							name="some"
+							data-title="16 gb"
+							class="btn btn-sm"
+						/>
+						<input
+							type="radio"
+							disabled
+							name="some"
+							data-title="32 gb"
+							class="btn btn-sm"
+						/>
+						<input
+							type="radio"
+							name="some"
+							data-title="64 gb"
+							class="btn btn-sm"
+						/>
+						<input
+							type="radio"
+							name="some"
+							data-title="128 gb"
+							class="btn btn-sm"
+						/>
 					</div>
 				</div>
 				<div class="divider"></div>
@@ -111,10 +195,15 @@ import Layout from "../components/Layout.astro";
 													<div class="flex gap-2">
 														<Icon class="h-8" pack="mdi" name="cart" />
 														<div class="flex-1">
-															<h4 class="font-bold text-lg">asdfadf asdf as f</h4>
+															<h4 class="font-bold text-lg">
+																asdfadf asdf as f
+															</h4>
 															<p>
-																Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit alias quam vitae! Atque dicta dolor assumenda facere
-																inventore tenetur voluptatibus at temporibus ducimus, autem id porro voluptatum quam nesciunt reiciendis.
+																Lorem ipsum dolor, sit amet consectetur
+																adipisicing elit. Velit alias quam vitae! Atque
+																dicta dolor assumenda facere inventore tenetur
+																voluptatibus at temporibus ducimus, autem id
+																porro voluptatum quam nesciunt reiciendis.
 															</p>
 														</div>
 													</div>
@@ -135,11 +224,23 @@ import Layout from "../components/Layout.astro";
 						.fill(0)
 						.map(() => {
 							return (
-								<a href="/product" class="carousel-item flex flex-col bg-base-200 rounded-lg relative group">
+								<a
+									href="/product"
+									class="carousel-item flex flex-col bg-base-200 rounded-lg relative group"
+								>
 									<div class="indicator m-6 mb-0">
-										<Icon class="h-8 indicator-item absolute top-0 right-0 hidden group-hover:block cursor-pointer" pack="mdi" name="heart" />
+										<Icon
+											class="h-8 indicator-item absolute top-0 right-0 hidden group-hover:block cursor-pointer"
+											pack="mdi"
+											name="heart"
+										/>
 										<div class="flex justify-center items-center">
-											<img width="300" height="200" class="object-contain rounded-lg w-[300px] h-[200px] p-2" src="https://fakeimg.pl/1500x200/" />
+											<img
+												width="300"
+												height="200"
+												class="object-contain rounded-lg w-[300px] h-[200px] p-2"
+												src="https://fakeimg.pl/1500x200/"
+											/>
 										</div>
 									</div>
 									<div class="p-2">
@@ -148,11 +249,32 @@ import Layout from "../components/Layout.astro";
 										<div class="flex justify-between items-center">
 											<div class="flex items-center">
 												<div class="rating items-center">
-													<input type="radio" name="rating-1" class="mask mask-star" />
-													<input type="radio" name="rating-1" class="mask mask-star" checked />
-													<input type="radio" name="rating-1" class="mask mask-star" />
-													<input type="radio" name="rating-1" class="mask mask-star" />
-													<input type="radio" name="rating-1" class="mask mask-star" />
+													<input
+														type="radio"
+														name="rating-1"
+														class="mask mask-star"
+													/>
+													<input
+														type="radio"
+														name="rating-1"
+														class="mask mask-star"
+														checked
+													/>
+													<input
+														type="radio"
+														name="rating-1"
+														class="mask mask-star"
+													/>
+													<input
+														type="radio"
+														name="rating-1"
+														class="mask mask-star"
+													/>
+													<input
+														type="radio"
+														name="rating-1"
+														class="mask mask-star"
+													/>
 												</div>
 												<div class="flex items-center">
 													<p class="opacity-60 text-sm ml-1">103 view</p>

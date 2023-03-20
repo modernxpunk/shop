@@ -15,7 +15,10 @@ if (pathname.at(-1) === "/") {
 <html lang="en">
 	<head>
 		<script is:inline>
-			const theme = localStorage.getItem("theme") === null ? "light" : localStorage.getItem("theme");
+			const theme =
+				localStorage.getItem("theme") === null
+					? "light"
+					: localStorage.getItem("theme");
 			document.documentElement.setAttribute("data-theme", theme);
 		</script>
 		<script>
