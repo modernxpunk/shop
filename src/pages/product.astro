@@ -5,15 +5,18 @@ import Layout from "../components/Layout.astro";
 
 <Layout>
 	<div class="container">
-		<div class="mb-2">
-			<h1 class="text-5xl font-bold">Apple iPhone 14 Pro Max</h1>
+		<div
+			class="mb-2 flex gap-x-4 justify-between lg:items-end flex-col lg:flex-row"
+		>
+			<div>
+				<h1 class="text-5xl font-bold">Apple iPhone 14 Pro Max</h1>
+			</div>
 			<div class="rating mt-2">
-				<input type="radio" name="rating-1" class="mask mask-star" />
-				<input type="radio" name="rating-1" class="mask mask-star" checked />
-				<input type="radio" name="rating-1" class="mask mask-star" />
-				<input type="radio" name="rating-1" class="mask mask-star" />
-				<input type="radio" name="rating-1" class="mask mask-star" />
 				<div class="flex items-center">
+					<div class="flex items-center gap-1">
+						<Sprite class="w-4 h-4" name="mdi:star" />
+						<p class="flex opacity-60 text-sm whitespace-nowrap">3.8 / 5</p>
+					</div>
 					<div class="divider divider-horizontal mx-0"></div>
 					<div class="flex items-center gap-1">
 						<Sprite class="w-4 h-4" name="mdi:star" />
@@ -30,7 +33,7 @@ import Layout from "../components/Layout.astro";
 	</div>
 	<div class="bg-base-300 sticky top-16 z-10">
 		<div class="container py-2 my-4 mb-4 pb-0">
-			<div class="tabs">
+			<div class="tabs overflow-auto flex-nowrap">
 				<a class="tab tab-bordered tab-active">All</a>
 				<a class="tab tab-bordered">Сharacteristics</a>
 				<a class="tab tab-bordered">Reviews</a>
@@ -185,25 +188,26 @@ import Layout from "../components/Layout.astro";
 					</div>
 				</div>
 				<div class="divider"></div>
-				<p class="text-4xl font-bold">$29.59</p>
-				<div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2">
-					<button class="btn btn-sm btn-primary">
-						<Sprite class="w-6 h-6 p-0.5" name="mdi:cart" />
-						add to cart
-					</button>
-					<button class="btn btn-sm btn-primary">
-						<Sprite class="w-6 h-6 p-0.5" name="mdi:heart" />
-						add to wishlist
-					</button>
-					<button class="btn btn-sm btn-primary">
-						<Sprite class="w-6 h-6 p-0.5" name="mdi:compare-horizontal" />
-						add to compare
-					</button>
+				<div class="flex justify-between items-center">
+					<div>
+						<p class="text-4xl font-bold">$29.59</p>
+					</div>
+					<div class="flex gap-2">
+						<button class="btn btn-sm btn-primary">
+							<Sprite class="w-6 h-6 p-0.5" name="mdi:cart" />
+						</button>
+						<button class="btn btn-sm btn-primary">
+							<Sprite class="w-6 h-6 p-0.5" name="mdi:compare-horizontal" />
+						</button>
+						<button class="btn btn-sm btn-primary">
+							<Sprite class="w-6 h-6 p-0.5" name="mdi:heart" />
+						</button>
+					</div>
 				</div>
 				<div class="divider"></div>
 				<div class="flex flex-col gap-4">
 					{
-						Array(2)
+						Array(1)
 							.fill(0)
 							.map(() => {
 								return (
@@ -242,7 +246,7 @@ import Layout from "../components/Layout.astro";
 					<h3 class="text-4xl font-bold">Characteristics</h3>
 				</div>
 				<div
-					class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-4"
+					class="grid flex-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-4 bg-base-100 p-4 rounded-xl shadow-lg border border-base-200 relative"
 				>
 					{
 						Array(10)
@@ -262,9 +266,8 @@ import Layout from "../components/Layout.astro";
 												/>
 											</p>
 										</div>
-										<div class="flex-1">
+										<div class="flex-1 text-right">
 											<p>Apple</p>
-											<p>asdfasfdasdf</p>
 											<p>asdfasfdasdf</p>
 										</div>
 									</div>
@@ -489,75 +492,82 @@ import Layout from "../components/Layout.astro";
 		</div>
 		<div class="mt-4">
 			<h3 class="text-4xl font-bold">Popular Caterogies</h3>
-			<div class="carousel gap-4 mt-4">
-				{
-					Array(5)
-						.fill(0)
-						.map(() => {
-							return (
-								<a
-									href="/product"
-									class="carousel-item flex flex-col bg-base-200 rounded-lg relative group"
-								>
-									<div class="indicator m-6 mb-0">
-										<Sprite
-											class="w-8 h-8 indicator-item absolute top-0 right-0 hidden group-hover:block cursor-pointer"
-											pack="mdi"
-											name="heart"
-										/>
-										<div class="flex justify-center items-center">
-											<img
-												width="300"
-												height="200"
-												class="object-contain rounded-lg w-[300px] h-[200px] p-2"
-												src="https://fakeimg.pl/1500x200/"
+			<div class="relative">
+				<div class="carousel gap-4 mt-4">
+					{
+						Array(5)
+							.fill(0)
+							.map(() => {
+								return (
+									<a
+										href="/product"
+										class="carousel-item flex flex-col bg-base-200 rounded-lg relative group"
+									>
+										<div class="indicator m-6 mb-0">
+											<Sprite
+												class="w-8 h-8 indicator-item absolute top-0 right-0 hidden group-hover:block cursor-pointer"
+												pack="mdi"
+												name="heart"
 											/>
-										</div>
-									</div>
-									<div class="p-2">
-										<p class="opacity-60">Electronics</p>
-										<p class="font-bold">asdfiasdf kasd faisf</p>
-										<div class="flex justify-between items-center">
-											<div class="flex items-center">
-												<div class="rating items-center">
-													<input
-														type="radio"
-														name="rating-1"
-														class="mask mask-star"
-													/>
-													<input
-														type="radio"
-														name="rating-1"
-														class="mask mask-star"
-														checked
-													/>
-													<input
-														type="radio"
-														name="rating-1"
-														class="mask mask-star"
-													/>
-													<input
-														type="radio"
-														name="rating-1"
-														class="mask mask-star"
-													/>
-													<input
-														type="radio"
-														name="rating-1"
-														class="mask mask-star"
-													/>
-												</div>
-												<div class="flex items-center">
-													<p class="opacity-60 text-sm ml-1">103 view</p>
-												</div>
+											<div class="flex justify-center items-center">
+												<img
+													width="300"
+													height="200"
+													class="object-contain rounded-lg w-[292px] h-[200px] p-2"
+													src="https://fakeimg.pl/1500x200/"
+												/>
 											</div>
-											<p class="font-bold text-3xl">$29.49</p>
 										</div>
-									</div>
-								</a>
-							);
-						})
-				}
+										<div class="p-2">
+											<p class="opacity-60">Electronics</p>
+											<p class="font-bold">asdfiasdf kasd faisf</p>
+											<div class="flex justify-between items-center">
+												<div class="flex items-center">
+													<div class="rating items-center">
+														<input
+															type="radio"
+															name="rating-1"
+															class="mask mask-star"
+														/>
+														<input
+															type="radio"
+															name="rating-1"
+															class="mask mask-star"
+															checked
+														/>
+														<input
+															type="radio"
+															name="rating-1"
+															class="mask mask-star"
+														/>
+														<input
+															type="radio"
+															name="rating-1"
+															class="mask mask-star"
+														/>
+														<input
+															type="radio"
+															name="rating-1"
+															class="mask mask-star"
+														/>
+													</div>
+													<div class="flex items-center">
+														<p class="opacity-60 text-sm ml-1">103 view</p>
+													</div>
+												</div>
+												<p class="font-bold text-3xl">$29.49</p>
+											</div>
+										</div>
+									</a>
+								);
+							})
+					}
+				</div>
+				<div
+					class="flex justify-center items-center absolute top-0 bottom-0 right-4"
+				>
+					<label class="btn btn-circle">{">"}</label>
+				</div>
 			</div>
 		</div>
 	</div>

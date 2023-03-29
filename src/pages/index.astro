@@ -10,46 +10,59 @@ import Layout from "../components/Layout.astro";
 				{
 					Array(5)
 						.fill(0)
-						.map(() => {
+						.map((_, i) => {
 							return (
-								<div class="carousel-item grid grid-rows-3 grid-cols-6 gap-4 w-full [&>a]:bg-base-200 [&>a]:transition-shadow [&>a]:rounded-lg [&>a]:bg-red">
-									<a href="/product" class="row-span-1 col-span-2 ">
-										<img
-											class="w-full h-full object-cover rounded-[inherit]"
-											src="https://fakeimg.pl/300/"
-										/>
-									</a>
-									<a href="/product" class="row-span-1 col-span-2 ">
-										<img
-											class="w-full h-full object-cover rounded-[inherit]"
-											src="https://fakeimg.pl/300/"
-										/>
-									</a>
-									<a href="/product" class="row-span-2 col-span-2 ">
-										<img
-											class="w-full h-full object-cover rounded-[inherit]"
-											src="https://fakeimg.pl/300/"
-										/>
-									</a>
-									<a href="/product" class="row-span-1 col-span-4 ">
-										<img
-											class="w-full h-full object-cover rounded-[inherit]"
-											src="https://fakeimg.pl/300/"
-										/>
-									</a>
-									<a href="/product" class="row-span-1 col-span-2 ">
-										<img
-											class="w-full h-full object-cover rounded-[inherit]"
-											src="https://fakeimg.pl/300/"
-										/>
-									</a>
-									<a href="/product" class="row-span-1 col-span-4 ">
-										<img
-											class="w-full h-full object-cover rounded-[inherit]"
-											src="https://fakeimg.pl/300/"
-										/>
-									</a>
+								<div
+									id={`item${i}`}
+									class="carousel-item grid grid-rows-3 grid-cols-5 gap-4 w-11/12 [&>a]:bg-base-200 [&>a]:transition-shadow [&>a]:rounded-lg [&>a]:bg-red"
+								>
+									{[
+										[1, 2],
+										[1, 2],
+										[1, 3],
+										[2, 3],
+										[2, 3],
+										[2, 1],
+										[1, 1],
+										[2, 3],
+										[1, 1],
+									].map(([row, columm]) => {
+										return (
+											<a
+												href="/product"
+												class={`row-span-${row} block col-span-${columm} relative`}
+											>
+												<img
+													width="300"
+													height="300"
+													class="w-full h-full object-cover rounded-[inherit]"
+													src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
+												/>
+												<div class="absolute inset-0 flex w-full h-full px-4 py-2 rounded-[inherit] shadow-[inset_0px_-10px_50px_40px_rgba(0,0,0,0.5)]">
+													<div class="flex items-end flex-1">
+														<p class="font-bold text-3xl text-slate-100">
+															Hello world
+														</p>
+													</div>
+												</div>
+											</a>
+										);
+									})}
 								</div>
+							);
+						})
+				}
+			</div>
+			<div class="flex gap-2 justify-center mt-2">
+				{
+					Array(5)
+						.fill(0)
+						.map((_, i) => {
+							return (
+								<a
+									class="scroll bg-base-300 w-6 h-6 mask mask-circle"
+									href={`#item${i}`}
+								/>
 							);
 						})
 				}
