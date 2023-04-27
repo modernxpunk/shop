@@ -4,7 +4,7 @@ import { Sprite } from "astro-icon";
 const account = {
 	messages: Array(0).fill(0),
 };
-const cart = Array(0).fill(0);
+const cart = Array(3).fill(0);
 const wishlist = Array(5).fill(0);
 
 const languages = [
@@ -39,13 +39,11 @@ const languages = [
 				<input type="checkbox" data-toggle-theme="dark,light" />
 				<Sprite
 					class="w-16 h-8 swap btn btn-sm btn-ghost swap-on"
-					pack="mdi"
-					name="white-balance-sunny"
+					name="mdi:white-balance-sunny"
 				/>
 				<Sprite
 					class="w-16 h-8 swap btn btn-sm btn-ghost swap-off"
-					pack="mdi"
-					name="moon-waning-crescent"
+					name="mdi:moon-waning-crescent"
 				/>
 			</label>
 			<div class="dropdown dropdown-end flex items-center">
@@ -205,7 +203,7 @@ const languages = [
 				<label tabindex="0" class="indicator">
 					{
 						Boolean(cart.length) && (
-							<span class="indicator-item badge">{cart.length}</span>
+							<span class="indicator-item badge mt-1 mr-1">{cart.length}</span>
 						)
 					}
 					<div class="btn btn-ghost btn-circle">

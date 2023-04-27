@@ -6,7 +6,7 @@ import Layout from "../components/Layout.astro";
 <Layout>
 	<div class="container">
 		<div class="gap-2">
-			<div class="h-[700px] carousel carousel-center gap-4">
+			<div class="h-[600px] carousel carousel-center gap-4">
 				{
 					Array(5)
 						.fill(0)
@@ -186,35 +186,40 @@ import Layout from "../components/Layout.astro";
 						.map(() => {
 							return (
 								<div>
-									<h3 class="text-4xl font-bold">Popular Caterogies</h3>
-									<div class="carousel gap-4 mt-2 overflow-auto">
-										{Array(5)
+									<div class="flex gap-4 items-end justify-between">
+										<h3 class="text-4xl font-bold">Popular Caterogies</h3>
+										<button class="btn btn-sm btn-outline">View All</button>
+									</div>
+									<div class="grid grid-cols-item gap-4 mt-2">
+										{Array(4)
 											.fill(0)
 											.map(() => {
 												return (
 													<a
 														href="/product"
-														class="carousel-item flex flex-col bg-base-200 rounded-lg relative group"
+														class="flex flex-col bg-base-200 rounded-lg group overflow-hidden"
 													>
-														<div class="indicator m-6 mb-0">
+														<div class="flex flex-1 relative justify-center items-center m-4 mb-0">
 															<Sprite
-																class="h-8 indicator-item absolute top-0 right-0 hidden group-hover:block cursor-pointer"
+																class="w-8 h-8 hidden absolute -top-2 -right-2 group-hover:block cursor-pointer"
 																pack="mdi"
 																name="heart"
 															/>
-															<div class="flex justify-center items-center">
+															<div class="flex flex-1 h-[150px] justify-center items-center overflow-hidden rounded-lg">
 																<img
-																	width="300"
-																	height="200"
-																	class="object-contain rounded-lg w-[300px] h-[200px] p-2"
-																	src="https://fakeimg.pl/1500x200/"
+																	class="object-cover rounded-[inherit]"
+																	src="https://fakeimg.pl/100x100/"
 																/>
 															</div>
 														</div>
-														<div class="flex items-center p-4">
+														<div class="flex items-stretch p-4">
 															<div class="flex-1">
 																<p class="opacity-60">Electronics</p>
-																<p class="font-bold">asdfiasdf kasd faisf</p>
+																<p class="font-bold break-all">
+																	Lorem ipsum dolor sit amet, asd f adipisicing
+																	elit
+																</p>
+
 																<div class="flex items-center">
 																	<div class="rating items-center">
 																		<input
@@ -245,14 +250,14 @@ import Layout from "../components/Layout.astro";
 																		/>
 																	</div>
 																	<div class="flex items-center">
-																		<p class="opacity-60 text-sm ml-1">
+																		<p class="flex-1 opacity-60 text-sm ml-1">
 																			103 view
 																		</p>
 																	</div>
 																</div>
-															</div>
-															<div>
-																<p class="text-3xl font-bold">$29.59</p>
+																<div>
+																	<p class="text-3xl font-bold">$29.59</p>
+																</div>
 															</div>
 														</div>
 													</a>
