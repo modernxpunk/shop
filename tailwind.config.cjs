@@ -12,6 +12,9 @@ module.exports = {
 					DEFAULT: "1rem",
 				},
 			},
+			gridTemplateColumns: {
+				item: "repeat(auto-fill, minmax(300px, 1fr))",
+			},
 			extend: {
 				display: ["group-hover"],
 			},
