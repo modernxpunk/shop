@@ -1,31 +1,167 @@
 ---
 import { Sprite } from "astro-icon";
-
 import Layout from "../components/Layout.astro";
 
-const cart = Array(0).fill(0);
+const cart = Array(3).fill(0);
 ---
 
 <Layout>
 	<div class="container">
 		<h1 class="text-5xl font-bold">Cart</h1>
-		{
-			cart.length === 0 && (
-				<div class="flex flex-col justify-center items-center">
-					<Sprite class="w-32 h-32" name="mdi:cart" />
-					<h1 class="text-3xl font-bold text-center">
-						Oops, your cart is empty! Go to
-						<a class="text-primary underline" href="/">
-							shop
-						</a>
-					</h1>
+		<div class="flex flex-col lg:flex-row justify-between gap-8 mt-4">
+			<div class="flex flex-col gap-4 flex-1">
+				<div>
+					<h2 class="font-bold text-lg mb-2">Delivery Information</h2>
+					<div class="bg-base-200 rounded-lg p-4">
+						<form class="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-4">
+							{
+								Array(5)
+									.fill(0)
+									.map(() => {
+										return (
+											<div>
+												<label
+													class="opacity-70 text-sm font-bold"
+													for="password"
+												>
+													PASSWORD
+												</label>
+												<label class="input-group">
+													<span class="opacity-80 text-sm font-bold">
+														<Sprite class="w-6 h-6" name="mdi:account" />
+													</span>
+													<input
+														class="input input-bordered w-full"
+														type="password"
+													/>
+												</label>
+											</div>
+										);
+									})
+							}
+						</form>
+					</div>
 				</div>
-			)
-		}
-		{
-			cart.length !== 0 && (
-				<table class="table table-zebra w-full mt-6">asdf</table>
-			)
-		}
+				<div>
+					<h2 class="font-bold text-lg mb-2">Payment Method</h2>
+					<div
+						class="flex items-center justify-between flex-col sm:flex-row gap-4 bg-base-200 rounded-lg p-4"
+					>
+						<div class="flex items-center gap-2">
+							<label for="online_payment">Online Payment</label>
+							<input
+								id="online_payment"
+								type="radio"
+								class="radio"
+								name="payment_method"
+							/>
+						</div>
+						<div class="flex items-center gap-2">
+							<label for="cash_on_delivery">Cash on Delivery</label>
+							<input
+								id="cash_on_delivery"
+								type="radio"
+								class="radio"
+								name="payment_method"
+							/>
+						</div>
+						<div class="flex items-center gap-2">
+							<label for="POS_on_Delivery">POS on Delivery</label>
+							<input
+								id="POS_on_Delivery"
+								type="radio"
+								class="radio"
+								name="payment_method"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="flex-1">
+				{
+					cart.length === 0 && (
+						<div class="flex flex-col justify-center items-center">
+							<Sprite class="w-32 h-32" name="mdi:heart" />
+							<h1 class="text-3xl font-bold text-center">
+								Oops, your wishlist is empty! Go to
+								<a class="text-primary underline" href="/">
+									shop
+								</a>
+							</h1>
+						</div>
+					)
+				}
+				{
+					cart.length !== 0 && (
+						<div>
+							<h2 class="font-bold text-lg mb-2">Order Summary</h2>
+							<table class="table table-compact w-full overflow-hidden">
+								<thead>
+									<tr>
+										<th />
+										<th class="text-left">Name</th>
+										<th class="text-center">Quantity</th>
+										<th class="text-right">Price</th>
+									</tr>
+								</thead>
+								<tbody>
+									{cart.map(() => {
+										return (
+											<tr class="hover">
+												<th>
+													<div class="flex justify-center items-center">
+														<label class="cursor-pointer">✕</label>
+													</div>
+												</th>
+												<td>
+													<div class="flex items-center space-x-3">
+														<div class="avatar">
+															<div class="mask mask-squircle w-12 h-12">
+																<img
+																	src="https://fakeimg.pl/48x48/"
+																	alt="Avatar Tailwind CSS Component"
+																/>
+															</div>
+														</div>
+														<div class="flex-1">
+															<div class="font-bold">STANDOUT BACKPACK</div>
+															<div class="text-sm opacity-50">
+																BASEBALL PACK
+															</div>
+														</div>
+													</div>
+												</td>
+												<td>
+													<div class="flex justify-center gap-2">
+														<button class="btn btn-square btn-xs">-</button>
+														<input
+															class="input text-center input-xs bg-base-200 w-16"
+															type="text"
+															value="1"
+														/>
+														<button class="btn btn-square btn-xs">+</button>
+													</div>
+												</td>
+												<td>
+													<p class="font-bold text-3xl text-right">$12.59</p>
+												</td>
+											</tr>
+										);
+									})}
+								</tbody>
+							</table>
+							<div class="mt-4">
+								<hr />
+								<div class="flex justify-between items-center">
+									<p class="font-bold opacity-60">Total</p>
+									<p class="font-bold text-3xl">$120.49</p>
+								</div>
+							</div>
+							<button class="btn w-full mt-4">Confirm Order</button>
+						</div>
+					)
+				}
+			</div>
+		</div>
 	</div>
 </Layout>
