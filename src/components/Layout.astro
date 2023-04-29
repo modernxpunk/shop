@@ -52,6 +52,45 @@ if (pathname.at(-1) === "/") {
 				</div>
 				<DrawerSide />
 			</div>
+			<!-- <div class="btm-nav flex sm:hidden">
+				{
+					[
+						{
+							label: "Home",
+							isActive: true,
+							iconName: "home",
+							link: "/",
+						},
+						{
+							label: "Shop",
+							isActive: false,
+							iconName: "cart",
+							link: "/catalog",
+						},
+						{
+							label: "Compare",
+							isActive: false,
+							iconName: "scale-balance",
+							link: "/compare",
+						},
+						{
+							label: "Account",
+							isActive: false,
+							iconName: "account",
+							link: "",
+						},
+					].map(({ label, iconName, isActive, link }) => {
+						return (
+							<a href={link}>
+								<button class={isActive ? "active" : ""}>
+									<Sprite class="w-8 h-8 mx-auto" name={`mdi:${iconName}`} />
+									<span class="btm-nav-label">{label}</span>
+								</button>
+							</a>
+						);
+					})
+				}
+			</div> -->
 		</Sprite.Provider>
 	</body>
 	<ModalAccount />
