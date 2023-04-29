@@ -13,7 +13,7 @@ module.exports = {
 				},
 			},
 			gridTemplateColumns: {
-				item: "repeat(auto-fill, minmax(300px, 1fr))",
+				item: "repeat(auto-fill, minmax(280px, 1fr))",
 			},
 			extend: {
 				display: ["group-hover"],
