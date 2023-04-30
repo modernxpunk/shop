@@ -2,6 +2,7 @@
 import { Sprite } from "astro-icon";
 import Layout from "../components/Layout.astro";
 import { getRandomImgSrc } from "../utils/funcs";
+import Card from "../components/Card.astro";
 ---
 
 <Layout>
@@ -188,80 +189,14 @@ import { getRandomImgSrc } from "../utils/funcs";
 							return (
 								<div>
 									<div class="flex gap-4 items-end justify-between">
-										<h3 class="text-4xl font-bold">Popular Caterogies</h3>
+										<h3 class="text-4xl font-bold">Popular products</h3>
 										<button class="btn btn-sm btn-outline">View All</button>
 									</div>
 									<div class="grid grid-cols-item gap-4 mt-2">
 										{Array(4)
 											.fill(0)
 											.map(() => {
-												return (
-													<a
-														href="/product"
-														class="flex flex-col bg-base-200 rounded-lg group overflow-hidden"
-													>
-														<div class="flex flex-1 relative justify-center items-center m-2 mb-0">
-															<Sprite
-																class="w-8 h-8 hidden absolute top-0 right-0 group-hover:block cursor-pointer"
-																pack="mdi"
-																name="heart"
-															/>
-															<div class="flex flex-1 h-[150px] justify-center items-center overflow-hidden rounded-lg">
-																<img
-																	class="object-cover rounded-[inherit]"
-																	src={getRandomImgSrc()}
-																/>
-															</div>
-														</div>
-														<div class="flex items-stretch p-2">
-															<div class="flex-1">
-																<p class="opacity-60">Electronics</p>
-																<p class="font-bold break-all">
-																	Lorem ipsum dolor sit amet, asd f adipisicing
-																	elit
-																</p>
-																<div class="flex items-center">
-																	<div class="rating items-center">
-																		<input
-																			type="radio"
-																			name="rating-1"
-																			class="mask mask-star"
-																		/>
-																		<input
-																			type="radio"
-																			name="rating-1"
-																			class="mask mask-star"
-																			checked
-																		/>
-																		<input
-																			type="radio"
-																			name="rating-1"
-																			class="mask mask-star"
-																		/>
-																		<input
-																			type="radio"
-																			name="rating-1"
-																			class="mask mask-star"
-																		/>
-																		<input
-																			type="radio"
-																			name="rating-1"
-																			class="mask mask-star"
-																		/>
-																	</div>
-																	<div class="flex items-center">
-																		<p class="flex-1 opacity-60 text-sm ml-1">
-																			103 view
-																		</p>
-																	</div>
-																</div>
-																<div>
-																	<p class="text-3xl font-bold">$29.59</p>
-																</div>
-															</div>
-														</div>
-													</a>
-												);
+												return <Card />;
 											})}
 									</div>
 								</div>

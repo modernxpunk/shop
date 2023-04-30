@@ -2,6 +2,7 @@
 import { Sprite } from "astro-icon";
 import Layout from "../components/Layout.astro";
 import { getRandomImgSrc } from "../utils/funcs";
+import Card from "../components/Card.astro";
 
 const products = Array(9).fill(0);
 ---
@@ -62,6 +63,7 @@ const products = Array(9).fill(0);
 					</div>
 				</div>
 				<div class="collapse collapse-arrow">
+					<input type="checkbox" class="peer" />
 					<div class="collapse-title">Rank</div>
 					<div class="collapse-content">
 						<div class="flex flex-col gap-4">
@@ -81,7 +83,7 @@ const products = Array(9).fill(0);
 																	type="radio"
 																	name={`rating-${20 * i + 1 + j}as`}
 																	class="mask mask-star"
-																	checked={i <= j}
+																	checked={4 - i <= j}
 																/>
 															);
 														})}
@@ -97,12 +99,12 @@ const products = Array(9).fill(0);
 		</div>
 		<div class="flex-1 rounded-box">
 			<div class="flex justify-between items-center">
-				<h1 class="text-2xl font-bold">
+				<h1 class="text-[2.5rem] font-bold">
 					Catalog
 					<span class="text-sm opacity-60">({products.length})</span>
 				</h1>
 				<div class="flex justify-end gap-2 items-center">
-					<div class="btn-group hidden sm:inline-flex">
+					<div class="btn-group hidden md:inline-flex">
 						<button class="btn btn-sm btn-active">
 							<Sprite class="w-4 h-4" name="mdi:dots-grid" />
 						</button>
@@ -110,7 +112,9 @@ const products = Array(9).fill(0);
 							<Sprite class="w-4 h-4" name="mdi:menu" />
 						</button>
 					</div>
-					<select class="select select-sm select-bordered max-w-xs">
+					<select
+						class="select select-sm select-bordered max-w-xs hidden md:inline-flex"
+					>
 						<option disabled selected>Sort by</option>
 						<option>Popular</option>
 						<option>Rank</option>
@@ -118,77 +122,31 @@ const products = Array(9).fill(0);
 				</div>
 			</div>
 			<div>
-				<div class="grid grid-cols-item gap-4 mt-4">
-					{
-						products.map((_, i) => {
-							return (
-								<a
-									href="/product"
-									class="flex flex-col bg-base-300 rounded-lg group overflow-hidden"
-								>
-									<div class="flex flex-1 relative justify-center items-center m-2 mb-0">
-										<Sprite
-											class="w-8 h-8 hidden absolute top-0 right-0 group-hover:block cursor-pointer"
-											pack="mdi"
-											name="heart"
-										/>
-										<div class="flex flex-1 h-[150px] justify-center items-center overflow-hidden rounded-lg">
-											<img
-												class="object-cover rounded-[inherit]"
-												src={getRandomImgSrc()}
-											/>
-										</div>
-									</div>
-									<div class="flex items-stretch p-2">
-										<div class="flex-1">
-											<p class="opacity-60">Electronics</p>
-											<p class="font-bold break-all">
-												Lorem ipsum dolor sit amet, asd f adipisicing elit
-											</p>
-											<div class="flex items-center">
-												<div class="rating items-center">
-													<input
-														type="radio"
-														name={"rating-" + i}
-														class="mask mask-star"
-													/>
-													<input
-														type="radio"
-														name={"rating-" + i}
-														class="mask mask-star"
-													/>
-													<input
-														type="radio"
-														name={"rating-" + i}
-														class="mask mask-star"
-														checked
-													/>
-													<input
-														type="radio"
-														name={"rating-" + i}
-														class="mask mask-star"
-													/>
-													<input
-														type="radio"
-														name={"rating-" + i}
-														class="mask mask-star"
-													/>
-												</div>
-												<div class="flex items-center">
-													<p class="flex-1 opacity-60 text-sm ml-1">103 view</p>
-												</div>
-											</div>
-											<div>
-												<p class="text-3xl font-bold">$29.59</p>
-											</div>
-										</div>
-									</div>
-								</a>
-							);
-						})
-					}
+				<div class="grid grid-cols-item gap-4">
+					{products.map((_, i) => <Card />)}
 				</div>
 			</div>
 		</div>
 	</div>
+	<div class="btm-nav flex gap-4 md:hidden">
+		<button class="ml-4">
+			<span class="btm-nav-label btn w-full">Sort</span>
+		</button>
+		<button class="mr-4">
+			<span class="btm-nav-label btn w-full">Filters</span>
+		</button>
+	</div>
 </Layout>
+
+<!-- <input id="sort" type="checkbox" class="drawer-toggle" />
+<div class="drawer-content">
+	<label for="sort" class="btn btn-primary drawer-button">Open drawer</label>
+</div>
+
+<div class="drawer-side">
+	<label for="my-drawer" class="drawer-overlay"></label>
+	<ul class="menu p-4 w-80 bg-base-100 text-base-content">
+		<li><a>Sidebar Item 1</a></li>
+		<li><a>Sidebar Item 2</a></li>
+	</ul>
+</div> -->
