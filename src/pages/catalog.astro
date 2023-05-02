@@ -1,7 +1,6 @@
 ---
 import { Sprite } from "astro-icon";
 import Layout from "../components/Layout.astro";
-import { getRandomImgSrc } from "../utils/funcs";
 import Card from "../components/Card.astro";
 
 const products = Array(9).fill(0);
@@ -123,7 +122,7 @@ const products = Array(9).fill(0);
 			</div>
 			<div>
 				<div class="grid grid-cols-item gap-4">
-					{products.map((_, i) => <Card />)}
+					{products.map((_) => <Card />)}
 				</div>
 			</div>
 		</div>
