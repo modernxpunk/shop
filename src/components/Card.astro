@@ -5,15 +5,21 @@ import { getRandomImgSrc } from "../utils/funcs";
 
 <a
 	href="/product"
-	class="flex flex-col shadow-lg transition-shadow hover:shadow-xl rounded-lg overflow-hidden"
+	class="flex flex-col shadow-lg transition-shadow group hover:shadow-xl rounded-lg overflow-hidden"
 >
 	<div class="flex flex-1 relative justify-center items-center m-2 mb-0">
-		<div class="flex absolute top-0 right-0">
+		<div
+			class="hidden group-hover:flex justify-end animate-appear absolute top-0 left-0 right-0"
+		>
 			<div class="btn btn-md btn-circle btn-ghost">
-				<Sprite class="w-8 h-8" pack="mdi" name="cards-heart-outline" />
+				<Sprite
+					class="w-8 h-8 text-slate-700"
+					pack="mdi"
+					name="cards-heart-outline"
+				/>
 			</div>
 			<div class="btn btn-md btn-circle btn-ghost">
-				<Sprite class="w-8 h-8" pack="mdi" name="cart-outline" />
+				<Sprite class="w-8 h-8 text-slate-700" pack="mdi" name="cart-outline" />
 			</div>
 		</div>
 		<div
