@@ -18,11 +18,11 @@ module.exports = {
 			extend: {
 				display: ["group-hover"],
 				animation: {
-					appear: "appear 0.3s linear",
+					appear: "appear 0.4s linear",
 				},
 				keyframes: {
 					appear: {
-						"0%": { transform: "scale(0.8)", opacity: "0.5" },
+						"0%": { transform: "scale(0.7)", opacity: "0.5" },
 						"100%": { transform: "scale(1)", opacity: "1" },
 					},
 				},
