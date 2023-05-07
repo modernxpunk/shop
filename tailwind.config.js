@@ -34,10 +34,6 @@ module.exports = {
 					"100%": { opacity: "scale(1)" },
 				},
 			},
-			// fontFamily: {
-			// 	sans: ["var(--font-roboto)", ...fontFamily.sans],
-			// 	title: ["var(--font-montserrat)", ...fontFamily.serif],
-			// },
 		},
 	},
 	variants: {
