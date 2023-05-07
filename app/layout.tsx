@@ -1,8 +1,10 @@
-import { cx } from "class-variance-authority";
 import React from "react";
-import Layout from "src/components/common/Layout";
+import Header from "src/components/Header";
 import "src/styles/globals.css";
-import { fontsVariables } from "src/utils/config";
+import ModalAccount from "src/components/ModalAccount";
+import Breadcrumbs from "../src/components/Breadcrumbs";
+import Footer from "src/components/Footer";
+import DrawerSide from "src/components/DrawerSide";
 
 export default function RootLayout({
 	children,
@@ -10,12 +12,32 @@ export default function RootLayout({
 	children: React.ReactElement;
 }) {
 	return (
-		<html
-			lang="en"
-			className={cx(fontsVariables.map((fontVariable: string) => fontVariable))}
-		>
+		<html lang="en">
+			<head>
+				<meta name="theme-color" content="#2a303c" />
+				<title>Document</title>
+			</head>
 			<body>
-				<Layout>{children}</Layout>
+				<div className="drawer drawer-end">
+					<input
+						id="my-drawer"
+						type="checkbox"
+						className="drawer-toggle rating"
+					/>
+					<div
+						className="flex flex-col min-h-screen drawer-content"
+						style={{
+							overflow: "overlay",
+						}}
+					>
+						<Header />
+						<Breadcrumbs />
+						<main className="flex-1 pb-8">{children}</main>
+						<Footer />
+					</div>
+					<DrawerSide />
+				</div>
+				<ModalAccount />
 			</body>
 		</html>
 	);
