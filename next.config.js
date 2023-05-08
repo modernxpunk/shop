@@ -5,6 +5,7 @@ const nextConfig = {
 	swcMinify: true,
 	experimental: {
 		appDir: true,
+		serverActions: true,
 	},
 	images: {
 		domains: ["fakeimg.pl"],

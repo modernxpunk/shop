@@ -26,12 +26,6 @@ module.exports = {
 			animation: {
 				appear: "appear 0.4s linear",
 			},
-			keyframes: {
-				appear: {
-					"0%": { transform: "scale(0.7)" },
-					"100%": { opacity: "scale(1)" },
-				},
-			},
 		},
 	},
 	variants: {
