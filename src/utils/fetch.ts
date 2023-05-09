@@ -29,8 +29,35 @@ export const getProducts = () => {
 		});
 };
 
+export const getProduct = () => {
+	return {
+		rate: 3.8,
+		rated: 54,
+		commented: 4,
+		poster: getRandomImgSrc(),
+		tags: [
+			"Smartphone",
+			"Wi-Fi 6",
+			"LTPO",
+			"FaceID",
+			"2022",
+			"without microSD",
+		],
+		isInStock: true,
+		carousel: Array(5)
+			.fill(0x00)
+			.map(() => getRandomImgSrc()),
+		name: "Apple iPhone 14 Pro Max",
+		price: 29.59,
+		desc: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum,
+		dolorem eveniet dolore laboriosam minima magni suscipit
+		quibusdam nobis iure quidem veniam architecto pariatur ea
+		tenetur adipisci laudantium. Necessitatibus, ipsum quod?`,
+	};
+};
+
 export const getCatalogs = () => {
-	return Array(5)
+	return Array(20)
 		.fill(0)
 		.map(() => {
 			return {

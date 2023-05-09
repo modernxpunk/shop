@@ -1,37 +1,38 @@
 import Image from "next/image";
 import Card from "src/components/Card";
 import Icon from "src/components/Icon";
-import { getProducts } from "src/utils/fetch";
+import { getProduct, getProducts } from "src/utils/fetch";
 
 const Product = () => {
+	const product = getProduct();
 	const products = getProducts();
 	return (
 		<>
 			<div className="container">
 				<div className="flex flex-col justify-between mb-2 gap-x-4 lg:items-end lg:flex-row">
 					<div>
-						<h1 className="text-5xl font-bold">Apple iPhone 14 Pro Max</h1>
+						<h1 className="text-5xl font-bold">{product.name}</h1>
 					</div>
 					<div className="mt-2 rating">
 						<div className="flex items-center">
 							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4 fill-current" name="star" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
-									3.8 / 5
+									{product.rate} / 5
 								</p>
 							</div>
 							<div className="mx-0 divider divider-horizontal"></div>
 							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4 fill-current" name="star" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
-									54 rated
+									{product.rated} rated
 								</p>
 							</div>
 							<div className="mx-0 divider divider-horizontal"></div>
 							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4 fill-current" name="comment" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
-									4 comments
+									{product.commented} comments
 								</p>
 							</div>
 						</div>
@@ -58,55 +59,48 @@ const Product = () => {
 								<Image
 									width="600"
 									height="700"
-									className="object-cover max-h-[700px] w-full rounded-[inherit]"
-									src="https://fakeimg.pl/1000x1200/"
+									className="object-cover h-[560px] w-full rounded-[inherit]"
+									src={product.poster}
 									alt={""}
 								/>
 							</div>
 							<div className="gap-4 mt-4 carousel carousel-center">
-								{Array(10)
-									.fill(0)
-									.map((_, i) => {
-										return (
-											<div key={i} className="rounded-lg carousel-item">
-												<Image
-													width="600"
-													height="700"
-													className="object-cover max-h-[700px] w-full rounded-[inherit]"
-													src="https://fakeimg.pl/300x200/"
-													alt={""}
-												/>
-											</div>
-										);
-									})}
+								{product.carousel.map((imgSrc, i) => {
+									return (
+										<div key={i} className="rounded-lg carousel-item">
+											<Image
+												width="600"
+												height="700"
+												className="object-cover h-[180px] w-full rounded-[inherit]"
+												src={imgSrc}
+												alt={""}
+											/>
+										</div>
+									);
+								})}
 							</div>
 						</div>
 					</div>
 					<div className="flex-1">
 						<div>
 							<span className="cursor-pointer badge badge-success">
-								in stock
+								{product.isInStock ? "in stock" : "not in stock"}
 							</span>
-							<span className="cursor-pointer badge">Smartphone</span>
-							<span className="cursor-pointer badge">Wi-Fi 6</span>
-							<span className="cursor-pointer badge">LTPO</span>
-							<span className="cursor-pointer badge">FaceID</span>
-							<span className="cursor-pointer badge">2022</span>
-							<span className="cursor-pointer badge">without microSD</span>
+							{product.tags.map((tag) => {
+								return (
+									<span key={tag} className="cursor-pointer badge">
+										{tag}
+									</span>
+								);
+							})}
 						</div>
 						<div className="mt-2">
-							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum,
-								dolorem eveniet dolore laboriosam minima magni suscipit
-								quibusdam nobis iure quidem veniam architecto pariatur ea
-								tenetur adipisci laudantium. Necessitatibus, ipsum quod?
-							</p>
+							<p>{product.desc}</p>
 						</div>
-
 						<div className="divider"></div>
 						<div className="flex items-center justify-between">
 							<div>
-								<p className="text-4xl font-bold">$29.59</p>
+								<p className="text-4xl font-bold">${product.price}</p>
 							</div>
 							<div className="flex gap-2">
 								<button className="btn btn-sm btn-primary">
