@@ -26,7 +26,7 @@ const DrawerSide = () => {
 					return (
 						<li key={item.label}>
 							<a className="font-bold" href={item.href}>
-								<Icon className="w-8 h-8" name={item.iconName} />
+								<Icon className="w-8 h-8 fill-current" name={item.iconName} />
 								{item.label}
 							</a>
 						</li>

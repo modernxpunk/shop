@@ -56,8 +56,8 @@ const Footer = () => {
 					</div>
 					<div className="md:place-self-center md:justify-self-end">
 						<div className="flex gap-4">
-							<Icon className="w-6 h-6" name="facebook" />
-							<Icon className="w-6 h-6" name="instagram" />
+							<Icon className="w-6 h-6 fill-current" name="facebook" />
+							<Icon className="w-6 h-6 fill-current" name="instagram" />
 						</div>
 					</div>
 				</div>

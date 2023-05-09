@@ -56,7 +56,7 @@ const Breadcrumbs = () => {
 						return (
 							<li key={href}>
 								<a href={href}>
-									<Icon className="w-4 h-4 mr-1" name={iconName} />
+									<Icon className="w-4 h-4 mr-1 fill-current" name={iconName} />
 									{label}
 								</a>
 							</li>

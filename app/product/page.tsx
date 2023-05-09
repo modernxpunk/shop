@@ -15,21 +15,21 @@ const Product = () => {
 					<div className="mt-2 rating">
 						<div className="flex items-center">
 							<div className="flex items-center gap-1">
-								<Icon className="w-4 h-4" name="star" />
+								<Icon className="w-4 h-4 fill-current" name="star" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
 									3.8 / 5
 								</p>
 							</div>
 							<div className="mx-0 divider divider-horizontal"></div>
 							<div className="flex items-center gap-1">
-								<Icon className="w-4 h-4" name="star" />
+								<Icon className="w-4 h-4 fill-current" name="star" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
 									54 rated
 								</p>
 							</div>
 							<div className="mx-0 divider divider-horizontal"></div>
 							<div className="flex items-center gap-1">
-								<Icon className="w-4 h-4" name="comment" />
+								<Icon className="w-4 h-4 fill-current" name="comment" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
 									4 comments
 								</p>
@@ -110,22 +110,16 @@ const Product = () => {
 							</div>
 							<div className="flex gap-2">
 								<button className="btn btn-sm btn-primary">
-									<Icon
-										className="w-6 h-6 p-0.5 fill-white dark:fill-black"
-										name="cart"
-									/>
+									<Icon className="w-6 h-6 p-0.5 fill-current" name="cart" />
 								</button>
 								<button className="btn btn-sm btn-primary">
 									<Icon
-										className="w-6 h-6 p-0.5 fill-white dark:fill-black"
+										className="w-6 h-6 p-0.5 fill-current"
 										name="compare-horizontal"
 									/>
 								</button>
 								<button className="btn btn-sm btn-primary">
-									<Icon
-										className="w-6 h-6 p-0.5 fill-white dark:fill-black"
-										name="heart"
-									/>
+									<Icon className="w-6 h-6 p-0.5 fill-current" name="heart" />
 								</button>
 							</div>
 						</div>
@@ -144,7 +138,10 @@ const Product = () => {
 												.map((_, j) => {
 													return (
 														<div className="flex gap-2" key={j}>
-															<Icon className="w-8 h-8" name="cart" />
+															<Icon
+																className="w-8 h-8 fill-current"
+																name="cart"
+															/>
 															<div className="flex-1">
 																<h4 className="text-lg font-bold">
 																	asdfadf asdf as f
@@ -185,7 +182,7 @@ const Product = () => {
 												>
 													<span className="font-bold">Brand:</span>
 													<Icon
-														className="w-4 h-4 opacity-60"
+														className="w-4 h-4 fill-current opacity-60"
 														name="help-circle"
 													/>
 												</p>
@@ -215,7 +212,7 @@ const Product = () => {
 										<label tabIndex={0} className="btn btn-sm btn-outline">
 											category
 											<Icon
-												className="w-6 h-6 opacity-60"
+												className="w-6 h-6 fill-current opacity-60"
 												name="chevron-down"
 											/>
 										</label>
@@ -272,14 +269,17 @@ const Product = () => {
 											</div>
 											<div className="flex items-center">
 												<div className="flex items-center gap-1">
-													<Icon className="w-4 h-4" name="star" />
+													<Icon className="w-4 h-4 fill-current" name="star" />
 													<p className="flex text-sm opacity-60 whitespace-nowrap">
 														54 rated
 													</p>
 												</div>
 												<div className="mx-0 divider divider-horizontal"></div>
 												<div className="flex items-center gap-1">
-													<Icon className="w-4 h-4" name="comment" />
+													<Icon
+														className="w-4 h-4 fill-current"
+														name="comment"
+													/>
 													<p className="flex text-sm opacity-60 whitespace-nowrap">
 														4 comments
 													</p>
@@ -391,7 +391,10 @@ const Product = () => {
 														</div>
 														<div className="flex justify-end flex-1">
 															<div>
-																<Icon className="w-8 h-8" name="reply" />
+																<Icon
+																	className="w-8 h-8 fill-current"
+																	name="reply"
+																/>
 															</div>
 														</div>
 													</div>

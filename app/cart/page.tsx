@@ -27,7 +27,10 @@ const Cart = () => {
 												</label>
 												<label className="input-group">
 													<span className="text-sm font-bold opacity-80">
-														<Icon className="w-6 h-6" name="account" />
+														<Icon
+															className="w-6 h-6 fill-current"
+															name="account"
+														/>
 													</span>
 													<input
 														className="w-full input input-bordered"
@@ -76,7 +79,7 @@ const Cart = () => {
 				<div className="flex-1">
 					{cart.length === 0 && (
 						<div className="flex flex-col items-center justify-center">
-							<Icon className="w-32 h-32" name="heart" />
+							<Icon className="w-32 h-32 fill-current" name="heart" />
 							<h1 className="text-3xl font-bold text-center">
 								Oops, your wishlist is empty! Go to
 								<a className="underline text-primary" href="/">

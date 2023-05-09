@@ -108,16 +108,10 @@ const Catalog = () => {
 						<div className="flex items-center justify-end gap-2">
 							<div className="hidden btn-group md:inline-flex">
 								<button className="btn btn-sm btn-active">
-									<Icon
-										className="w-4 h-4 fill-white dark:fill-black"
-										name="dots-grid"
-									/>
+									<Icon className="w-4 h-4 fill-current" name="dots-grid" />
 								</button>
 								<button className="btn btn-sm">
-									<Icon
-										className="w-4 h-4 fill-white dark:fill-black"
-										name="menu"
-									/>
+									<Icon className="w-4 h-4 fill-current" name="menu" />
 								</button>
 							</div>
 							<select className="hidden max-w-xs select select-sm select-bordered md:inline-flex">

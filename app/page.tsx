@@ -22,7 +22,7 @@ const Home = () => {
 							return (
 								<li key={i}>
 									<a href="#">
-										<Icon className="w-4 h-4" name="controller" />
+										<Icon className="w-4 h-4 fill-current" name="controller" />
 										<p>{catalog.name}</p>
 									</a>
 								</li>

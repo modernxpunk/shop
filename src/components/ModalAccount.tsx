@@ -25,7 +25,7 @@ const ModalAccount = () => {
 								</label>
 								<label className="input-group">
 									<span className="opacity-80">
-										<Icon className="w-6 h-6" name="account" />
+										<Icon className="w-6 h-6 fill-current" name="account" />
 									</span>
 									<input className="w-full input input-bordered" type="text" />
 								</label>
@@ -39,7 +39,7 @@ const ModalAccount = () => {
 								</label>
 								<label className="input-group">
 									<span className="text-sm font-bold opacity-80">
-										<Icon className="w-6 h-6" name="account" />
+										<Icon className="w-6 h-6 fill-current" name="account" />
 									</span>
 									<input
 										className="w-full input input-bordered"
@@ -63,7 +63,7 @@ const ModalAccount = () => {
 						/>
 						<div className="divider">or</div>
 						<button className="w-full gap-2 btn btn-outline">
-							<Icon className="w-6 h-6" name="account" />
+							<Icon className="w-6 h-6 fill-current" name="account" />
 							Continue with Google
 						</button>
 					</form>

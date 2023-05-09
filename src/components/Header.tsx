@@ -36,7 +36,7 @@ const Header = () => {
 				<nav className="container flex items-center justify-between gap-4 py-2">
 					<a href="/">
 						<Icon
-							className="w-16 h-8 btn btn-sm btn-primary fill-white dark:fill-black"
+							className="w-16 h-8 fill-current btn btn-sm btn-primary"
 							name="skull"
 						/>
 					</a>
@@ -45,11 +45,11 @@ const Header = () => {
 							<input type="checkbox" data-toggle-theme="dark,light" />
 							<Icon
 								name="white-balance-sunny"
-								className="w-16 h-8 swap btn btn-sm btn-ghost swap-on dark:fill-white"
+								className="w-16 h-8 fill-current swap btn btn-sm btn-ghost swap-on"
 							/>
 							<Icon
 								name="moon-waning-crescent"
-								className="w-16 h-8 swap btn btn-sm btn-ghost swap-off dark:fill-white"
+								className="w-16 h-8 fill-current swap btn btn-sm btn-ghost swap-off"
 							/>
 						</label>
 						<div className="flex items-center dropdown dropdown-end">
@@ -91,7 +91,7 @@ const Header = () => {
 					<div className="flex flex-1">
 						<label className="input-group">
 							<span className="border-r-2 border-r-base-200">
-								<Icon name="magnify" className="w-6 h-6 fill-black" />
+								<Icon name="magnify" className="w-6 h-6 fill-current" />
 							</span>
 							<input
 								type="text"
@@ -114,7 +114,7 @@ const Header = () => {
 								<div className="btn btn-ghost btn-circle">
 									<Icon
 										name="account"
-										className="w-12 h-12 p-1.5 fill-black dark:fill-white"
+										className="w-12 h-12 p-1.5 fill-current"
 									/>
 								</div>
 							</label>
@@ -127,10 +127,7 @@ const Header = () => {
 									</span>
 								)}
 								<div className="btn btn-ghost btn-circle">
-									<Icon
-										name="heart"
-										className="w-12 h-12 p-1.5 fill-black dark:fill-white"
-									/>
+									<Icon name="heart" className="w-12 h-12 p-1.5 fill-current" />
 								</div>
 								<div
 									tabIndex={0}
@@ -224,10 +221,7 @@ const Header = () => {
 									</span>
 								)}
 								<div className="btn btn-ghost btn-circle">
-									<Icon
-										name="cart"
-										className="w-12 h-12 p-1.5 fill-black dark:fill-white"
-									/>
+									<Icon name="cart" className="w-12 h-12 p-1.5 fill-current" />
 								</div>
 								<div
 									tabIndex={0}
@@ -318,10 +312,7 @@ const Header = () => {
 					</div>
 					<div className="flex items-center sm:hidden">
 						<label htmlFor="my-drawer" className="btn btn-circle">
-							<Icon
-								name="menu"
-								className="w-12 h-12 p-1.5 fill-white dark:fill-black"
-							/>
+							<Icon name="menu" className="w-12 h-12 p-1.5 fill-current" />
 						</label>
 					</div>
 				</div>
