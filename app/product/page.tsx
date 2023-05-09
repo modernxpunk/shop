@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Card from "src/components/Card";
 import Icon from "src/components/Icon";
+import { getProducts } from "src/utils/fetch";
 
 const Product = () => {
+	const products = getProducts();
 	return (
 		<>
 			<div className="container">
@@ -14,7 +16,6 @@ const Product = () => {
 						<div className="flex items-center">
 							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4" name="star" />
-								{/* <Sprite class="w-4 h-4" name="mdi:star" /> */}
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
 									3.8 / 5
 								</p>
@@ -22,8 +23,6 @@ const Product = () => {
 							<div className="mx-0 divider divider-horizontal"></div>
 							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4" name="star" />
-
-								{/* <Sprite class="w-4 h-4" name="mdi:star" /> */}
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
 									54 rated
 								</p>
@@ -31,8 +30,6 @@ const Product = () => {
 							<div className="mx-0 divider divider-horizontal"></div>
 							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4" name="comment" />
-
-								{/* <Sprite class="w-4 h-4" name="mdi:comment" /> */}
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
 									4 comments
 								</p>
@@ -117,24 +114,18 @@ const Product = () => {
 										className="w-6 h-6 p-0.5 fill-white dark:fill-black"
 										name="cart"
 									/>
-
-									{/* <Sprite class="w-6 h-6 p-0.5" name="mdi:cart" /> */}
 								</button>
 								<button className="btn btn-sm btn-primary">
 									<Icon
 										className="w-6 h-6 p-0.5 fill-white dark:fill-black"
 										name="compare-horizontal"
 									/>
-
-									{/* <Sprite class="w-6 h-6 p-0.5" name="mdi:compare-horizontal" /> */}
 								</button>
 								<button className="btn btn-sm btn-primary">
 									<Icon
 										className="w-6 h-6 p-0.5 fill-white dark:fill-black"
 										name="heart"
 									/>
-
-									{/* <Sprite class="w-6 h-6 p-0.5" name="mdi:heart" /> */}
 								</button>
 							</div>
 						</div>
@@ -154,7 +145,6 @@ const Product = () => {
 													return (
 														<div className="flex gap-2" key={j}>
 															<Icon className="w-8 h-8" name="cart" />
-															{/* <Sprite class="w-8 h-8" name="mdi:cart" /> */}
 															<div className="flex-1">
 																<h4 className="text-lg font-bold">
 																	asdfadf asdf as f
@@ -198,10 +188,6 @@ const Product = () => {
 														className="w-4 h-4 opacity-60"
 														name="help-circle"
 													/>
-													{/* <Sprite
-														class="w-4 h-4 opacity-60"
-														name="mdi:help-circle"
-													/> */}
 												</p>
 											</div>
 											<div className="flex-1 text-right">
@@ -232,10 +218,6 @@ const Product = () => {
 												className="w-6 h-6 opacity-60"
 												name="chevron-down"
 											/>
-											{/* <Sprite
-												class="w-6 h-6 opacity-60"
-												name="mdi:expand-more"
-											/> */}
 										</label>
 										<ul
 											tabIndex={0}
@@ -291,7 +273,6 @@ const Product = () => {
 											<div className="flex items-center">
 												<div className="flex items-center gap-1">
 													<Icon className="w-4 h-4" name="star" />
-													{/* <Sprite class="w-4 h-4" name="mdi:star" /> */}
 													<p className="flex text-sm opacity-60 whitespace-nowrap">
 														54 rated
 													</p>
@@ -299,7 +280,6 @@ const Product = () => {
 												<div className="mx-0 divider divider-horizontal"></div>
 												<div className="flex items-center gap-1">
 													<Icon className="w-4 h-4" name="comment" />
-													{/* <Sprite class="w-4 h-4" name="mdi:comment" /> */}
 													<p className="flex text-sm opacity-60 whitespace-nowrap">
 														4 comments
 													</p>
@@ -412,8 +392,6 @@ const Product = () => {
 														<div className="flex justify-end flex-1">
 															<div>
 																<Icon className="w-8 h-8" name="reply" />
-
-																{/* <Sprite class="w-8 h-8" name="mdi:reply" /> */}
 															</div>
 														</div>
 													</div>
@@ -443,11 +421,9 @@ const Product = () => {
 				<div className="mt-4">
 					<h3 className="text-4xl font-bold">Popular products</h3>
 					<div className="grid gap-4 mt-4 grid-cols-item">
-						{Array(4)
-							.fill(0)
-							.map((_, i) => {
-								return <Card key={i} />;
-							})}
+						{products.map((product, i) => {
+							return <Card product={product} key={i} />;
+						})}
 					</div>
 				</div>
 			</div>

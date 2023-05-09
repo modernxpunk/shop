@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Icon from "src/components/Icon";
+import { getCart } from "src/utils/fetch";
 
 const Cart = () => {
-	const cart = Array(3).fill(0);
+	const cart = getCart();
 
 	return (
 		<div className="container">

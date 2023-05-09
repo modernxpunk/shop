@@ -1,14 +1,13 @@
 "use client";
 import { cx } from "class-variance-authority";
 import Image from "next/image";
+import { getAccount, getCart, getWishlist } from "src/utils/fetch";
 import Icon from "./Icon";
 
 const Header = () => {
-	const account = {
-		messages: Array(0).fill(0),
-	};
-	const cart = Array(3).fill(0);
-	const wishlist = Array(5).fill(0);
+	const account = getAccount();
+	const cart = getCart();
+	const wishlist = getWishlist();
 
 	const languages = [
 		{
@@ -60,7 +59,7 @@ const Header = () => {
 							</div>
 							<div className="w-56 mt-8 overflow-y-auto shadow-2xl dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px">
 								<ul className="gap-1 p-3 menu menu-compact" tabIndex={0}>
-									{languages.map(({ label, image, isActive }, i) => {
+									{languages.map(({ label, image, isActive }) => {
 										return (
 											<li key={label}>
 												<button
@@ -93,7 +92,6 @@ const Header = () => {
 						<label className="input-group">
 							<span className="border-r-2 border-r-base-200">
 								<Icon name="magnify" className="w-6 h-6 fill-black" />
-								{/* <Sprite class="w-6 h-6" name="mdi:search" /> */}
 							</span>
 							<input
 								type="text"
@@ -118,8 +116,6 @@ const Header = () => {
 										name="account"
 										className="w-12 h-12 p-1.5 fill-black dark:fill-white"
 									/>
-
-									{/* <Sprite class="w-12 h-12 p-1.5" name="mdi:account" /> */}
 								</div>
 							</label>
 						</div>
@@ -135,7 +131,6 @@ const Header = () => {
 										name="heart"
 										className="w-12 h-12 p-1.5 fill-black dark:fill-white"
 									/>
-									{/* <Sprite class="w-12 h-12 p-1.5" name="mdi:heart" /> */}
 								</div>
 								<div
 									tabIndex={0}
@@ -233,7 +228,6 @@ const Header = () => {
 										name="cart"
 										className="w-12 h-12 p-1.5 fill-black dark:fill-white"
 									/>
-									{/* <Sprite class="w-12 h-12 p-1.5" name="mdi:cart" /> */}
 								</div>
 								<div
 									tabIndex={0}
@@ -328,7 +322,6 @@ const Header = () => {
 								name="menu"
 								className="w-12 h-12 p-1.5 fill-white dark:fill-black"
 							/>
-							{/* <Sprite class="w-12 h-12 p-1.5" name="mdi:menu" /> */}
 						</label>
 					</div>
 				</div>

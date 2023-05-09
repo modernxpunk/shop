@@ -1,9 +1,9 @@
 import Card from "src/components/Card";
 import Icon from "src/components/Icon";
+import { getProducts } from "src/utils/fetch";
 
 const Catalog = () => {
-	const products = Array(9).fill(0);
-
+	const products = getProducts();
 	return (
 		<>
 			<div className="container flex h-full gap-4">
@@ -112,14 +112,12 @@ const Catalog = () => {
 										className="w-4 h-4 fill-white dark:fill-black"
 										name="dots-grid"
 									/>
-									{/* <Sprite class="w-4 h-4" name="mdi:dots-grid" /> */}
 								</button>
 								<button className="btn btn-sm">
 									<Icon
 										className="w-4 h-4 fill-white dark:fill-black"
 										name="menu"
 									/>
-									{/* <Sprite class="w-4 h-4" name="mdi:menu" /> */}
 								</button>
 							</div>
 							<select className="hidden max-w-xs select select-sm select-bordered md:inline-flex">
@@ -133,8 +131,8 @@ const Catalog = () => {
 					</div>
 					<div>
 						<div className="grid gap-4 grid-cols-item">
-							{products.map((_, i) => (
-								<Card key={i} />
+							{products.map((product, i) => (
+								<Card product={product} key={i} />
 							))}
 						</div>
 					</div>

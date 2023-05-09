@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Card from "src/components/Card";
 import Icon from "src/components/Icon";
+import { getCatalogs, getProducts } from "src/utils/fetch";
 import { getRandomImgSrc } from "src/utils/view";
 
 export const metadata: Metadata = {
@@ -10,24 +11,23 @@ export const metadata: Metadata = {
 };
 
 const Home = () => {
+	const catalogs = getCatalogs();
+	const products = getProducts();
 	return (
 		<div className="container">
 			<div className="flex flex-col-reverse gap-4 sm:flex-row">
 				<div className="flex-1 max-w-xs rounded-lg">
 					<ul className="menu bg-base-300 rounded-box">
-						{Array(10)
-							.fill(0)
-							.map((_, i) => {
-								return (
-									<li key={i}>
-										<a href="#">
-											<Icon className="w-4 h-4" name="controller" />
-											{/* <Sprite class="w-4 h-4" name="mdi:controller" /> */}
-											<p>Laptop and software</p>
-										</a>
-									</li>
-								);
-							})}
+						{catalogs.map((catalog, i) => {
+							return (
+								<li key={i}>
+									<a href="#">
+										<Icon className="w-4 h-4" name="controller" />
+										<p>{catalog.name}</p>
+									</a>
+								</li>
+							);
+						})}
 					</ul>
 				</div>
 				<div className="flex-1 rounded-lg bg-base-200">
@@ -61,11 +61,9 @@ const Home = () => {
 									<button className="btn btn-sm btn-outline">View All</button>
 								</div>
 								<div className="grid gap-4 mt-2 grid-cols-item">
-									{Array(4)
-										.fill(0)
-										.map((_, i) => {
-											return <Card key={i} />;
-										})}
+									{products.map((product, i) => {
+										return <Card product={product} key={i} />;
+									})}
 								</div>
 							</div>
 						);

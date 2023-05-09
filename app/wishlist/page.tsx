@@ -10,7 +10,6 @@ const Wishlist = () => {
 			{wishlist.length === 0 && (
 				<div className="flex flex-col items-center justify-center">
 					<Icon className="w-32 h-32" name="heart" />
-					{/* <Sprite class="w-32 h-32" name="mdi:heart" /> */}
 					<h1 className="text-3xl font-bold text-center">
 						Oops, your wishlist is empty! Go to
 						<a className="underline text-primary" href="/">
