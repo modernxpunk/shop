@@ -3,6 +3,7 @@ import { cx } from "class-variance-authority";
 import Image from "next/image";
 import { getAccount, getCart, getWishlist } from "src/utils/fetch";
 import Icon from "./Icon";
+import ThemeButton from "./ThemeButton";
 
 const Header = () => {
 	const account = getAccount();
@@ -41,17 +42,7 @@ const Header = () => {
 						/>
 					</a>
 					<div className="flex items-center gap-2">
-						<label className="gap-1 swap">
-							<input type="checkbox" data-toggle-theme="dark,light" />
-							<Icon
-								name="white-balance-sunny"
-								className="w-16 h-8 fill-current swap btn btn-sm btn-ghost swap-on"
-							/>
-							<Icon
-								name="moon-waning-crescent"
-								className="w-16 h-8 fill-current swap btn btn-sm btn-ghost swap-off"
-							/>
-						</label>
+						<ThemeButton />
 						<div className="flex items-center dropdown dropdown-end">
 							<div tabIndex={0} className="gap-2 btn btn-sm btn-ghost">
 								<Icon name="translate" className="w-6 h-6 fill-current" />
