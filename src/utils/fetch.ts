@@ -5,7 +5,7 @@ export const getWishlist = () => {
 };
 
 export const getCart = () => {
-	return Array(0).fill(0);
+	return Array(3).fill(0);
 };
 
 export const getAccount = () => {
@@ -15,7 +15,7 @@ export const getAccount = () => {
 };
 
 export const getProducts = () => {
-	return Array(5)
+	return Array(4)
 		.fill(0)
 		.map(() => {
 			return {
