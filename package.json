@@ -9,7 +9,7 @@
 		"export": "next export",
 		"lint": "next lint --ignore-path .gitignore --cache",
 		"format": "prettier --ignore-path .gitignore \"src/**/*.{js,ts,jsx,tsx}\" --write --cache",
-		"prepare": "husky install",
+		"prepare": "prisma generate && husky install",
 		"db:up": "npx prisma db seed",
 		"db:down": "npx prisma migrate reset --skip-seed --force",
 		"db:gui": "npx prisma studio"
