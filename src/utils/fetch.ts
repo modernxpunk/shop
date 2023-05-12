@@ -1,4 +1,9 @@
+"use server";
+
 import { getRandomImgSrc } from "./view";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export const getWishlist = () => {
 	return Array(5).fill(0);
@@ -7,26 +12,46 @@ export const getWishlist = () => {
 export const getCart = () => {
 	return Array(3).fill(0);
 };
-
 export const getAccount = () => {
 	return {
 		messages: Array(0).fill(0),
 	};
 };
 
-export const getProducts = () => {
-	return Array(4)
-		.fill(0)
-		.map(() => {
-			return {
-				image: getRandomImgSrc(),
-				catalog: "Electronics",
-				description: "Lorem ipsum dolor sit amet, asd f adipisicing elit",
-				view: 103,
-				price: 25.99,
-				rate: 4,
-			};
-		});
+export const getProducts = async () => {
+	const products = await prisma.product.findMany({
+		take: 4,
+		select: {
+			catalog_name: true,
+			id: true,
+			image: true,
+			price: true,
+			rate: true,
+			view: true,
+			name: true,
+		},
+	});
+	return products;
+};
+
+export const getCatalogProducts = async () => {
+	const products = await prisma.product.findMany({
+		take: 20,
+		select: {
+			catalog_name: {
+				select: {
+					name: true,
+				},
+			},
+			id: true,
+			image: true,
+			price: true,
+			rate: true,
+			view: true,
+			name: true,
+		},
+	});
+	return products;
 };
 
 export const getProduct = () => {
@@ -56,12 +81,7 @@ export const getProduct = () => {
 	};
 };
 
-export const getCatalogs = () => {
-	return Array(20)
-		.fill(0)
-		.map(() => {
-			return {
-				name: "Laptop and software",
-			};
-		});
+export const getCatalogs = async () => {
+	const catalogs = await prisma.catalog.findMany();
+	return catalogs;
 };
