@@ -18,13 +18,13 @@ module.exports = {
 				DEFAULT: "1rem",
 			},
 		},
-		gridTemplateColumns: {
-			item: "repeat(auto-fill, minmax(280px, 1fr))",
-		},
 		extend: {
 			display: ["group-hover"],
 			animation: {
 				appear: "appear 0.4s linear",
+			},
+			gridTemplateColumns: {
+				item: "repeat(auto-fill, minmax(280px, 1fr))",
 			},
 		},
 	},
