@@ -9,7 +9,20 @@ datasource db {
   // shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model Person {
-  id   Int     @id @default(autoincrement())
-  name String?
+model Product {
+  id           Int     @id @default(autoincrement())
+  name         String
+  price        Int
+  image        String
+  catalog_name Catalog @relation(fields: [catalogId], references: [id])
+  description  String
+  rate         Int?    @default(0)
+  view         Int?    @default(0)
+  catalogId    Int
+}
+
+model Catalog {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  Product Product[]
 }
