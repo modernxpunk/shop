@@ -1,3 +1,4 @@
+import { Product } from "@prisma/client";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Card from "src/components/Card";
@@ -10,14 +11,15 @@ export const metadata: Metadata = {
 	description: "Welcome to Next.js",
 };
 
-const Home = () => {
-	const catalogs = getCatalogs();
-	const products = getProducts();
+const Home = async () => {
+	const catalogs = await getCatalogs();
+	console.log(catalogs);
+	const products = await getProducts();
 	return (
 		<div className="container">
-			<div className="flex flex-col gap-4 sm:flex-row h-[480px]">
-				<div className="flex-1 w-full sm:max-w-xs h-[inherit] overflow-auto rounded-lg">
-					<ul className="menu bg-base-300 rounded-box">
+			<div className="grid grid-cols-[max-content,1fr] grid-rows-1 gap-4 sm:flex-row h-[400px]">
+				<div className="col-span-1 row-span-1 overflow-auto rounded-lg">
+					<ul className="menu bg-base-200 rounded-box">
 						{catalogs.map((catalog, i) => {
 							return (
 								<li key={i}>
@@ -30,22 +32,23 @@ const Home = () => {
 						})}
 					</ul>
 				</div>
-				<div className="flex-1 rounded-lg bg-base-200 h-[inherit] p-4 space-x-4 carousel carousel-center">
-					{Array(10)
-						.fill(0)
-						.map((_, i) => {
-							return (
-								<div key={i} className="carousel-item">
-									<Image
-										width="400"
-										height="480"
-										src={getRandomImgSrc()}
-										className="object-cover rounded-box"
-										alt={""}
-									/>
-								</div>
-							);
-						})}
+				<div className="col-span-1 row-span-1 gap-4 rounded-lg carousel">
+					<div className="relative w-full carousel-item">
+						<Image
+							className="flex-1 object-cover w-full h-full rounded-lg"
+							width={1200}
+							height={400}
+							src={getRandomImgSrc(1200, 400)}
+							alt={""}
+						/>
+						<div className="absolute bottom-0 left-0 right-0 flex justify-end">
+							<div className="p-2 ml-auto">
+								<a href="/catalog" className="btn btn-sm">
+									see more
+								</a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div className="mt-8 space-y-6">
@@ -61,8 +64,8 @@ const Home = () => {
 									</a>
 								</div>
 								<div className="grid gap-4 mt-2 grid-cols-item">
-									{products.map((product, i) => {
-										return <Card product={product} key={i} />;
+									{products.map((product: Product) => {
+										return <Card product={product} key={product.id} />;
 									})}
 								</div>
 							</div>
