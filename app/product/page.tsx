@@ -3,9 +3,9 @@ import Card from "src/components/Card";
 import Icon from "src/components/Icon";
 import { getProduct, getProducts } from "src/utils/fetch";
 
-const Product = () => {
+const Product = async () => {
 	const product = getProduct();
-	const products = getProducts();
+	const products = await getProducts();
 	return (
 		<>
 			<div className="container">
@@ -418,8 +418,8 @@ const Product = () => {
 				<div className="mt-4">
 					<h3 className="text-4xl font-bold">Popular products</h3>
 					<div className="grid gap-4 mt-4 grid-cols-item">
-						{products.map((product, i) => {
-							return <Card product={product} key={i} />;
+						{products.map((product) => {
+							return <Card product={product} key={product.id} />;
 						})}
 					</div>
 				</div>

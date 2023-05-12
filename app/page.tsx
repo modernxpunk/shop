@@ -1,4 +1,3 @@
-import { Product } from "@prisma/client";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Card from "src/components/Card";
@@ -64,7 +63,7 @@ const Home = async () => {
 									</a>
 								</div>
 								<div className="grid gap-4 mt-2 grid-cols-item">
-									{products.map((product: Product) => {
+									{products.map((product) => {
 										return <Card product={product} key={product.id} />;
 									})}
 								</div>

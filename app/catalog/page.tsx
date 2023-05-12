@@ -1,9 +1,10 @@
 import Card from "src/components/Card";
 import Icon from "src/components/Icon";
-import { getProducts } from "src/utils/fetch";
+import { getCatalogProducts, getCatalogs } from "src/utils/fetch";
 
-const Catalog = () => {
-	const products = getProducts();
+const Catalog = async () => {
+	const catalogs = await getCatalogs();
+	const products = await getCatalogProducts();
 	return (
 		<>
 			<div className="container flex h-full gap-4">
@@ -14,18 +15,10 @@ const Catalog = () => {
 							<div className="collapse-title">Categories</div>
 							<div className="collapse-content">
 								<div className="space-y-2">
-									{[
-										"All categories",
-										"Mobile phones",
-										"Tablets",
-										"Bikes",
-										"Coffee Makers",
-										"PC Components",
-										"Drones",
-									].map((category: string) => {
+									{catalogs.map((catalog) => {
 										return (
 											<label
-												key={category}
+												key={catalog.id + catalog.name}
 												className="flex items-center gap-2"
 												id="category"
 											>
@@ -34,7 +27,7 @@ const Catalog = () => {
 													name="category"
 													className="radio radio-sm"
 												/>
-												<p>{category}</p>
+												<p>{catalog.name}</p>
 											</label>
 										);
 									})}
@@ -125,8 +118,8 @@ const Catalog = () => {
 					</div>
 					<div>
 						<div className="grid gap-4 grid-cols-item">
-							{products.map((product, i) => (
-								<Card product={product} key={i} />
+							{products.map((product) => (
+								<Card product={product} key={product.id} />
 							))}
 						</div>
 					</div>

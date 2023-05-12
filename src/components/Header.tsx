@@ -1,11 +1,10 @@
-"use client";
 import { cx } from "class-variance-authority";
 import Image from "next/image";
 import { getAccount, getCart, getWishlist } from "src/utils/fetch";
 import Icon from "./Icon";
 import ThemeButton from "./ThemeButton";
 
-const Header = () => {
+const Header = async () => {
 	const account = getAccount();
 	const cart = getCart();
 	const wishlist = getWishlist();

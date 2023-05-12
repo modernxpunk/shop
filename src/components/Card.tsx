@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Icon from "./Icon";
 
-const Card = ({ product }: any) => {
+const Card = ({ product }: { product: any }) => {
 	return (
 		<a
 			href="/product"
@@ -28,8 +28,8 @@ const Card = ({ product }: any) => {
 			</div>
 			<div className="flex items-stretch p-2">
 				<div className="flex-1">
-					<p className="opacity-60">{product.catalog}</p>
-					<p className="font-bold break-all">{product.description}</p>
+					<p className="opacity-60 line-clamp-1">{product.catalog_name.name}</p>
+					<p className="font-bold line-clamp-2">{product.name}</p>
 					<div className="flex items-center justify-between">
 						<div className="flex items-center">
 							<div className="items-center rating">
@@ -42,7 +42,7 @@ const Card = ({ product }: any) => {
 												name="product_rank"
 												className="mask mask-star"
 												key={"product_rank_" + i}
-												checked={i + 1 === product.rate}
+												checked={i + 1 < (product.rate || 0)}
 											/>
 										);
 									})}
