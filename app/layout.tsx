@@ -30,6 +30,7 @@ export default function RootLayout({
 							overflow: "overlay",
 						}}
 					>
+						{/* @ts-expect-error Server Component */}
 						<Header />
 						<Breadcrumbs />
 						<main className="flex-1 pb-8">{children}</main>
