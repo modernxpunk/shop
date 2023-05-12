@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 
 const Home = async () => {
 	const catalogs = await getCatalogs();
-	console.log(catalogs);
 	const products = await getProducts();
 	return (
 		<div className="container">
