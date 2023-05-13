@@ -2,9 +2,15 @@ import Card from "src/components/Card";
 import Icon from "src/components/Icon";
 import { getCatalogProducts, getCatalogs } from "src/utils/fetch";
 
-const Catalog = async () => {
+const Catalog = async ({
+	searchParams,
+}: {
+	params: { slug: string };
+	searchParams?: { [key: string]: string | string[] | undefined };
+}) => {
+	const { catalog } = searchParams as any;
 	const catalogs = await getCatalogs();
-	const products = await getCatalogProducts();
+	const products = await getCatalogProducts(catalog);
 	return (
 		<>
 			<div className="container flex h-full gap-4">

@@ -34,9 +34,8 @@ export const getProducts = async () => {
 	return products;
 };
 
-export const getCatalogProducts = async () => {
+export const getCatalogProducts = async (category: string) => {
 	const products = await prisma.product.findMany({
-		take: 20,
 		select: {
 			catalog_name: {
 				select: {
@@ -49,6 +48,11 @@ export const getCatalogProducts = async () => {
 			rate: true,
 			view: true,
 			name: true,
+		},
+		where: {
+			catalog_name: {
+				name: category,
+			},
 		},
 	});
 	return products;
