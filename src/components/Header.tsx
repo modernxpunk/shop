@@ -2,7 +2,6 @@ import { cx } from "class-variance-authority";
 import Image from "next/image";
 import { getAccount, getCart, getWishlist } from "src/utils/fetch";
 import Icon from "./Icon";
-import ThemeButton from "./ThemeButton";
 
 const Header = async () => {
 	const account = getAccount();
@@ -41,7 +40,7 @@ const Header = async () => {
 						/>
 					</a>
 					<div className="flex items-center gap-2">
-						<ThemeButton />
+						{/* <ThemeButton /> */}
 						<div className="flex items-center dropdown dropdown-end">
 							<div tabIndex={0} className="gap-2 btn btn-sm btn-ghost">
 								<Icon name="translate" className="w-6 h-6 fill-current" />
