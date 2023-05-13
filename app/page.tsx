@@ -10,18 +10,20 @@ export const metadata: Metadata = {
 	description: "Welcome to Next.js",
 };
 
+export const dynamic = "force-dynamic";
+
 const Home = async () => {
 	const catalogs = await getCatalogs();
 	const products = await getProducts();
 	return (
 		<div className="container">
-			<div className="grid grid-cols-[max-content,1fr] grid-rows-1 gap-4 sm:flex-row h-[400px]">
-				<div className="col-span-1 row-span-1 overflow-auto rounded-lg">
+			<div className="grid grid-rows-2 sm:grid-cols-[max-content,1fr] sm:grid-rows-1 gap-4 sm:h-[400px]">
+				<div className="order-1 sm:-order-none col-span-1 row-span-1 overflow-auto rounded-lg max-h-[250px] sm:max-h-none">
 					<ul className="menu bg-base-200 rounded-box">
 						{catalogs.map((catalog, i) => {
 							return (
 								<li key={i}>
-									<a href="/catalog">
+									<a href={`/catalog?catalog=${catalog.name}`}>
 										<Icon className="w-8 h-8 fill-current" name="controller" />
 										<p className="flex-1">{catalog.name}</p>
 									</a>
