@@ -4,7 +4,7 @@ import Icon from "./Icon";
 const Card = ({ product }: { product: any }) => {
 	return (
 		<a
-			href="/product"
+			href={"/product/" + product.id}
 			className="flex flex-col overflow-hidden transition-shadow rounded-lg shadow-lg group hover:shadow-xl"
 		>
 			<div className="relative flex items-center justify-center flex-1 m-2 mb-0">
