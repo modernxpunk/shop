@@ -39,11 +39,17 @@ const Breadcrumbs = () => {
 				label: "Catalog",
 				iconName: "shopping",
 			};
-		} else {
+		} else if (path === "") {
 			return {
 				href: "/",
 				label: "Home",
 				iconName: "home",
+			};
+		} else {
+			return {
+				href: "",
+				label: "",
+				iconName: "",
 			};
 		}
 	});
