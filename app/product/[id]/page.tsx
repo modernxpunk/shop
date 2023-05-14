@@ -3,8 +3,9 @@ import Card from "src/components/Card";
 import Icon from "src/components/Icon";
 import { getProduct, getProducts } from "src/utils/fetch";
 
-const Product = async () => {
-	const product = getProduct();
+const Product = async ({ params }: { params: { id: string } }) => {
+	const { id } = params;
+	const product: any = await getProduct(id);
 	const products = await getProducts();
 	return (
 		<>
@@ -32,7 +33,7 @@ const Product = async () => {
 							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4 fill-current" name="comment" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
-									{product.commented} comments
+									{product.commented.length} comments
 								</p>
 							</div>
 						</div>
@@ -64,7 +65,7 @@ const Product = async () => {
 									alt={""}
 								/>
 							</div>
-							<div className="gap-4 mt-4 carousel carousel-center">
+							{/* <div className="gap-4 mt-4 carousel carousel-center">
 								{product.carousel.map((imgSrc, i) => {
 									return (
 										<div key={i} className="rounded-lg carousel-item">
@@ -78,7 +79,7 @@ const Product = async () => {
 										</div>
 									);
 								})}
-							</div>
+							</div> */}
 						</div>
 					</div>
 					<div className="flex-1">
@@ -86,7 +87,7 @@ const Product = async () => {
 							<span className="cursor-pointer badge badge-success">
 								{product.isInStock ? "in stock" : "not in stock"}
 							</span>
-							{product.tags.map((tag) => {
+							{product?.tags_name.map((tag: string) => {
 								return (
 									<span key={tag} className="cursor-pointer badge">
 										{tag}
@@ -95,7 +96,7 @@ const Product = async () => {
 							})}
 						</div>
 						<div className="mt-2">
-							<p>{product.desc}</p>
+							<p>{product.description}</p>
 						</div>
 						<div className="divider"></div>
 						<div className="flex items-center justify-between">
