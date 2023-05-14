@@ -1,6 +1,5 @@
 "use server";
 
-import { getRandomImgSrc } from "./view";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -58,31 +57,32 @@ export const getCatalogProducts = async (category: string) => {
 	return products;
 };
 
-export const getProduct = () => {
-	return {
-		rate: 3.8,
-		rated: 54,
-		commented: 4,
-		poster: getRandomImgSrc(),
-		tags: [
-			"Smartphone",
-			"Wi-Fi 6",
-			"LTPO",
-			"FaceID",
-			"2022",
-			"without microSD",
-		],
-		isInStock: true,
-		carousel: Array(5)
-			.fill(0x00)
-			.map(() => getRandomImgSrc()),
-		name: "Apple iPhone 14 Pro Max",
-		price: 29.59,
-		desc: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum,
-		dolorem eveniet dolore laboriosam minima magni suscipit
-		quibusdam nobis iure quidem veniam architecto pariatur ea
-		tenetur adipisci laudantium. Necessitatibus, ipsum quod?`,
-	};
+export const getProduct = async (id: string) => {
+	const product = await prisma.product.findUnique({
+		select: {
+			catalog_name: {
+				select: {
+					name: true,
+				},
+			},
+			id: true,
+			commented: true,
+			description: true,
+			image: true,
+			isInStock: true,
+			name: true,
+			poster: true,
+			price: true,
+			rate: true,
+			rated: true,
+			view: true,
+			tags_name: true,
+		},
+		where: {
+			id: id,
+		},
+	});
+	return product;
 };
 
 export const getCatalogs = async () => {
