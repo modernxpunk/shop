@@ -27,8 +27,6 @@ model Product {
   commented    Comment[]
   catalog_name Catalog   @relation(fields: [catalogId], references: [id])
   tags_name    Tag[]
-  rate         Int?      @default(0)
-  rated        Int?      @default(0)
   isInStock    Boolean   @default(true)
   view         Int?      @default(0)
   catalogId    String

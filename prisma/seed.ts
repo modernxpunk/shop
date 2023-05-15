@@ -21,7 +21,7 @@ async function main() {
 			name: name,
 		}));
 
-	const products = Array(100)
+	const products = Array(25)
 		.fill(0x00)
 		.map(() => ({
 			id: faker.datatype.uuid(),
@@ -34,10 +34,10 @@ async function main() {
 			isInStock: faker.datatype.boolean(),
 		}));
 
-	const tags = faker.helpers
-		.uniqueArray(faker.commerce.productAdjective, 10)
-		.map((tag) => ({
-			name: tag,
+	const tags = Array(25)
+		.fill(0x00)
+		.map(() => ({
+			name: faker.commerce.productAdjective(),
 			productId: faker.helpers.arrayElement(products).id,
 		}));
 
