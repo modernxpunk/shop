@@ -8,7 +8,7 @@ const nextConfig = {
 		serverActions: true,
 	},
 	images: {
-		domains: ["fakeimg.pl"],
+		domains: ["fakeimg.pl", "cloudflare-ipfs.com"],
 	},
 };
 

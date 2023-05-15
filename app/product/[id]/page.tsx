@@ -24,13 +24,6 @@ const Product = async ({ params }: { params: { id: string } }) => {
 							</div>
 							<div className="mx-0 divider divider-horizontal"></div>
 							<div className="flex items-center gap-1">
-								<Icon className="w-4 h-4 fill-current" name="star" />
-								<p className="flex text-sm opacity-60 whitespace-nowrap">
-									{product.rated} rated
-								</p>
-							</div>
-							<div className="mx-0 divider divider-horizontal"></div>
-							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4 fill-current" name="comment" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
 									{product.commented.length} comments
@@ -87,10 +80,10 @@ const Product = async ({ params }: { params: { id: string } }) => {
 							<span className="cursor-pointer badge badge-success">
 								{product.isInStock ? "in stock" : "not in stock"}
 							</span>
-							{product?.tags_name.map((tag: string) => {
+							{product.tags_name.map((tag: string) => {
 								return (
-									<span key={tag} className="cursor-pointer badge">
-										{tag}
+									<span key={tag.id} className="cursor-pointer badge">
+										{tag.name}
 									</span>
 								);
 							})}
@@ -195,12 +188,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 						<div className="flex-1">
 							<div className="flex items-center">
 								<div className="flex-1">
-									<h3 className="text-4xl font-bold">
-										Reviews{" "}
-										<span className="text-base font-normal opacity-80">
-											(35)
-										</span>
-									</h3>
+									<h3 className="text-4xl font-bold">Reviews</h3>
 								</div>
 								<div>
 									<div className="dropdown dropdown-end">
@@ -233,50 +221,30 @@ const Product = async ({ params }: { params: { id: string } }) => {
 									<div className="flex items-center flex-1 gap-4 stat">
 										<div>
 											<div className="stat-title">Average rating</div>
-											<div className="text-5xl stat-value">3.8</div>
+											<div className="text-5xl stat-value">{product.rate}</div>
 											<div className="items-center rating">
-												<input
-													type="radio"
-													name="average-rating"
-													className="mask mask-star"
-												/>
-												<input
-													type="radio"
-													name="average-rating"
-													className="mask mask-star"
-												/>
-												<input
-													type="radio"
-													name="average-rating"
-													className="mask mask-star"
-													checked
-												/>
-												<input
-													type="radio"
-													name="average-rating"
-													className="mask mask-star"
-												/>
-												<input
-													type="radio"
-													name="average-rating"
-													className="mask mask-star"
-												/>
+												{Array(5)
+													.fill(0x00)
+													.map((_, i) => {
+														return (
+															<input
+																type="radio"
+																name="average-rating"
+																className="mask mask-star"
+																checked={product.rate > i}
+																key={"average" + i}
+															/>
+														);
+													})}
 											</div>
 											<div className="flex items-center">
-												<div className="flex items-center gap-1">
-													<Icon className="w-4 h-4 fill-current" name="star" />
-													<p className="flex text-sm opacity-60 whitespace-nowrap">
-														54 rated
-													</p>
-												</div>
-												<div className="mx-0 divider divider-horizontal"></div>
 												<div className="flex items-center gap-1">
 													<Icon
 														className="w-4 h-4 fill-current"
 														name="comment"
 													/>
 													<p className="flex text-sm opacity-60 whitespace-nowrap">
-														4 comments
+														{product.ratingCount} comments
 													</p>
 												</div>
 											</div>
@@ -337,76 +305,54 @@ const Product = async ({ params }: { params: { id: string } }) => {
 								</div>
 							</div>
 							<div className="relative flex flex-col gap-4 p-4 mt-4 border shadow-lg bg-base-100 rounded-xl border-base-200">
-								{Array(3)
-									.fill(0)
-									.map((_, i) => {
-										return (
-											<div key={i} className="flex items-start gap-2">
-												<Image
-													className="object-cover mask mask-circle"
-													width="48"
-													height="48"
-													src="https://fakeimg.pl/48x48/"
-													alt="avatar"
-												/>
-												<div className="flex flex-col justify-center flex-1">
-													<div className="flex items-center gap-2">
-														<div>
-															<h4 className="text-lg font-bold">
-																Lorem ipsum!
-															</h4>
-															<div className="items-center rating rating-sm">
-																<input
-																	type="radio"
-																	name="rating-1"
-																	className="mask mask-star"
-																/>
-																<input
-																	type="radio"
-																	name="rating-1"
-																	className="mask mask-star"
-																	checked
-																/>
-																<input
-																	type="radio"
-																	name="rating-1"
-																	className="mask mask-star"
-																/>
-																<input
-																	type="radio"
-																	name="rating-1"
-																	className="mask mask-star"
-																/>
-																<input
-																	type="radio"
-																	name="rating-1"
-																	className="mask mask-star"
-																/>
-															</div>
-														</div>
-														<div className="flex justify-end flex-1">
-															<div>
-																<Icon
-																	className="w-8 h-8 fill-current"
-																	name="reply"
-																/>
-															</div>
+								{product.commented.map((comment) => {
+									return (
+										<div key={comment.id} className="flex items-start gap-2">
+											<Image
+												className="object-cover mask mask-circle"
+												width="48"
+												height="48"
+												src={comment.User.avatar}
+												alt="avatar"
+											/>
+											<div className="flex flex-col justify-center flex-1">
+												<div className="flex items-center gap-2">
+													<div>
+														<h4 className="text-lg font-bold">
+															{comment.User.username}
+														</h4>
+														<div className="items-center rating rating-sm">
+															{Array(5)
+																.fill(0x00)
+																.map((_, i: number) => {
+																	return (
+																		<input
+																			type="radio"
+																			name={comment.id}
+																			className="mask mask-star"
+																			key={comment.id + i}
+																			checked={comment.rate > i}
+																		/>
+																	);
+																})}
 														</div>
 													</div>
-													<div className="flex gap-2">
-														<p>
-															Lorem, ipsum dolor sit amet consectetur
-															adipisicing elit. Perspiciatis, architecto,
-															impedit iure minima id recusandae provident
-															officia ipsum, mollitia enim est distinctio
-															expedita obcaecati explicabo assumenda numquam
-															nemo consequuntur! Asperiores!
-														</p>
+													<div className="flex justify-end flex-1">
+														<div>
+															<Icon
+																className="w-8 h-8 fill-current"
+																name="reply"
+															/>
+														</div>
 													</div>
 												</div>
+												<div className="flex gap-2">
+													<p className="line-clamp-4">{comment.content}</p>
+												</div>
 											</div>
-										);
-									})}
+										</div>
+									);
+								})}
 								<div className="absolute bottom-0 left-0 right-0 rounded-[inherit]">
 									<div className="flex justify-center rounded-[inherit] pt-16 pb-4 bg-gradient-to-b from-transparent via-base-200 to-base-300">
 										<button className="btn btn-primary">Read more</button>
