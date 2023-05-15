@@ -5,18 +5,20 @@ import { getRandomImgSrc } from "../src/utils/view";
 const prisma = new PrismaClient();
 
 async function main() {
-	const catalogs = faker.helpers
-		.uniqueArray(faker.commerce.product, 10)
-		.map((name) => ({
-			id: faker.datatype.uuid(),
-			name: name,
-		}));
-
 	const users = faker.helpers
 		.uniqueArray(faker.internet.email, 100)
 		.map((email) => ({
 			id: faker.datatype.uuid(),
 			email: email,
+			username: faker.internet.userName(),
+			avatar: faker.internet.avatar(),
+		}));
+
+	const catalogs = faker.helpers
+		.uniqueArray(faker.commerce.product, 10)
+		.map((name) => ({
+			id: faker.datatype.uuid(),
+			name: name,
 		}));
 
 	const products = Array(100)
@@ -29,10 +31,14 @@ async function main() {
 			description: faker.lorem.paragraphs(),
 			poster: getRandomImgSrc(),
 			catalogId: faker.helpers.arrayElement(catalogs).id,
-			isInStock: true,
-			rate: 0,
-			rated: 0,
-			view: 0,
+			isInStock: faker.datatype.boolean(),
+		}));
+
+	const tags = faker.helpers
+		.uniqueArray(faker.commerce.productAdjective, 10)
+		.map((tag) => ({
+			name: tag,
+			productId: faker.helpers.arrayElement(products).id,
 		}));
 
 	const comments = faker.helpers
@@ -42,6 +48,8 @@ async function main() {
 			productId: faker.helpers.arrayElement(products).id,
 			userId: faker.helpers.arrayElement(users).id,
 			content: comment,
+			likes: faker.datatype.number({ min: 0, max: 10 }),
+			rate: faker.datatype.number({ min: 0, max: 5 }),
 		}));
 
 	await prisma.user.createMany({
@@ -54,6 +62,10 @@ async function main() {
 	});
 	await prisma.product.createMany({
 		data: products,
+		skipDuplicates: true,
+	});
+	await prisma.tag.createMany({
+		data: tags,
 		skipDuplicates: true,
 	});
 	await prisma.comment.createMany({
