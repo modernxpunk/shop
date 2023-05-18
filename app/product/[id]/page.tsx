@@ -19,7 +19,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4 fill-current" name="star" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
-									{product.rate} / 5
+									{product._avg.rate.toFixed(1)} / 5
 								</p>
 							</div>
 							<div className="mx-0 divider divider-horizontal"></div>
@@ -80,7 +80,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 							<span className="cursor-pointer badge badge-success">
 								{product.isInStock ? "in stock" : "not in stock"}
 							</span>
-							{product.tags_name.map((tag: string) => {
+							{product.tags_name.map((tag: any) => {
 								return (
 									<span key={tag.id} className="cursor-pointer badge">
 										{tag.name}
@@ -176,8 +176,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 												</p>
 											</div>
 											<div className="flex-1 text-right">
-												<p>Apple</p>
-												<p>asdfasfdasdf</p>
+												<p>Lorem</p>
 											</div>
 										</div>
 									);
@@ -190,7 +189,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 								<div className="flex-1">
 									<h3 className="text-4xl font-bold">Reviews</h3>
 								</div>
-								<div>
+								{/* <div>
 									<div className="dropdown dropdown-end">
 										<label tabIndex={0} className="btn btn-sm btn-outline">
 											category
@@ -214,14 +213,16 @@ const Product = async ({ params }: { params: { id: string } }) => {
 											)}
 										</ul>
 									</div>
-								</div>
+								</div> */}
 							</div>
 							<div className="w-full mt-2 shadow-lg stats">
 								<div className="flex flex-1">
 									<div className="flex items-center flex-1 gap-4 stat">
 										<div>
 											<div className="stat-title">Average rating</div>
-											<div className="text-5xl stat-value">{product.rate}</div>
+											<div className="text-5xl stat-value">
+												{product._avg.rate.toFixed(1)}
+											</div>
 											<div className="items-center rating">
 												{Array(5)
 													.fill(0x00)
@@ -231,7 +232,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 																type="radio"
 																name="average-rating"
 																className="mask mask-star"
-																checked={product.rate > i}
+																checked={product._avg.rate > i}
 																key={"average" + i}
 															/>
 														);
@@ -244,68 +245,45 @@ const Product = async ({ params }: { params: { id: string } }) => {
 														name="comment"
 													/>
 													<p className="flex text-sm opacity-60 whitespace-nowrap">
-														{product.ratingCount} comments
+														{product._count._all} comments
 													</p>
 												</div>
 											</div>
 										</div>
 										<div className="flex-1 stat-desc">
 											<div className="flex flex-col gap-1">
-												<div className="flex items-center gap-1">
-													<p>5</p>
-													<progress
-														className="flex-1 w-full progress progress-primary"
-														value="40"
-														max="100"
-													></progress>
-												</div>
-												<div className="flex items-center gap-1">
-													<p>4</p>
-													<progress
-														className="w-full progress progress-primary"
-														value="92"
-														max="100"
-													></progress>
-												</div>
-												<div className="flex items-center gap-1">
-													<p>3</p>
-													<progress
-														className="w-full progress progress-primary"
-														value="80"
-														max="100"
-													></progress>
-												</div>
-												<div className="flex items-center gap-1">
-													<p>2</p>
-													<progress
-														className="w-full progress progress-primary"
-														value="40"
-														max="100"
-													></progress>
-												</div>
-												<div className="flex items-center gap-1">
-													<p>1</p>
-													<progress
-														className="w-full progress progress-primary"
-														value="4"
-														max="100"
-													></progress>
-												</div>
-												<div className="flex items-center gap-1">
-													<p>0</p>
-													<progress
-														className="w-full progress progress-primary"
-														value="2"
-														max="100"
-													></progress>
-												</div>
+												{Array(6)
+													.fill(0x00)
+													.map((_, i) => {
+														return (
+															<div
+																className="flex items-center gap-1"
+																key={5 - i}
+															>
+																<p>{5 - i}</p>
+																<progress
+																	className="flex-1 w-full progress progress-primary"
+																	value={product.balling.reduce(
+																		(a: number, b: { rate: number }) =>
+																			b.rate === 5 - i ? a + 1 : a,
+																		0
+																	)}
+																	max={Math.max(
+																		...product.balling.map(
+																			(x: { rate: number }) => x.rate
+																		)
+																	)}
+																></progress>
+															</div>
+														);
+													})}
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div className="relative flex flex-col gap-4 p-4 mt-4 border shadow-lg bg-base-100 rounded-xl border-base-200">
-								{product.commented.map((comment) => {
+								{product.commented.map((comment: any) => {
 									return (
 										<div key={comment.id} className="flex items-start gap-2">
 											<Image
@@ -318,9 +296,14 @@ const Product = async ({ params }: { params: { id: string } }) => {
 											<div className="flex flex-col justify-center flex-1">
 												<div className="flex items-center gap-2">
 													<div>
-														<h4 className="text-lg font-bold">
-															{comment.User.username}
-														</h4>
+														<div className="flex items-baseline gap-2">
+															<h4 className="text-lg font-bold">
+																{comment.User.username}
+															</h4>
+															<span className="text-sm opacity-60">
+																{new Date(comment.createdAt).toDateString()}
+															</span>
+														</div>
 														<div className="items-center rating rating-sm">
 															{Array(5)
 																.fill(0x00)
@@ -348,6 +331,15 @@ const Product = async ({ params }: { params: { id: string } }) => {
 												</div>
 												<div className="flex gap-2">
 													<p className="line-clamp-4">{comment.content}</p>
+												</div>
+												<div className="mt-2">
+													<div className="btn btn-sm btn-outline group">
+														<Icon
+															className="w-8 h-8 p-1.5 group-hover:fill-white"
+															name="thumb-up"
+														/>
+														{comment.likes}
+													</div>
 												</div>
 											</div>
 										</div>

@@ -23,7 +23,6 @@ export const getProducts = async () => {
 			id: true,
 			image: true,
 			price: true,
-			rate: true,
 			view: true,
 			name: true,
 		},
@@ -42,7 +41,7 @@ export const getCatalogProducts = async (category: string) => {
 			id: true,
 			image: true,
 			price: true,
-			rate: true,
+			// rate: true,
 			view: true,
 			name: true,
 		},
@@ -65,8 +64,6 @@ export const getProduct = async (id: string) => {
 			name: true,
 			poster: true,
 			price: true,
-			rate: true,
-			rated: true,
 			view: true,
 			catalog_name: {
 				select: {
@@ -111,10 +108,22 @@ export const getProduct = async (id: string) => {
 			productId: id,
 		},
 	});
+	const balling = await prisma.product.findUnique({
+		select: {
+			commented: {
+				select: {
+					rate: true,
+				},
+			},
+		},
+		where: {
+			id: id,
+		},
+	});
 	return {
 		...product,
-		rate: rating._avg.rate,
-		ratingCount: rating._count._all,
+		...rating,
+		balling: balling?.commented,
 	};
 };
 

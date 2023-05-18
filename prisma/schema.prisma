@@ -56,3 +56,7 @@ model Catalog {
   name    String    @unique
   Product Product[]
 }
+
+model Characteristic {
+  id String @id @default(cuid())
+}
