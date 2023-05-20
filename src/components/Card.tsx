@@ -1,26 +1,29 @@
 import Image from "next/image";
+import Link from "next/link";
 import Icon from "./Icon";
 
 const Card = ({ product }: { product: any }) => {
 	return (
-		<a
+		<Link
 			href={"/product/" + product.id}
 			className="flex flex-col overflow-hidden transition-shadow rounded-lg shadow-lg group hover:shadow-xl"
 		>
 			<div className="relative flex items-center justify-center flex-1 m-2 mb-0">
-				<div className="absolute top-0 left-0 right-0 justify-end hidden group-hover:flex animate-appear">
-					<div className="btn btn-md btn-circle btn-ghost">
-						<Icon className="w-8 h-8 fill-neutral" name="cards-heart-outline" />
+				<div className="absolute top-0 right-0 z-10 hidden rounded-box group-hover:flex animate-appear btn-group btn-group-vertical">
+					<div className="btn btn-sm btn-circle">
+						<Icon
+							className="w-8 h-8 p-1 fill-current"
+							name="cards-heart-outline"
+						/>
 					</div>
-					<div className="btn btn-md btn-circle btn-ghost">
-						<Icon className="w-8 h-8 fill-neutral" name="cart-outline" />
+					<div className="btn btn-sm btn-circle">
+						<Icon className="w-8 h-8 p-1 fill-current" name="cart-outline" />
 					</div>
 				</div>
 				<div className="flex bg-base-300 flex-1 h-[150px] justify-center items-center rounded-lg overflow-hidden">
 					<Image
-						width="400"
-						height="400"
-						className="object-cover rounded-[inherit]"
+						layout="fill"
+						className="object-contain rounded-[inherit]"
 						src={product.image}
 						alt={""}
 					/>
@@ -59,7 +62,7 @@ const Card = ({ product }: { product: any }) => {
 					</div>
 				</div>
 			</div>
-		</a>
+		</Link>
 	);
 };
 
