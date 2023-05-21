@@ -335,7 +335,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 												<div className="mt-2">
 													<div className="btn btn-sm btn-outline group">
 														<Icon
-															className="w-8 h-8 p-1.5 group-hover:fill-white"
+															className="w-8 h-8 p-1.5 fill-current"
 															name="thumb-up"
 														/>
 														{comment.likes}
