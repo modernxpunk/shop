@@ -1,103 +1,22 @@
+import { Catalog } from "@prisma/client";
 import Card from "src/components/Card";
+import CatalogFilter from "src/components/CatalogFilter";
 import Icon from "src/components/Icon";
 import { getCatalogProducts, getCatalogs } from "src/utils/fetch";
 
-const Catalog = async ({
+const Catalogs = async ({
 	searchParams,
 }: {
 	params: { slug: string };
 	searchParams?: { [key: string]: string | string[] | undefined };
 }) => {
 	const { catalog } = searchParams as any;
-	const catalogs = await getCatalogs();
+	const catalogs: Catalog[] = await getCatalogs();
 	const products = await getCatalogProducts(catalog);
 	return (
 		<>
 			<div className="container flex h-full gap-4">
-				<div className="hidden md:block flex-1 max-w-[250px]">
-					<div className="sticky hidden bg-base-200 sm:block rounded-box top-20">
-						<div className="collapse collapse-arrow">
-							<input type="checkbox" className="peer" />
-							<div className="collapse-title">Categories</div>
-							<div className="collapse-content">
-								<div className="space-y-2">
-									{catalogs.map((catalog) => {
-										return (
-											<label
-												key={catalog.id + catalog.name}
-												className="flex items-center gap-2"
-												id="category"
-											>
-												<input
-													type="radio"
-													name="category"
-													className="radio radio-sm"
-												/>
-												<p>{catalog.name}</p>
-											</label>
-										);
-									})}
-								</div>
-							</div>
-						</div>
-						<div className="collapse collapse-arrow">
-							<input type="checkbox" className="peer" />
-							<div className="collapse-title">Price</div>
-							<div className="collapse-content">
-								<input
-									type="range"
-									min="0"
-									max="100"
-									value="25"
-									className="range"
-									step="25"
-								/>
-								<div className="flex justify-between w-full px-2 text-xs">
-									<span>|</span>
-									<span>|</span>
-									<span>|</span>
-									<span>|</span>
-									<span>|</span>
-								</div>
-							</div>
-						</div>
-						<div className="collapse collapse-arrow">
-							<input type="checkbox" className="peer" />
-							<div className="collapse-title">Rank</div>
-							<div className="collapse-content">
-								<div className="flex flex-col gap-4">
-									{Array(5)
-										.fill(0)
-										.map((_, i) => {
-											return (
-												<div key={i} className="flex items-center gap-2">
-													<input
-														type="checkbox"
-														className="checkbox checkbox-sm"
-													/>
-													<div className="rating rating-md">
-														{Array(5)
-															.fill(0)
-															.map((_, j) => {
-																return (
-																	<input
-																		type="radio"
-																		name={`rating-${20 * i + 1 + j}as`}
-																		className="mask mask-star"
-																		checked={4 - i <= j}
-																		key={j}
-																	/>
-																);
-															})}
-													</div>
-												</div>
-											);
-										})}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<CatalogFilter catalogs={catalogs} currentCatalog={catalog} />
 				<div className="flex-1 rounded-box">
 					<div className="flex items-center justify-between">
 						<h1 className="text-[2.5rem] font-bold">
@@ -113,12 +32,15 @@ const Catalog = async ({
 									<Icon className="w-4 h-4 fill-current" name="menu" />
 								</button>
 							</div>
-							<select className="hidden max-w-xs select select-sm select-bordered md:inline-flex">
-								<option disabled selected>
+							<select
+								className="hidden max-w-xs select select-sm select-bordered md:inline-flex"
+								defaultValue={"sort by"}
+							>
+								<option value={"sort by"} disabled>
 									Sort by
 								</option>
-								<option>Popular</option>
-								<option>Rank</option>
+								<option value={"popular"}>Popular</option>
+								<option value={"rank"}>Rank</option>
 							</select>
 						</div>
 					</div>
@@ -143,4 +65,4 @@ const Catalog = async ({
 	);
 };
 
-export default Catalog;
+export default Catalogs;
