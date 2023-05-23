@@ -25,6 +25,11 @@ export const getProducts = async () => {
 			price: true,
 			view: true,
 			name: true,
+			commented: {
+				select: {
+					rate: true,
+				},
+			},
 		},
 	});
 	return products;
@@ -41,9 +46,13 @@ export const getCatalogProducts = async (category: string) => {
 			id: true,
 			image: true,
 			price: true,
-			// rate: true,
 			view: true,
 			name: true,
+			commented: {
+				select: {
+					rate: true,
+				},
+			},
 		},
 		where: {
 			catalog_name: {
