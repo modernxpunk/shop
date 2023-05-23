@@ -1,8 +1,16 @@
+import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "./Icon";
 
 const Card = ({ product }: { product: any }) => {
+	const rate = (
+		product.commented.reduce(
+			(a: number, b: Product & { rate: number }) => a + b.rate,
+			0
+		) / product.commented.length
+	).toFixed(1);
+
 	return (
 		<Link
 			href={"/product/" + product.id}
@@ -22,7 +30,9 @@ const Card = ({ product }: { product: any }) => {
 				</div>
 				<div className="flex bg-base-300 flex-1 h-[150px] justify-center items-center rounded-lg overflow-hidden">
 					<Image
-						layout="fill"
+						width={400}
+						height={400}
+						// layout="fill"
 						className="object-contain rounded-[inherit]"
 						src={product.image}
 						alt={""}
@@ -45,7 +55,8 @@ const Card = ({ product }: { product: any }) => {
 												name="product_rank"
 												className="mask mask-star"
 												key={"product_rank_" + i}
-												checked={i + 1 < (product.rate || 0)}
+												readOnly
+												checked={i + 1 < (rate || 0)}
 											/>
 										);
 									})}
