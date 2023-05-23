@@ -59,7 +59,7 @@ const Home = async () => {
 							<div key={i}>
 								<div className="flex items-end justify-between gap-4">
 									<h3 className="text-4xl font-bold">Popular products</h3>
-									<a href="/product" className="btn btn-sm btn-outline">
+									<a href="/catalog" className="btn btn-sm btn-outline">
 										View All
 									</a>
 								</div>
