@@ -21,18 +21,27 @@ async function main() {
 			name: name,
 		}));
 
-	const products = Array(25)
+	const productsIds = Array(25)
 		.fill(0x00)
-		.map(() => ({
-			id: faker.datatype.uuid(),
-			name: faker.commerce.productName(),
-			price: +faker.commerce.price(100, 1000, 0),
-			image: getRandomImgSrc(),
-			description: faker.lorem.paragraphs(),
-			poster: getRandomImgSrc(),
-			catalogId: faker.helpers.arrayElement(catalogs).id,
-			isInStock: faker.datatype.boolean(),
+		.map(() => faker.datatype.uuid());
+
+	const discount = faker.helpers
+		.uniqueArray(productsIds, Math.floor(productsIds.length / 5))
+		.map((id) => ({
+			percent: faker.datatype.number({ min: 5, max: 40 }),
 		}));
+
+	const products = productsIds.map((id) => ({
+		id: id,
+		name: faker.commerce.productName(),
+		price: +faker.commerce.price(100, 1000, 0),
+		image: getRandomImgSrc(),
+		description: faker.lorem.paragraphs(),
+		poster: getRandomImgSrc(),
+		view: faker.datatype.number({ min: 50, max: 1000 }),
+		catalogId: faker.helpers.arrayElement(catalogs).id,
+		isInStock: faker.datatype.boolean(),
+	}));
 
 	const tags = Array(25)
 		.fill(0x00)
@@ -58,6 +67,10 @@ async function main() {
 	});
 	await prisma.catalog.createMany({
 		data: catalogs,
+		skipDuplicates: true,
+	});
+	await prisma.discount.createMany({
+		data: discount,
 		skipDuplicates: true,
 	});
 	await prisma.product.createMany({

@@ -10,11 +10,12 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(cuid())
-  email    String    @unique
-  username String?   @unique
-  avatar   String?
-  comments Comment[]
+  id        String    @id @default(cuid())
+  email     String    @unique
+  username  String?   @unique
+  avatar    String?
+  comments  Comment[]
+  createdAt DateTime  @default(now())
 }
 
 model Product {
@@ -26,10 +27,12 @@ model Product {
   poster       String
   commented    Comment[]
   catalog_name Catalog   @relation(fields: [catalogId], references: [id])
+  discount     Discount? @relation(fields: [discountId], references: [id])
   tags_name    Tag[]
   isInStock    Boolean   @default(true)
   view         Int?      @default(0)
   catalogId    String
+  discountId   String?   @unique
 }
 
 model Comment {
@@ -57,6 +60,9 @@ model Catalog {
   Product Product[]
 }
 
-model Characteristic {
-  id String @id @default(cuid())
+model Discount {
+  id       String    @id @default(cuid())
+  isActive Boolean?  @default(true)
+  percent  Int?
+  Product  Product[]
 }
