@@ -18,30 +18,32 @@ const Catalogs = async ({
 			<div className="container flex h-full gap-4">
 				<CatalogFilter catalogs={catalogs} currentCatalog={catalog} />
 				<div className="flex-1 rounded-box">
-					<div className="flex items-center justify-between">
-						<h1 className="text-[2.5rem] font-bold">
-							Catalog
-							<span className="text-sm opacity-60">({products.length})</span>
-						</h1>
-						<div className="flex items-center justify-end gap-2">
-							<div className="hidden btn-group md:inline-flex">
-								<button className="btn btn-sm btn-active">
-									<Icon className="w-4 h-4 fill-current" name="dots-grid" />
-								</button>
-								<button className="btn btn-sm">
-									<Icon className="w-4 h-4 fill-current" name="menu" />
-								</button>
+					<div className="sticky z-20 top-16">
+						<div className="flex items-center justify-between shadow-2xl bg-base-100">
+							<h1 className="text-[2.5rem] font-bold">
+								Catalog
+								<span className="text-sm opacity-60">({products.length})</span>
+							</h1>
+							<div className="flex items-center justify-end gap-2">
+								<div className="hidden btn-group md:inline-flex">
+									<button className="btn btn-sm btn-active">
+										<Icon className="w-4 h-4 fill-current" name="dots-grid" />
+									</button>
+									<button className="btn btn-sm">
+										<Icon className="w-4 h-4 fill-current" name="menu" />
+									</button>
+								</div>
+								<select
+									className="hidden max-w-xs select select-sm select-bordered md:inline-flex"
+									defaultValue={"sort by"}
+								>
+									<option value={"sort by"} disabled>
+										Sort by
+									</option>
+									<option value={"popular"}>Popular</option>
+									<option value={"rank"}>Rank</option>
+								</select>
 							</div>
-							<select
-								className="hidden max-w-xs select select-sm select-bordered md:inline-flex"
-								defaultValue={"sort by"}
-							>
-								<option value={"sort by"} disabled>
-									Sort by
-								</option>
-								<option value={"popular"}>Popular</option>
-								<option value={"rank"}>Rank</option>
-							</select>
 						</div>
 					</div>
 					<div>
@@ -53,7 +55,7 @@ const Catalogs = async ({
 					</div>
 				</div>
 			</div>
-			<div className="flex gap-4 btm-nav md:hidden">
+			<div className="z-20 flex gap-4 btm-nav md:hidden">
 				<button className="ml-4">
 					<span className="w-full btm-nav-label btn">Sort</span>
 				</button>
