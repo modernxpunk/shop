@@ -32,10 +32,9 @@ const Card = ({ product }: { product: any }) => {
 					<Image
 						width={400}
 						height={400}
-						// layout="fill"
 						className="object-contain rounded-[inherit]"
 						src={product.image}
-						alt={""}
+						alt={product.name}
 					/>
 				</div>
 			</div>
@@ -45,18 +44,18 @@ const Card = ({ product }: { product: any }) => {
 					<p className="font-bold line-clamp-2">{product.name}</p>
 					<div className="flex items-center justify-between">
 						<div className="flex items-center">
-							<div className="items-center rating">
+							<div className="rating">
 								{Array(5)
 									.fill(0x00)
 									.map((_, i: number) => {
 										return (
 											<input
 												type="radio"
-												name="product_rank"
+												name={"product_rank_" + product.id}
 												className="mask mask-star"
-												key={"product_rank_" + i}
+												key={`product_rank_${product.id}_${i}`}
 												readOnly
-												checked={i + 1 < (rate || 0)}
+												checked={i + 1 === Math.floor(+rate)}
 											/>
 										);
 									})}
