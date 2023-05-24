@@ -5,8 +5,17 @@ import { getRandomImgSrc } from "../src/utils/view";
 const prisma = new PrismaClient();
 
 async function main() {
+	const generate = {
+		users: 10,
+		catalog: 10,
+		products: 100,
+		discount: 1,
+		tags: 20,
+		comments: 50,
+	};
+
 	const users = faker.helpers
-		.uniqueArray(faker.internet.email, 100)
+		.uniqueArray(faker.internet.email, generate.users)
 		.map((email) => ({
 			id: faker.datatype.uuid(),
 			email: email,
@@ -15,20 +24,21 @@ async function main() {
 		}));
 
 	const catalogs = faker.helpers
-		.uniqueArray(faker.commerce.product, 10)
+		.uniqueArray(faker.commerce.product, generate.catalog)
 		.map((name) => ({
 			id: faker.datatype.uuid(),
 			name: name,
 		}));
 
-	const productsIds = Array(25)
+	const productsIds = Array(generate.products)
 		.fill(0x00)
 		.map(() => faker.datatype.uuid());
 
 	const discount = faker.helpers
-		.uniqueArray(productsIds, Math.floor(productsIds.length / 5))
+		.uniqueArray(productsIds, Math.floor(generate.discount))
 		.map((id) => ({
 			percent: faker.datatype.number({ min: 5, max: 40 }),
+			isActive: faker.datatype.boolean(),
 		}));
 
 	const products = productsIds.map((id) => ({
@@ -43,7 +53,7 @@ async function main() {
 		isInStock: faker.datatype.boolean(),
 	}));
 
-	const tags = Array(25)
+	const tags = Array(generate.tags)
 		.fill(0x00)
 		.map(() => ({
 			name: faker.commerce.productAdjective(),
@@ -51,7 +61,7 @@ async function main() {
 		}));
 
 	const comments = faker.helpers
-		.uniqueArray(faker.lorem.paragraphs, 500)
+		.uniqueArray(faker.lorem.paragraphs, generate.comments)
 		.map((comment) => ({
 			id: faker.datatype.uuid(),
 			productId: faker.helpers.arrayElement(products).id,
