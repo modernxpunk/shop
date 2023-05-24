@@ -13,7 +13,8 @@
 		"postinstall": "prisma generate",
 		"db:up": "npx prisma db seed",
 		"db:down": "npx prisma migrate reset --skip-seed --force",
-		"db:gui": "npx prisma studio"
+		"db:gui": "npx prisma studio",
+		"db:regenerate": "pnpm db:down && pnpx prisma db push && pnpm db:up"
 	},
 	"lint-staged": {
 		"./src/**/*.{ts,js,jsx,tsx}": [
