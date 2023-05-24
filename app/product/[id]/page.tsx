@@ -19,7 +19,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 							<div className="flex items-center gap-1">
 								<Icon className="w-4 h-4 fill-current" name="star" />
 								<p className="flex text-sm opacity-60 whitespace-nowrap">
-									{product._avg.rate.toFixed(1)} / 5
+									{(product._avg.rate || 0).toFixed(1)} / 5
 								</p>
 							</div>
 							<div className="mx-0 divider divider-horizontal"></div>
@@ -217,11 +217,11 @@ const Product = async ({ params }: { params: { id: string } }) => {
 							</div>
 							<div className="w-full mt-2 shadow-lg stats">
 								<div className="flex flex-1">
-									<div className="flex items-center flex-1 gap-4 stat">
+									<div className="flex flex-1 gap-4 stat">
 										<div>
 											<div className="stat-title">Average rating</div>
 											<div className="text-5xl stat-value">
-												{product._avg.rate.toFixed(1)}
+												{(product._avg.rate || 0).toFixed(1)}
 											</div>
 											<div className="items-center rating">
 												{Array(5)
@@ -232,6 +232,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 																type="radio"
 																name="average-rating"
 																className="mask mask-star"
+																readOnly
 																checked={product._avg.rate > i}
 																key={"average" + i}
 															/>
@@ -283,6 +284,32 @@ const Product = async ({ params }: { params: { id: string } }) => {
 								</div>
 							</div>
 							<div className="relative flex flex-col gap-4 p-4 mt-4 border shadow-lg bg-base-100 rounded-xl border-base-200">
+								<div className="form-control">
+									<div className="relative">
+										<textarea
+											className="w-full pb-10 resize-none h-36 textarea textarea-bordered"
+											placeholder="Bio"
+										></textarea>
+										<div className="absolute inset-x-0 flex justify-end py-1 bottom-2 right-3">
+											<button className="ml-auto btn btn-sm">Publish</button>
+										</div>
+									</div>
+									<label className="label">
+										<span className="label-text-alt">
+											<div className="flex flex-1 gap-1 carousel">
+												<div className="cursor-pointer carousel-item badge hover:shadow-lg">
+													Thanks for sharing
+												</div>
+												<div className="cursor-pointer carousel-item badge hover:shadow-lg">
+													Perfect!
+												</div>
+											</div>
+										</span>
+										<span className="label-text-alt whitespace-nowrap">
+											0 / 200
+										</span>
+									</label>
+								</div>
 								{product.commented.map((comment: any) => {
 									return (
 										<div key={comment.id} className="flex items-start gap-2">
@@ -300,7 +327,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 															<h4 className="text-lg font-bold">
 																{comment.User.username}
 															</h4>
-															<span className="text-sm opacity-60">
+															<span className="text-sm opacity-60 whitespace-nowrap">
 																{new Date(comment.createdAt).toDateString()}
 															</span>
 														</div>
@@ -313,21 +340,22 @@ const Product = async ({ params }: { params: { id: string } }) => {
 																			type="radio"
 																			name={comment.id}
 																			className="mask mask-star"
+																			readOnly
 																			key={comment.id + i}
-																			checked={comment.rate > i}
+																			checked={comment.rate === i + 1}
 																		/>
 																	);
 																})}
 														</div>
 													</div>
-													<div className="flex justify-end flex-1">
+													{/* <div className="flex justify-end flex-1">
 														<div>
 															<Icon
 																className="w-8 h-8 fill-current"
 																name="reply"
 															/>
 														</div>
-													</div>
+													</div> */}
 												</div>
 												<div className="flex gap-2">
 													<p className="line-clamp-4">{comment.content}</p>
@@ -345,11 +373,14 @@ const Product = async ({ params }: { params: { id: string } }) => {
 										</div>
 									);
 								})}
-								<div className="absolute bottom-0 left-0 right-0 rounded-[inherit]">
-									<div className="flex justify-center rounded-[inherit] pt-16 pb-4 bg-gradient-to-b from-transparent via-base-200 to-base-300">
-										<button className="btn btn-primary">Read more</button>
+
+								{product.commented.length > 3 && (
+									<div className="absolute bottom-0 left-0 right-0 rounded-[inherit]">
+										<div className="flex justify-center rounded-[inherit] pt-16 pb-4 bg-gradient-to-b from-transparent via-base-200 to-base-300">
+											<button className="btn btn-primary">Read more</button>
+										</div>
 									</div>
-								</div>
+								)}
 							</div>
 						</div>
 					</div>
