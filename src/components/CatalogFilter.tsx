@@ -1,4 +1,3 @@
-"use client";
 import { Catalog } from "@prisma/client";
 import Link from "next/link";
 
@@ -13,30 +12,32 @@ const CatalogFilter = ({
 		<div className="hidden md:block flex-1 max-w-[250px]">
 			<div className="sticky hidden bg-base-200 sm:block rounded-box top-20">
 				<div className="collapse collapse-arrow">
-					<input type="checkbox" className="peer" />
+					<input
+						type="checkbox"
+						className="peer"
+						defaultChecked={!!currentCatalog}
+					/>
 					<div className="collapse-title">Categories</div>
 					<div className="collapse-content">
-						<div className="space-y-2">
-							{catalogs.map((catalog) => {
-								return (
-									<Link
-										key={catalog.id + catalog.name}
-										href={`/catalog?catalog=${catalog.name}`}
-									>
-										<label className="flex items-center gap-2" id="category">
-											<input
-												type="radio"
-												name="category"
-												className="radio radio-sm"
-												readOnly
-												checked={currentCatalog === catalog.name}
-											/>
-											<p>{catalog.name}</p>
-										</label>
-									</Link>
-								);
-							})}
-						</div>
+						{catalogs.map((catalog) => {
+							return (
+								<Link
+									key={catalog.id + catalog.name}
+									href={`/catalog?catalog=${catalog.name}`}
+								>
+									<label className="flex items-center gap-2 py-1" id="category">
+										<input
+											type="radio"
+											name="category"
+											className="radio radio-sm"
+											readOnly
+											checked={currentCatalog === catalog.name}
+										/>
+										<p>{catalog.name}</p>
+									</label>
+								</Link>
+							);
+						})}
 					</div>
 				</div>
 				<div className="collapse collapse-arrow">
@@ -47,7 +48,6 @@ const CatalogFilter = ({
 							type="range"
 							min="0"
 							max="100"
-							value="25"
 							className="range"
 							readOnly
 							step="25"
