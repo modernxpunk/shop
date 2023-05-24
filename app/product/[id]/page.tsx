@@ -2,6 +2,7 @@ import Image from "next/image";
 import Card from "src/components/Card";
 import Icon from "src/components/Icon";
 import { getProduct, getProducts } from "src/utils/fetch";
+import { cx } from "class-variance-authority";
 
 const Product = async ({ params }: { params: { id: string } }) => {
 	const { id } = params;
@@ -77,7 +78,12 @@ const Product = async ({ params }: { params: { id: string } }) => {
 					</div>
 					<div className="flex-1">
 						<div>
-							<span className="cursor-pointer badge badge-success">
+							<span
+								className={cx(
+									"badge",
+									product.isInStock ? "badge-success" : " badge-error"
+								)}
+							>
 								{product.isInStock ? "in stock" : "not in stock"}
 							</span>
 							{product.tags_name.map((tag: any) => {
@@ -287,8 +293,8 @@ const Product = async ({ params }: { params: { id: string } }) => {
 								<div className="form-control">
 									<div className="relative">
 										<textarea
-											className="w-full pb-10 resize-none h-36 textarea textarea-bordered"
-											placeholder="Bio"
+											className="w-full h-24 pb-10 resize-none textarea textarea-bordered"
+											placeholder="Add comment..."
 										></textarea>
 										<div className="absolute inset-x-0 flex justify-end py-1 bottom-2 right-3">
 											<button className="ml-auto btn btn-sm">Publish</button>
@@ -310,6 +316,11 @@ const Product = async ({ params }: { params: { id: string } }) => {
 										</span>
 									</label>
 								</div>
+								{product.commented.length === 0 && (
+									<div className="text-2xl font-bold text-center">
+										No comment yet
+									</div>
+								)}
 								{product.commented.map((comment: any) => {
 									return (
 										<div key={comment.id} className="flex items-start gap-2">
@@ -361,7 +372,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 													<p className="line-clamp-4">{comment.content}</p>
 												</div>
 												<div className="mt-2">
-													<div className="btn btn-sm btn-outline group">
+													<div className="btn btn-sm group">
 														<Icon
 															className="w-8 h-8 p-1.5 fill-current"
 															name="thumb-up"
