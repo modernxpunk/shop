@@ -6,6 +6,11 @@ const prisma = new PrismaClient();
 
 async function main() {
 	const generate = {
+		iam: {
+			email: "modernpunk@gmail.com",
+			username: "modernpunk",
+			password: "123",
+		},
 		users: 10,
 		catalog: 10,
 		products: 100,
@@ -23,6 +28,14 @@ async function main() {
 			avatar: faker.internet.avatar(),
 			password: faker.internet.password(),
 		}));
+
+	users.push({
+		id: faker.datatype.uuid(),
+		email: generate.iam.email,
+		username: generate.iam.username,
+		avatar: faker.internet.avatar(),
+		password: generate.iam.password,
+	});
 
 	const catalogs = faker.helpers
 		.uniqueArray(faker.commerce.product, generate.catalog)
