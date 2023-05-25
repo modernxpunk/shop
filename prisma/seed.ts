@@ -21,6 +21,7 @@ async function main() {
 			email: email,
 			username: faker.internet.userName(),
 			avatar: faker.internet.avatar(),
+			password: faker.internet.password(),
 		}));
 
 	const catalogs = faker.helpers
