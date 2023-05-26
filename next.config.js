@@ -5,8 +5,7 @@ const nextConfig = {
 	swcMinify: true,
 	experimental: {
 		appDir: true,
-		// serverActions: true,
-		serverComponentsExternalPackages: ["@prisma/client", "bcryptjs"],
+		// serverComponentsExternalPackages: ["@prisma/client", "bcryptjs"],
 	},
 	images: {
 		domains: ["fakeimg.pl", "cloudflare-ipfs.com"],
