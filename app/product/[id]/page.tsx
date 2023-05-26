@@ -3,6 +3,7 @@ import Card from "src/components/Card";
 import Icon from "src/components/Icon";
 import { getProduct, getProducts } from "src/utils/fetch";
 import { cx } from "class-variance-authority";
+import CommentTextarea from "src/components/CommentTextarea";
 
 const Product = async ({ params }: { params: { id: string } }) => {
 	const { id } = params;
@@ -290,32 +291,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 								</div>
 							</div>
 							<div className="relative flex flex-col gap-4 p-4 mt-4 border shadow-lg bg-base-100 rounded-xl border-base-200">
-								<div className="form-control">
-									<div className="relative">
-										<textarea
-											className="w-full h-24 pb-10 resize-none textarea textarea-bordered"
-											placeholder="Add comment..."
-										></textarea>
-										<div className="absolute inset-x-0 flex justify-end py-1 bottom-2 right-3">
-											<button className="ml-auto btn btn-sm">Publish</button>
-										</div>
-									</div>
-									<label className="label">
-										<span className="label-text-alt">
-											<div className="flex flex-1 gap-1 carousel">
-												<div className="cursor-pointer carousel-item badge hover:shadow-lg">
-													Thanks for sharing
-												</div>
-												<div className="cursor-pointer carousel-item badge hover:shadow-lg">
-													Perfect!
-												</div>
-											</div>
-										</span>
-										<span className="label-text-alt whitespace-nowrap">
-											0 / 200
-										</span>
-									</label>
-								</div>
+								<CommentTextarea productId={product.id} />
 								{product.commented.length === 0 && (
 									<div className="text-2xl font-bold text-center">
 										No comment yet
