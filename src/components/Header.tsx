@@ -1,10 +1,17 @@
+import { User } from "@prisma/client";
 import { cx } from "class-variance-authority";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
-import { getAccount, getCart, getWishlist } from "src/utils/fetch";
+import Link from "next/link";
+import { authOptions } from "src/lib/auth";
+import { getCart, getWishlist } from "src/utils/fetch";
 import Icon from "./Icon";
+import SignOut from "./Signout";
 
 const Header = async () => {
-	const account = getAccount();
+	const session = await getServerSession(authOptions);
+	const account = session?.user as User;
+
 	const cart = getCart();
 	const wishlist = getWishlist();
 
@@ -33,12 +40,12 @@ const Header = async () => {
 		<>
 			<div className="bg-base-300">
 				<nav className="container flex items-center justify-between gap-4 py-2">
-					<a href="/">
+					<Link href="/">
 						<Icon
 							className="w-16 h-8 fill-current btn btn-sm btn-primary"
 							name="skull"
 						/>
-					</a>
+					</Link>
 					<div className="flex items-center gap-2">
 						{/* <ThemeButton /> */}
 						<div className="flex items-center dropdown dropdown-end">
@@ -89,23 +96,68 @@ const Header = async () => {
 							/>
 						</label>
 					</div>
-					<div className="items-center hidden gap-2 sm:flex">
-						<div className="flex items-center">
+					<div className="items-center hidden gap-1 sm:flex">
+						<div
+							className={cx(
+								"relative flex items-center",
+								account && "dropdown dropdown-end"
+							)}
+						>
 							<label
-								htmlFor="modal-account"
-								className="indicator btn btn-ghost btn-circle"
+								tabIndex={0}
+								htmlFor={account ? "" : "modal-account"}
+								className="indicator"
 							>
-								{Boolean(account.messages.length) && (
-									<span className="mt-1 mr-1 indicator-item badge">
-										{account.messages.length}
-									</span>
-								)}
 								<div className="btn btn-ghost btn-circle">
-									<Icon
-										name="account"
-										className="w-12 h-12 p-1.5 fill-current"
-									/>
+									{account ? (
+										account?.avatar ? (
+											<div className="avatar online">
+												<div className="w-10 h-10 rounded-full">
+													<Image
+														src={account.avatar || ""}
+														width={40}
+														height={40}
+														alt={"avatar"}
+													/>
+												</div>
+											</div>
+										) : (
+											<div className="avatar placeholder">
+												<div className="w-10 h-10 rounded-full bg-neutral-focus text-neutral-content">
+													<span className="text-xl">K</span>
+												</div>
+											</div>
+										)
+									) : (
+										<Icon
+											name="account"
+											className="w-12 h-12 p-1.5 fill-current"
+										/>
+									)}
 								</div>
+								{account && (
+									<div
+										tabIndex={0}
+										className="flex flex-col mt-12 overflow-auto shadow-2xl dropdown-content bg-base-100 rounded-box"
+									>
+										<div className="flex z-10 items-center sticky w-full -top-4 -mt-0 bg-[inherit] justify-between">
+											<ul className="w-56 menu bg-base-100 rounded-box">
+												<li>
+													<Link href="#">
+														<Icon
+															name="account"
+															className="w-4 h-4 fill-current"
+														/>
+														Setting
+													</Link>
+												</li>
+												<li>
+													<SignOut />
+												</li>
+											</ul>
+										</div>
+									</div>
+								)}
 							</label>
 						</div>
 						<div className="relative flex items-center dropdown dropdown-end">
@@ -129,9 +181,9 @@ const Header = async () => {
 												({wishlist.length})
 											</span>
 										</h4>
-										<a href="/wishlist" className="text-primary">
+										<Link href="/wishlist" className="text-primary">
 											View All
-										</a>
+										</Link>
 									</div>
 									<div className="flex flex-col flex-1 gap-4">
 										{wishlist.length === 0 && (
@@ -216,16 +268,16 @@ const Header = async () => {
 									tabIndex={0}
 									className="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[425px] overflow-auto max-h-[800px] mt-12"
 								>
-									<div className="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-1">
+									<div className="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-10">
 										<h4 className="text-3xl font-bold">
 											My Cart
 											<span className="text-xs font-normal opacity-80">
 												({cart.length})
 											</span>
 										</h4>
-										<a href="cart" className="text-primary">
+										<Link href="/cart" className="text-primary">
 											View All
-										</a>
+										</Link>
 									</div>
 									<div className="flex flex-col flex-1 gap-4">
 										{cart.length === 0 && (

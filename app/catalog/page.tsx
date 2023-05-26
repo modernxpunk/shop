@@ -19,7 +19,7 @@ const Catalogs = async ({
 				<CatalogFilter catalogs={catalogs} currentCatalog={catalog} />
 				<div className="flex-1 rounded-box">
 					<div className="sticky z-20 top-16">
-						<div className="flex items-center justify-between shadow-2xl bg-base-100">
+						<div className="flex items-center justify-between shadow-2xl backdrop-blur-lg">
 							<h1 className="text-[2.5rem] font-bold">
 								Catalog
 								<span className="text-sm opacity-60">({products.length})</span>
