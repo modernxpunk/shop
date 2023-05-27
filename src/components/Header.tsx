@@ -1,19 +1,17 @@
 import { User } from "@prisma/client";
 import { cx } from "class-variance-authority";
-import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { authOptions } from "src/lib/auth";
-import { getCart, getWishlist } from "src/utils/fetch";
 import Icon from "./Icon";
 import SignOut from "./Signout";
 
-const Header = async () => {
-	const session = await getServerSession(authOptions);
-	const account = session?.user as User;
+const Header = () => {
+	const { data } = useSession();
+	const account = data?.user as User;
 
-	const cart = getCart();
-	const wishlist = getWishlist();
+	const cart: any = [];
+	const wishlist: any = [];
 
 	const languages = [
 		{
@@ -191,7 +189,7 @@ const Header = async () => {
 												<h1 className="text-3xl font-bold">Go to shop</h1>
 											</div>
 										)}
-										{wishlist.map((_, i) => {
+										{wishlist.map((_: any, i: number) => {
 											return (
 												<div className="flex items-center gap-4" key={100 * i}>
 													<Image
@@ -285,7 +283,7 @@ const Header = async () => {
 												<h1 className="text-3xl font-bold">Go to shop</h1>
 											</div>
 										)}
-										{cart.map((_, i: number) => {
+										{cart.map((_: any, i: number) => {
 											return (
 												<div className="flex items-center gap-4" key={202 * i}>
 													<div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Icon from "src/components/Icon";
+import Link from "next/link";
 
 const Wishlist = () => {
 	const wishlist = Array(5).fill(0);
@@ -12,9 +13,9 @@ const Wishlist = () => {
 					<Icon className="w-32 h-32 fill-current" name="heart" />
 					<h1 className="text-3xl font-bold text-center">
 						Oops, your wishlist is empty! Go to
-						<a className="underline text-primary" href="/">
+						<Link className="underline text-primary" href="/">
 							shop
-						</a>
+						</Link>
 					</h1>
 				</div>
 			)}

@@ -5,10 +5,22 @@ import { getProduct, getProducts } from "src/utils/fetch";
 import { cx } from "class-variance-authority";
 import CommentTextarea from "src/components/CommentTextarea";
 
-const Product = async ({ params }: { params: { id: string } }) => {
-	const { id } = params;
+export const getServerSideProps = async (req: any) => {
+	const { id } = req.query;
 	const product: any = await getProduct(id);
+	product.commented.map((comment: any) => {
+		comment.createdAt = comment.createdAt.toString();
+	});
 	const products = await getProducts();
+	return {
+		props: {
+			product,
+			products,
+		},
+	};
+};
+
+const Product = ({ product, products }: any) => {
 	return (
 		<>
 			<div className="container">
@@ -375,7 +387,7 @@ const Product = async ({ params }: { params: { id: string } }) => {
 				<div className="mt-4">
 					<h3 className="text-4xl font-bold">Popular products</h3>
 					<div className="grid gap-4 mt-4 grid-cols-item">
-						{products.map((product) => {
+						{products.map((product: any) => {
 							return <Card product={product} key={product.id} />;
 						})}
 					</div>

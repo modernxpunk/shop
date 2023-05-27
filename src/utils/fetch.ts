@@ -1,5 +1,3 @@
-// "use server";
-
 import { prisma } from "./db";
 
 export const getWishlist = () => {
@@ -8,11 +6,6 @@ export const getWishlist = () => {
 
 export const getCart = () => {
 	return Array(3).fill(0);
-};
-export const getAccount = () => {
-	return {
-		messages: Array(0).fill(0),
-	};
 };
 
 export const getProducts = async () => {

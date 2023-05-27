@@ -4,15 +4,20 @@ import CatalogFilter from "src/components/CatalogFilter";
 import Icon from "src/components/Icon";
 import { getCatalogProducts, getCatalogs } from "src/utils/fetch";
 
-const Catalogs = async ({
-	searchParams,
-}: {
-	params: { slug: string };
-	searchParams?: { [key: string]: string | string[] | undefined };
-}) => {
-	const { catalog } = searchParams as any;
+export const getServerSideProps = async (req: any) => {
+	const catalog = req.query.catalog;
 	const catalogs: Catalog[] = await getCatalogs();
 	const products = await getCatalogProducts(catalog);
+	return {
+		props: {
+			catalogs,
+			products,
+			catalog,
+		},
+	};
+};
+
+const Catalogs = ({ catalogs, products, catalog }: any) => {
 	return (
 		<>
 			<div className="container flex h-full gap-4">
@@ -48,7 +53,7 @@ const Catalogs = async ({
 					</div>
 					<div>
 						<div className="grid gap-4 grid-cols-item">
-							{products.map((product) => (
+							{products.map((product: any) => (
 								<Card product={product} key={product.id} />
 							))}
 						</div>

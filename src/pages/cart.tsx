@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Icon from "src/components/Icon";
-import { getCart } from "src/utils/fetch";
+import Link from "next/link";
 
 const Cart = () => {
-	const cart = getCart();
+	const cart: any = [];
 
 	return (
 		<div className="container">
@@ -82,9 +82,9 @@ const Cart = () => {
 							<Icon className="w-32 h-32 fill-current" name="heart" />
 							<h1 className="text-3xl font-bold text-center">
 								Oops, your wishlist is empty! Go to
-								<a className="underline text-primary" href="/">
+								<Link className="underline text-primary" href="/">
 									shop
-								</a>
+								</Link>
 							</h1>
 						</div>
 					)}
@@ -101,7 +101,7 @@ const Cart = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{cart.map((_, i) => {
+									{cart.map((_: any, i: number) => {
 										return (
 											<tr key={i} className="hover">
 												<th>

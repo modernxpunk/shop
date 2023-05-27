@@ -1,5 +1,3 @@
-"use server";
-
 import { prisma } from "../db";
 
 const createComment = async (

@@ -1,32 +1,34 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Card from "src/components/Card";
 import Icon from "src/components/Icon";
 import { getCatalogs, getProducts } from "src/utils/fetch";
 import { getRandomImgSrc } from "src/utils/view";
+import Link from "next/link";
 
-export const metadata: Metadata = {
-	title: "Home",
-	description: "Welcome to Next.js",
-};
-
-export const dynamic = "force-dynamic";
-
-const Home = async () => {
+export const getServerSideProps = async () => {
 	const catalogs = await getCatalogs();
 	const products = await getProducts();
+	return {
+		props: {
+			catalogs,
+			products,
+		},
+	};
+};
+
+const Home = ({ catalogs, products }: any) => {
 	return (
 		<div className="container">
 			<div className="grid grid-rows-2 sm:grid-cols-[max-content,1fr] sm:grid-rows-1 gap-4 sm:h-[400px]">
 				<div className="order-1 sm:-order-none col-span-1 row-span-1 overflow-auto rounded-lg max-h-[250px] sm:max-h-none">
 					<ul className="menu bg-base-200 rounded-box">
-						{catalogs.map((catalog, i) => {
+						{catalogs.map((catalog: any, i: number) => {
 							return (
 								<li key={i}>
-									<a href={`/catalog?catalog=${catalog.name}`}>
+									<Link href={`/catalog?catalog=${catalog.name}`}>
 										<Icon className="w-8 h-8 fill-current" name="controller" />
 										<p className="flex-1">{catalog.name}</p>
-									</a>
+									</Link>
 								</li>
 							);
 						})}
@@ -43,9 +45,9 @@ const Home = async () => {
 						/>
 						<div className="absolute bottom-0 left-0 right-0 flex justify-end">
 							<div className="p-2 ml-auto">
-								<a href="/catalog" className="btn btn-sm">
+								<Link href="/catalog" className="btn btn-sm">
 									see more
-								</a>
+								</Link>
 							</div>
 						</div>
 					</div>
@@ -59,12 +61,12 @@ const Home = async () => {
 							<div key={i}>
 								<div className="flex items-end justify-between gap-4">
 									<h3 className="text-4xl font-bold">Popular products</h3>
-									<a href="/catalog" className="btn btn-sm btn-outline">
+									<Link href="/catalog" className="btn btn-sm btn-outline">
 										View All
-									</a>
+									</Link>
 								</div>
 								<div className="grid gap-4 mt-2 grid-cols-item">
-									{products.map((product) => {
+									{products.map((product: any) => {
 										return <Card product={product} key={product.id} />;
 									})}
 								</div>

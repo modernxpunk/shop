@@ -1,9 +1,9 @@
-"use client";
-import { usePathname } from "next/navigation";
 import Icon from "./Icon";
+import { usePathname } from "next/navigation";
 
 const Breadcrumbs = () => {
 	let pathname = usePathname();
+	pathname = pathname || "";
 	if (pathname.at(-1) === "/") {
 		pathname = pathname.slice(0, pathname.length - 1);
 	}
