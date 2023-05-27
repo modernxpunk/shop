@@ -35,8 +35,7 @@ const CommentTextarea = ({ productId }: { productId: string }) => {
 						);
 					})}
 			</div> */}
-			<div className="flex gap-2">
-				{/* <div className="avatar online">
+			{/* <div className="avatar online">
 					<div className="w-10 h-10 rounded-full">
 						<Image
 							src={account.avatar || ""}
@@ -46,25 +45,24 @@ const CommentTextarea = ({ productId }: { productId: string }) => {
 						/>
 					</div>
 				</div> */}
-				<div className="relative">
-					<textarea
-						className={cx(
-							"w-full h-32 text-base resize-none textarea textarea-bordered",
-							comment.length >= commentLimit ? "textarea-error" : ""
-						)}
-						placeholder="Add comment..."
-						value={comment}
-						onChange={(e) => setComment(e.target.value)}
-					></textarea>
-					<div className="absolute bottom-0 right-0 flex items-center justify-end px-2 py-3">
-						<button
-							className={"btn btn-sm"}
-							disabled={comment.length >= commentLimit}
-							onClick={handleSubmitComment}
-						>
-							Publish
-						</button>
-					</div>
+			<div className="relative">
+				<textarea
+					className={cx(
+						"w-full h-32 text-base resize-none textarea textarea-bordered",
+						comment.length >= commentLimit ? "textarea-error" : ""
+					)}
+					placeholder="Add comment..."
+					value={comment}
+					onChange={(e) => setComment(e.target.value)}
+				></textarea>
+				<div className="absolute bottom-0 right-0 flex items-center justify-end px-2 py-3">
+					<button
+						className={"btn btn-sm"}
+						disabled={comment.length >= commentLimit}
+						onClick={handleSubmitComment}
+					>
+						Publish
+					</button>
 				</div>
 			</div>
 
