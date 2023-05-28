@@ -1,22 +1,31 @@
 import Image from "next/image";
 import Card from "src/components/Card";
 import Icon from "src/components/Icon";
-import { getCatalogs, getProducts } from "src/utils/fetch";
+import { createServerSideHelpers } from "@trpc/react-query/server";
 import { getRandomImgSrc } from "src/utils/view";
 import Link from "next/link";
+import appRouter from "src/server/routes/_app";
+import { trpc } from "src/utils/trpc";
 
 export const getServerSideProps = async () => {
-	const catalogs = await getCatalogs();
-	const products = await getProducts();
+	const ssr = createServerSideHelpers({
+		router: appRouter,
+		ctx: {},
+	});
+
+	await ssr.catalog.getAll.prefetch();
+	await ssr.product.getAll.prefetch();
+
 	return {
 		props: {
-			catalogs,
-			products,
+			trpcState: ssr.dehydrate(),
 		},
 	};
 };
 
-const Home = ({ catalogs, products }: any) => {
+const Home = () => {
+	const { data: catalogs }: any = trpc.catalog.getAll.useQuery();
+	const { data: products }: any = trpc.product.getAll.useQuery();
 	return (
 		<div className="container">
 			<div className="grid grid-rows-2 sm:grid-cols-[max-content,1fr] sm:grid-rows-1 gap-4 sm:h-[400px]">

@@ -1,7 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { prisma } from "src/utils/db";
-import { getUser } from "../utils/fetch";
+import prisma from "src/server/prisma";
+import { getUser } from "../server/fetch";
 
 export const authOptions: NextAuthOptions = {
 	session: {

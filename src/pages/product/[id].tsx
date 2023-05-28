@@ -1,26 +1,34 @@
 import Image from "next/image";
 import Card from "src/components/Card";
 import Icon from "src/components/Icon";
-import { getProduct, getProducts } from "src/utils/fetch";
 import { cx } from "class-variance-authority";
 import CommentTextarea from "src/components/CommentTextarea";
+import { trpc } from "src/utils/trpc";
+import { createServerSideHelpers } from "@trpc/react-query/server";
+import appRouter from "src/server/routes/_app";
 
 export const getServerSideProps = async (req: any) => {
 	const { id } = req.query;
-	const product: any = await getProduct(id);
-	product.commented.map((comment: any) => {
-		comment.createdAt = comment.createdAt.toString();
+
+	const ssr = createServerSideHelpers({
+		router: appRouter,
+		ctx: {},
 	});
-	const products = await getProducts();
+
+	await ssr.product.getAll.prefetch();
+	await ssr.product.getById.prefetch(id);
+
 	return {
 		props: {
-			product,
-			products,
+			id,
+			trpcState: ssr.dehydrate(),
 		},
 	};
 };
 
-const Product = ({ product, products }: any) => {
+const Product = ({ id }: any) => {
+	const { data: product }: any = trpc.product.getById.useQuery(id);
+	const { data: products }: any = trpc.product.getAll.useQuery();
 	return (
 		<>
 			<div className="container">

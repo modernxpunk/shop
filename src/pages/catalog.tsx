@@ -1,23 +1,33 @@
-import { Catalog } from "@prisma/client";
+import { createServerSideHelpers } from "@trpc/react-query/server";
 import Card from "src/components/Card";
 import CatalogFilter from "src/components/CatalogFilter";
 import Icon from "src/components/Icon";
-import { getCatalogProducts, getCatalogs } from "src/utils/fetch";
+import appRouter from "src/server/routes/_app";
+import { trpc } from "src/utils/trpc";
 
 export const getServerSideProps = async (req: any) => {
-	const catalog = req.query.catalog || null;
-	const catalogs: Catalog[] = await getCatalogs();
-	const products = await getCatalogProducts(catalog);
+	const catalog = req.query.catalog || "";
+
+	const ssr = createServerSideHelpers({
+		router: appRouter,
+		ctx: {},
+	});
+
+	await ssr.catalog.getAll.prefetch();
+	await ssr.catalog.getProductByCatalogName.prefetch(catalog);
+
 	return {
 		props: {
-			catalogs,
-			products,
 			catalog,
+			trpcState: ssr.dehydrate(),
 		},
 	};
 };
 
-const Catalogs = ({ catalogs, products, catalog }: any) => {
+const Catalogs = ({ catalog }: any) => {
+	const { data: catalogs }: any = trpc.catalog.getAll.useQuery();
+	const { data: products }: any =
+		trpc.catalog.getProductByCatalogName.useQuery(catalog);
 	return (
 		<>
 			<div className="container flex h-full gap-4">

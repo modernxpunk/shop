@@ -4,7 +4,6 @@ import { cx } from "class-variance-authority";
 import { getSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
-import { createComment } from "src/utils/crud/comment";
 
 const CommentTextarea = ({ productId }: { productId: string }) => {
 	const [comment, setComment] = useState("");

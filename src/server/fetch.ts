@@ -1,4 +1,4 @@
-import { prisma } from "./db";
+import prisma from "./prisma";
 
 export const getUser = async (userId: string) => {
 	const user: any = await prisma.user.findUnique({
@@ -115,7 +115,7 @@ export const getProducts = async () => {
 	return products;
 };
 
-export const getCatalogProducts = async (category: string | null) => {
+export const getCatalogProducts = async (category: string) => {
 	const products = await prisma.product.findMany({
 		select: {
 			catalog_name: {
