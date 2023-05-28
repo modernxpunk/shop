@@ -17,6 +17,8 @@ async function main() {
 		discount: 1,
 		tags: 20,
 		comments: 50,
+		cart: 50,
+		wishlist: 50,
 	};
 
 	const users = faker.helpers
@@ -67,6 +69,20 @@ async function main() {
 		isInStock: faker.datatype.boolean(),
 	}));
 
+	const cart = Array(generate.cart)
+		.fill(0x00)
+		.map(() => ({
+			userId: faker.helpers.arrayElement(users).id,
+			productId: faker.helpers.arrayElement(products).id,
+		}));
+
+	const wishlist = Array(generate.cart)
+		.fill(0x00)
+		.map(() => ({
+			userId: faker.helpers.arrayElement(users).id,
+			productId: faker.helpers.arrayElement(products).id,
+		}));
+
 	const tags = Array(generate.tags)
 		.fill(0x00)
 		.map(() => ({
@@ -99,6 +115,14 @@ async function main() {
 	});
 	await prisma.product.createMany({
 		data: products,
+		skipDuplicates: true,
+	});
+	await prisma.cart.createMany({
+		data: cart,
+		skipDuplicates: true,
+	});
+	await prisma.wishlist.createMany({
+		data: wishlist,
 		skipDuplicates: true,
 	});
 	await prisma.tag.createMany({

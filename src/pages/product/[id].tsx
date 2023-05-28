@@ -110,8 +110,7 @@ const Product = ({ product, products }: any) => {
 						<div className="mt-2">
 							<p>{product.description}</p>
 						</div>
-						<div className="divider"></div>
-						<div className="flex items-center justify-between">
+						<div className="flex items-center justify-between my-4">
 							<div>
 								<p className="text-4xl font-bold">${product.price}</p>
 							</div>
@@ -130,7 +129,6 @@ const Product = ({ product, products }: any) => {
 								</button>
 							</div>
 						</div>
-						<div className="divider"></div>
 						<div className="flex flex-col gap-4">
 							{Array(1)
 								.fill(0)

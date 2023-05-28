@@ -5,7 +5,7 @@ import Icon from "src/components/Icon";
 import { getCatalogProducts, getCatalogs } from "src/utils/fetch";
 
 export const getServerSideProps = async (req: any) => {
-	const catalog = req.query.catalog;
+	const catalog = req.query.catalog || null;
 	const catalogs: Catalog[] = await getCatalogs();
 	const products = await getCatalogProducts(catalog);
 	return {
@@ -24,7 +24,7 @@ const Catalogs = ({ catalogs, products, catalog }: any) => {
 				<CatalogFilter catalogs={catalogs} currentCatalog={catalog} />
 				<div className="flex-1 rounded-box">
 					<div className="sticky z-20 top-16">
-						<div className="flex items-center justify-between shadow-2xl backdrop-blur-lg">
+						<div className="flex items-center justify-between backdrop-blur-lg">
 							<h1 className="text-[2.5rem] font-bold">
 								Catalog
 								<span className="text-sm opacity-60">({products.length})</span>

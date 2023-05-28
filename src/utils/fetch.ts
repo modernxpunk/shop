@@ -1,11 +1,98 @@
 import { prisma } from "./db";
 
-export const getWishlist = () => {
-	return Array(5).fill(0);
+export const getUser = async (userId: string) => {
+	const user: any = await prisma.user.findUnique({
+		where: {
+			id: userId,
+		},
+		select: {
+			avatar: true,
+			Cart: {
+				select: {
+					product: {
+						select: {
+							id: true,
+							name: true,
+							image: true,
+							price: true,
+							isInStock: true,
+							catalog_name: true,
+							view: true,
+							commented: {
+								select: {
+									rate: true,
+								},
+							},
+						},
+					},
+				},
+			},
+			Wishlist: {
+				select: {
+					product: {
+						select: {
+							id: true,
+							name: true,
+							image: true,
+							price: true,
+							isInStock: true,
+							catalog_name: true,
+							view: true,
+							commented: {
+								select: {
+									rate: true,
+								},
+							},
+						},
+					},
+				},
+			},
+			id: true,
+			email: true,
+			username: true,
+		},
+	});
+	return user;
 };
 
-export const getCart = () => {
-	return Array(3).fill(0);
+export const getWishlist = async (userId: string) => {
+	const wishlist = await prisma.wishlist.findMany({
+		select: {
+			product: {
+				include: {
+					commented: {
+						select: {
+							rate: true,
+						},
+					},
+				},
+			},
+		},
+		where: {
+			userId: userId,
+		},
+	});
+	return wishlist;
+};
+
+export const getCart = async (userId: string) => {
+	const cart = await prisma.cart.findMany({
+		select: {
+			product: {
+				include: {
+					commented: {
+						select: {
+							rate: true,
+						},
+					},
+				},
+			},
+		},
+		where: {
+			userId: userId,
+		},
+	});
+	return cart;
 };
 
 export const getProducts = async () => {
@@ -28,7 +115,7 @@ export const getProducts = async () => {
 	return products;
 };
 
-export const getCatalogProducts = async (category: string) => {
+export const getCatalogProducts = async (category: string | null) => {
 	const products = await prisma.product.findMany({
 		select: {
 			catalog_name: {
@@ -47,11 +134,13 @@ export const getCatalogProducts = async (category: string) => {
 				},
 			},
 		},
-		where: {
-			catalog_name: {
-				name: category,
+		...(category && {
+			where: {
+				catalog_name: {
+					name: category,
+				},
 			},
-		},
+		}),
 	});
 	return products;
 };

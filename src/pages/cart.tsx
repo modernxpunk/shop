@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Icon from "src/components/Icon";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const Cart = () => {
-	const cart: any = [];
+	const { data }: { data: any } = useSession();
+	const cart = data?.user?.Cart || [];
 
 	return (
 		<div className="container">
@@ -101,9 +103,9 @@ const Cart = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{cart.map((_: any, i: number) => {
+									{cart.map(({ product }: any) => {
 										return (
-											<tr key={i} className="hover">
+											<tr key={product.id + product.name} className="hover">
 												<th>
 													<div className="flex items-center justify-center">
 														<label className="cursor-pointer">✕</label>
@@ -122,9 +124,11 @@ const Cart = () => {
 															</div>
 														</div>
 														<div className="flex-1">
-															<div className="font-bold">STANDOUT BACKPACK</div>
+															<div className="font-bold">
+																{product.catalog_name.name}
+															</div>
 															<div className="text-sm opacity-50">
-																BASEBALL PACK
+																{product.name}
 															</div>
 														</div>
 													</div>
@@ -142,7 +146,7 @@ const Cart = () => {
 												</td>
 												<td>
 													<p className="text-3xl font-bold text-right">
-														$12.59
+														${product.price}
 													</p>
 												</td>
 											</tr>
@@ -153,7 +157,10 @@ const Cart = () => {
 							<div className="mt-4">
 								<div className="flex items-center justify-between">
 									<p className="font-bold opacity-60">Total</p>
-									<p className="text-3xl font-bold">$120.49</p>
+									<p className="text-3xl font-bold">
+										$
+										{cart.reduce((a: number, b: any) => a + b.product.price, 0)}
+									</p>
 								</div>
 							</div>
 							<button className="w-full mt-4 btn">Confirm Order</button>

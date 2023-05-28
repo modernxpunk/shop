@@ -10,30 +10,34 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
-  username  String?   @unique
+  id        String     @id @default(cuid())
+  email     String     @unique
+  username  String?    @unique
   password  String
   avatar    String?
   comments  Comment[]
-  createdAt DateTime  @default(now())
+  createdAt DateTime   @default(now())
+  Cart      Cart[]
+  Wishlist  Wishlist[]
 }
 
 model Product {
-  id           String    @id @default(cuid())
+  id           String     @id @default(cuid())
   name         String
   price        Int
   image        String
   description  String
   poster       String
   commented    Comment[]
-  catalog_name Catalog   @relation(fields: [catalogId], references: [id])
-  discount     Discount? @relation(fields: [discountId], references: [id])
+  catalog_name Catalog    @relation(fields: [catalogId], references: [id])
+  discount     Discount?  @relation(fields: [discountId], references: [id])
   tags_name    Tag[]
-  isInStock    Boolean   @default(true)
-  view         Int?      @default(0)
+  isInStock    Boolean    @default(true)
+  view         Int?       @default(0)
   catalogId    String
-  discountId   String?   @unique
+  discountId   String?    @unique
+  Cart         Cart[]
+  Wishlist     Wishlist[]
 }
 
 model Comment {
@@ -66,4 +70,24 @@ model Discount {
   isActive Boolean?  @default(true)
   percent  Int?
   Product  Product[]
+}
+
+model Cart {
+  id        String  @id @default(cuid())
+  user      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  userId    String
+  productId String
+
+  @@map("cart")
+}
+
+model Wishlist {
+  id        String  @id @default(cuid())
+  user      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  userId    String
+  productId String
+
+  @@map("wishlist")
 }

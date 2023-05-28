@@ -8,10 +8,10 @@ import SignOut from "./Signout";
 
 const Header = () => {
 	const { data } = useSession();
-	const account = data?.user as User;
 
-	const cart: any = [];
-	const wishlist: any = [];
+	const account: any = data?.user as User;
+	const cart = account?.Cart || [];
+	const wishlist = account?.Wishlist || [];
 
 	const languages = [
 		{
@@ -189,44 +189,58 @@ const Header = () => {
 												<h1 className="text-3xl font-bold">Go to shop</h1>
 											</div>
 										)}
-										{wishlist.map((_: any, i: number) => {
+										{wishlist.map(({ product }: any) => {
+											const rate = (
+												product.commented.reduce(
+													(a: number, b: any & { rate: number }) => a + b.rate,
+													0
+												) / product.commented.length || 0
+											).toFixed(1);
 											return (
-												<div className="flex items-center gap-4" key={100 * i}>
-													<Image
-														width="115"
-														height="115"
-														className="object-cover rounded-lg"
-														src="https://fakeimg.pl/115x115/"
-														alt={""}
-													/>
+												<div
+													className="flex items-center gap-4"
+													key={product.id + product.catalogId}
+												>
 													<div>
+														<Image
+															width="115"
+															height="115"
+															className="object-cover rounded-lg"
+															src={product.image}
+															alt={product.name}
+														/>
+													</div>
+													<div className="flex-1">
 														<h4 className="text-sm font-bold opacity-80">
-															BASEBALL PACK
+															{product.catalog_name.name}
 														</h4>
 														<h3 className="text-xl font-bold">
-															STANDOUT BACKPACK
+															{product.name}
 														</h3>
-														<div className="flex flex-wrap my-2 text-sm gap-x-4">
-															{[
-																{ name: "size", value: "large" },
-																{ name: "color", value: "white" },
-																{ name: "color", value: "white" },
-															].map(({ name, value }, i) => {
-																return (
-																	<div key={name + value + i}>
-																		<p className="space-x-1">
-																			<>
-																				<span className="opacity-80">
-																					{name}:
-																				</span>
-																				<span>{value}</span>
-																			</>
-																		</p>
-																	</div>
-																);
-															})}
+														<div className="flex items-center">
+															<div className="rating">
+																{Array(5)
+																	.fill(0x00)
+																	.map((_, i: number) => {
+																		return (
+																			<input
+																				type="radio"
+																				name={"product_rank_" + product.id}
+																				className="mask mask-star"
+																				key={`product_rank_${product.id}_${i}`}
+																				readOnly
+																				checked={i + 1 === Math.floor(+rate)}
+																			/>
+																		);
+																	})}
+															</div>
+															<div className="flex items-center">
+																<p className="flex-1 ml-1 text-sm opacity-60">
+																	{product.view} view
+																</p>
+															</div>
 														</div>
-														<div className="flex items-center justify-between">
+														{/* <div className="flex items-center justify-between">
 															<div className="flex gap-2">
 																<button className="btn btn-square btn-xs">
 																	-
@@ -234,16 +248,18 @@ const Header = () => {
 																<input
 																	className="w-16 text-center input input-xs bg-base-200"
 																	type="text"
-																	// value="1"
+																	value="1"
 																/>
 																<button className="btn btn-square btn-xs">
 																	+
 																</button>
 															</div>
 															<div>
-																<p className="text-3xl font-bold">$12.59</p>
+																<p className="text-3xl font-bold">
+																	${product.price}
+																</p>
 															</div>
-														</div>
+														</div> */}
 													</div>
 												</div>
 											);
@@ -283,46 +299,58 @@ const Header = () => {
 												<h1 className="text-3xl font-bold">Go to shop</h1>
 											</div>
 										)}
-										{cart.map((_: any, i: number) => {
+										{cart.map(({ product }: any) => {
+											const rate = (
+												product.commented.reduce(
+													(a: number, b: any & { rate: number }) => a + b.rate,
+													0
+												) / product.commented.length || 0
+											).toFixed(1);
 											return (
-												<div className="flex items-center gap-4" key={202 * i}>
+												<div
+													className="flex items-center gap-4"
+													key={product.id + product.catalogId}
+												>
 													<div>
 														<Image
 															width="115"
 															height="115"
 															className="object-cover rounded-lg"
-															src="https://fakeimg.pl/115x115/"
-															alt={""}
+															src={product.image}
+															alt={product.name}
 														/>
 													</div>
-													<div>
+													<div className="flex-1">
 														<h4 className="text-sm font-bold opacity-80">
-															BASEBALL PACK
+															{product.catalog_name.name}
 														</h4>
 														<h3 className="text-xl font-bold">
-															STANDOUT BACKPACK
+															{product.name}
 														</h3>
-														<div className="flex flex-wrap my-2 text-sm gap-x-4">
-															{[
-																{ name: "size", value: "large" },
-																{ name: "color", value: "white" },
-																{ name: "color", value: "white" },
-															].map(({ name, value }, i: number) => {
-																return (
-																	<div key={303 * i}>
-																		<p className="space-x-1">
-																			<>
-																				<span className="opacity-80">
-																					{name}:
-																				</span>
-																				<span>{value}</span>
-																			</>
-																		</p>
-																	</div>
-																);
-															})}
+														<div className="flex items-center">
+															<div className="rating">
+																{Array(5)
+																	.fill(0x00)
+																	.map((_, i: number) => {
+																		return (
+																			<input
+																				type="radio"
+																				name={"product_rank_" + product.id}
+																				className="mask mask-star"
+																				key={`product_rank_${product.id}_${i}`}
+																				readOnly
+																				checked={i + 1 === Math.floor(+rate)}
+																			/>
+																		);
+																	})}
+															</div>
+															<div className="flex items-center">
+																<p className="flex-1 ml-1 text-sm opacity-60">
+																	{product.view} view
+																</p>
+															</div>
 														</div>
-														<div className="flex items-center justify-between">
+														{/* <div className="flex items-center justify-between">
 															<div className="flex gap-2">
 																<button className="btn btn-square btn-xs">
 																	-
@@ -330,16 +358,18 @@ const Header = () => {
 																<input
 																	className="w-16 text-center input input-xs bg-base-200"
 																	type="text"
-																	// value="1"
+																	value="1"
 																/>
 																<button className="btn btn-square btn-xs">
 																	+
 																</button>
 															</div>
 															<div>
-																<p className="text-3xl font-bold">$12.59</p>
+																<p className="text-3xl font-bold">
+																	${product.price}
+																</p>
 															</div>
-														</div>
+														</div> */}
 													</div>
 												</div>
 											);
