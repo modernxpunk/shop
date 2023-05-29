@@ -6,13 +6,14 @@ import CommentTextarea from "src/components/CommentTextarea";
 import { trpc } from "src/utils/trpc";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import appRouter from "src/server/routes/_app";
+import { createContext } from "src/server/context";
 
 export const getServerSideProps = async (req: any) => {
 	const { id } = req.query;
 
 	const ssr = createServerSideHelpers({
 		router: appRouter,
-		ctx: {},
+		ctx: await createContext(req),
 	});
 
 	await ssr.product.getAll.prefetch();
@@ -21,7 +22,7 @@ export const getServerSideProps = async (req: any) => {
 	return {
 		props: {
 			id,
-			trpcState: ssr.dehydrate(),
+			trpcState: JSON.parse(JSON.stringify(ssr.dehydrate())),
 		},
 	};
 };
