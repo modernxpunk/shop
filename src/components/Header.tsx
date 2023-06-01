@@ -1,38 +1,42 @@
-import { User } from "@prisma/client";
 import { cx } from "class-variance-authority";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { trpc } from "src/utils/trpc";
 import Icon from "./Icon";
 import SignOut from "./Signout";
+
+const languages = [
+	{
+		image:
+			"https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ec-1f1e7.svg",
+		label: "English",
+		isActive: true,
+	},
+	{
+		image:
+			"https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ea-1f1f8.svg",
+		label: "Español",
+		isActive: false,
+	},
+	{
+		image:
+			"https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1eb-1f1f7.svg",
+		label: "Français",
+		isActive: false,
+	},
+];
 
 const Header = () => {
 	const { data } = useSession();
 
-	const account: any = data?.user as User;
-	const cart = account?.Cart || [];
-	const wishlist = account?.Wishlist || [];
+	const account: any = data?.user;
+	const cart: any = [];
+	const wishlist: any = [];
 
-	const languages = [
-		{
-			image:
-				"https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ec-1f1e7.svg",
-			label: "English",
-			isActive: true,
-		},
-		{
-			image:
-				"https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ea-1f1f8.svg",
-			label: "Español",
-			isActive: false,
-		},
-		{
-			image:
-				"https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1eb-1f1f7.svg",
-			label: "Français",
-			isActive: false,
-		},
-	];
+	const { data: c, refetch } = trpc.cart.get.useQuery(undefined, {
+		enabled: false,
+	});
 
 	return (
 		<>
