@@ -7,6 +7,7 @@ import { trpc } from "src/utils/trpc";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import appRouter from "src/server/routes/_app";
 import { createContext } from "src/server/context";
+import superjson from "superjson";
 
 export const getServerSideProps = async (req: any) => {
 	const { id } = req.query;
@@ -14,6 +15,7 @@ export const getServerSideProps = async (req: any) => {
 	const ssr = createServerSideHelpers({
 		router: appRouter,
 		ctx: await createContext(req),
+		transformer: superjson,
 	});
 
 	await ssr.product.getAll.prefetch();
