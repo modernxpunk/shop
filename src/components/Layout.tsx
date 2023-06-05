@@ -15,9 +15,9 @@ export default function Layout({ children }: any) {
 				/>
 				<div
 					className="flex flex-col min-h-screen drawer-content"
-					style={{
-						overflow: "overlay",
-					}}
+					// style={{
+					// 	overflow: "overlay",
+					// }}
 				>
 					<Header />
 					<Breadcrumbs />
