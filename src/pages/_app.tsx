@@ -1,8 +1,8 @@
 import { trpc } from "../utils/trpc";
-import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
 import Layout from "src/components/Layout";
 import "../styles/globals.css";
+import { SessionProvider } from "next-auth/react";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	return (

@@ -1,11 +1,36 @@
 import Image from "next/image";
 import Icon from "src/components/Icon";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { createServerSideHelpers } from "@trpc/react-query/server";
+import appRouter from "src/server/routes/_app";
+import { createContext } from "src/server/context";
+import { trpc } from "src/utils/trpc";
+import superjson from "superjson";
+
+export const getServerSideProps = async (req: any) => {
+	const ssr = createServerSideHelpers({
+		router: appRouter,
+		ctx: await createContext(req),
+		transformer: superjson,
+	});
+
+	await ssr.cart.get.prefetch();
+
+	return {
+		props: {
+			trpcState: ssr.dehydrate(),
+		},
+	};
+};
 
 const Cart = () => {
-	const { data }: { data: any } = useSession();
-	const cart = data?.user?.Cart || [];
+	const { data: cart, refetch: refetchCart } = trpc.cart.get.useQuery();
+
+	const deleteCart = trpc.cart.delete.useMutation({
+		onSuccess: async () => {
+			await refetchCart();
+		},
+	});
 
 	return (
 		<div className="container">
@@ -79,7 +104,7 @@ const Cart = () => {
 					</div>
 				</div>
 				<div className="flex-1">
-					{cart.length === 0 && (
+					{cart && cart.length === 0 && (
 						<div className="flex flex-col items-center justify-center">
 							<Icon className="w-32 h-32 fill-current" name="heart" />
 							<h1 className="text-3xl font-bold text-center">
@@ -90,7 +115,7 @@ const Cart = () => {
 							</h1>
 						</div>
 					)}
-					{cart.length !== 0 && (
+					{cart && cart.length !== 0 && (
 						<div>
 							<h2 className="mb-2 text-lg font-bold">Order Summary</h2>
 							<table className="table w-full overflow-hidden table-compact">
@@ -103,12 +128,17 @@ const Cart = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{cart.map(({ product }: any) => {
+									{cart.map(({ id, product }: any) => {
 										return (
-											<tr key={product.id + product.name} className="hover">
+											<tr key={id} className="hover">
 												<th>
-													<div className="flex items-center justify-center">
-														<label className="cursor-pointer">✕</label>
+													<div className="flex items-center justify-center w-4 h-4">
+														<label
+															className="flex-1 cursor-pointer"
+															onClick={() => deleteCart.mutate(id)}
+														>
+															✕
+														</label>
 													</div>
 												</th>
 												<td>
@@ -139,7 +169,8 @@ const Cart = () => {
 														<input
 															className="w-16 text-center input input-xs bg-base-200"
 															type="text"
-															value="1"
+															readOnly
+															// value="1"
 														/>
 														<button className="btn btn-square btn-xs">+</button>
 													</div>

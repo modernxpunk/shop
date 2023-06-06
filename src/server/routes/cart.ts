@@ -1,12 +1,24 @@
-import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
-import { getCart } from "../fetch";
+import { router, protectedProcedure } from "../trpc";
+import { getCart, addProductToCart, deleteProductFromCartById } from "../fetch";
+import z from "zod";
 
 const cartRouter = router({
-	getCartByUserId: publicProcedure.input(z.string()).query(async (req) => {
-		const id = req.input;
+	get: protectedProcedure.query(async (opts) => {
+		const user: any = opts.ctx.session?.user;
+		const id = user?.id;
 		const cart = await getCart(id);
 		return cart;
+	}),
+	add: protectedProcedure.input(z.string()).mutation(async (opts) => {
+		const user: any = opts.ctx.session?.user;
+		const userId = user?.id;
+		const productId = opts.input;
+		const newProductInCart = await addProductToCart(userId, productId);
+		return newProductInCart;
+	}),
+	delete: protectedProcedure.input(z.string()).mutation(async (req) => {
+		const productId = req.input;
+		await deleteProductFromCartById(productId);
 	}),
 });
 

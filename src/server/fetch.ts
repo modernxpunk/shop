@@ -58,8 +58,16 @@ export const getUser = async (userId: string) => {
 export const getWishlist = async (userId: string) => {
 	const wishlist = await prisma.wishlist.findMany({
 		select: {
+			id: true,
 			product: {
-				include: {
+				select: {
+					id: true,
+					name: true,
+					image: true,
+					price: true,
+					isInStock: true,
+					catalog_name: true,
+					view: true,
 					commented: {
 						select: {
 							rate: true,
@@ -75,11 +83,31 @@ export const getWishlist = async (userId: string) => {
 	return wishlist;
 };
 
+export const addProductToWishlist = async (
+	userId: string,
+	productId: string
+) => {
+	await prisma.wishlist.create({
+		data: {
+			userId,
+			productId,
+		},
+	});
+};
+
 export const getCart = async (userId: string) => {
 	const cart = await prisma.cart.findMany({
 		select: {
+			id: true,
 			product: {
-				include: {
+				select: {
+					id: true,
+					name: true,
+					image: true,
+					price: true,
+					isInStock: true,
+					catalog_name: true,
+					view: true,
 					commented: {
 						select: {
 							rate: true,
@@ -93,6 +121,31 @@ export const getCart = async (userId: string) => {
 		},
 	});
 	return cart;
+};
+
+export const addProductToCart = async (userId: string, productId: string) => {
+	await prisma.cart.create({
+		data: {
+			userId,
+			productId,
+		},
+	});
+};
+
+export const deleteProductFromCartById = async (productId: string) => {
+	await prisma.cart.deleteMany({
+		where: {
+			productId,
+		},
+	});
+};
+
+export const deleteProductFromWishlistById = async (productId: string) => {
+	await prisma.wishlist.deleteMany({
+		where: {
+			productId,
+		},
+	});
 };
 
 export const getProducts = async () => {
