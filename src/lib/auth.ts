@@ -2,6 +2,7 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "src/server/prisma";
 import { getUser } from "../server/fetch";
+import { User } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
 	session: {
@@ -18,7 +19,7 @@ export const authOptions: NextAuthOptions = {
 				email: { label: "Email", type: "email", placeholder: "Email..." },
 				password: { label: "Password", type: "password" },
 			},
-			async authorize(credentials, req) {
+			async authorize(credentials) {
 				const { email, password, is_register }: any = credentials;
 				if (is_register === "true") {
 					const newUser = await prisma.user.create({
@@ -46,7 +47,12 @@ export const authOptions: NextAuthOptions = {
 		async session({ session, token }) {
 			if (token) {
 				const user = await getUser(token.sub as string);
-				session.user = user;
+				session.user = {
+					id: user.id,
+					avatar: user.avatar || null,
+					email: user.email,
+					username: user.username,
+				} as User;
 			}
 			return session;
 		},
