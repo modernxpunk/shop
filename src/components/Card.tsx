@@ -1,9 +1,68 @@
 import { Product } from "@prisma/client";
 import Image from "next/image";
-import Link from "next/link";
+import { trpc } from "src/utils/trpc";
 import Icon from "./Icon";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Card = ({ product }: { product: any }) => {
+	const router = useRouter();
+	const { data } = useSession();
+
+	const { data: cart } = trpc.cart.get.useQuery(undefined, {
+		enabled: !!data?.user,
+	});
+	const { data: wishlist } = trpc.wishlist.get.useQuery(undefined, {
+		enabled: !!data?.user,
+	});
+
+	const isProdictInCart = cart?.some(
+		(cartProduct) => cartProduct.product.id === product.id
+	);
+
+	const isProdictInWishlist = wishlist?.some(
+		(wishlistProduct) => wishlistProduct.product.id === product.id
+	);
+
+	const utils = trpc.useContext();
+
+	const { mutate: addProductToCart } = trpc.cart.add.useMutation({
+		onSuccess() {
+			utils.cart.get.invalidate();
+		},
+	});
+	const { mutate: removeProductFromCart } = trpc.cart.delete.useMutation({
+		onSuccess() {
+			utils.cart.get.invalidate();
+		},
+	});
+
+	const { mutate: addProductToWishlist } = trpc.wishlist.add.useMutation({
+		onSuccess() {
+			utils.wishlist.get.invalidate();
+		},
+	});
+	const { mutate: removeProductFromWishlist } =
+		trpc.wishlist.delete.useMutation({
+			onSuccess() {
+				utils.wishlist.get.invalidate();
+			},
+		});
+
+	const handleClickWishlist = async (e: any) => {
+		e.stopPropagation();
+		isProdictInWishlist
+			? removeProductFromWishlist(product.id)
+			: addProductToWishlist(product.id);
+	};
+
+	const handleClickCart = async (e: any) => {
+		e.stopPropagation();
+		isProdictInCart
+			? removeProductFromCart(product.id)
+			: addProductToCart(product.id);
+	};
+
 	const rate = (
 		product.commented.reduce(
 			(a: number, b: Product & { rate: number }) => a + b.rate,
@@ -12,23 +71,44 @@ const Card = ({ product }: { product: any }) => {
 	).toFixed(1);
 
 	return (
-		<Link
-			href={"/product/" + product.id}
-			className="flex flex-col overflow-hidden transition-shadow rounded-lg shadow-lg group hover:shadow-xl"
+		<button
+			className="flex flex-col flex-1 w-full overflow-hidden transition-shadow rounded-lg shadow-lg bg-base-200 group hover:shadow-xl"
+			onClick={() => router.push("/product/" + product.id)}
 		>
-			<div className="relative flex items-center justify-center flex-1 m-2 mb-0">
-				<div className="absolute top-0 right-0 z-10 hidden rounded-box group-hover:flex animate-appear btn-group btn-group-vertical">
-					<div className="btn btn-sm btn-circle">
-						<Icon
-							className="w-8 h-8 p-1 fill-current"
-							name="cards-heart-outline"
-						/>
+			<div className="relative flex items-center justify-center flex-1 w-full p-2 pb-0">
+				<div className="absolute top-0 right-0 hidden p-2 rounded-box group-hover:flex animate-appear btn-group btn-group-vertical">
+					<div className="btn btn-sm btn-circle" onClick={handleClickWishlist}>
+						{!data?.user ? (
+							<label htmlFor="modal-account">
+								<Icon
+									className="w-8 h-8 p-1 fill-current"
+									name={isProdictInWishlist ? "heart-fill" : "heart-outline"}
+								/>
+							</label>
+						) : (
+							<Icon
+								className="w-8 h-8 p-1 fill-current"
+								name={isProdictInWishlist ? "heart-fill" : "heart-outline"}
+							/>
+						)}
 					</div>
-					<div className="btn btn-sm btn-circle">
-						<Icon className="w-8 h-8 p-1 fill-current" name="cart-outline" />
+					<div className="btn btn-sm btn-circle" onClick={handleClickCart}>
+						{!data?.user ? (
+							<label htmlFor="modal-account">
+								<Icon
+									className="w-8 h-8 p-1 fill-current"
+									name={isProdictInCart ? "cart" : "cart-outline"}
+								/>
+							</label>
+						) : (
+							<Icon
+								className="w-8 h-8 p-1 fill-current"
+								name={isProdictInCart ? "cart" : "cart-outline"}
+							/>
+						)}
 					</div>
 				</div>
-				<div className="flex bg-base-300 flex-1 h-[150px] justify-center items-center rounded-lg overflow-hidden">
+				<div className="flex bg-base-300 h-[150px] justify-center items-center rounded-lg overflow-hidden">
 					<Image
 						width={400}
 						height={400}
@@ -38,12 +118,12 @@ const Card = ({ product }: { product: any }) => {
 					/>
 				</div>
 			</div>
-			<div className="flex items-stretch p-2">
+			<div className="flex items-stretch w-full p-2 text-left">
 				<div className="flex-1">
 					<p className="opacity-60 line-clamp-1">{product.catalog_name.name}</p>
 					<p className="font-bold line-clamp-2">{product.name}</p>
 					<div className="flex items-center justify-between">
-						<div className="flex items-center">
+						<div className="flex items-center items-">
 							<div className="rating">
 								{Array(5)
 									.fill(0x00)
@@ -72,7 +152,7 @@ const Card = ({ product }: { product: any }) => {
 					</div>
 				</div>
 			</div>
-		</Link>
+		</button>
 	);
 };
 
