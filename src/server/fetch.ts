@@ -132,17 +132,25 @@ export const addProductToCart = async (userId: string, productId: string) => {
 	});
 };
 
-export const deleteProductFromCartById = async (productId: string) => {
+export const deleteProductFromCartById = async (
+	userId: string,
+	productId: string
+) => {
 	await prisma.cart.deleteMany({
 		where: {
+			userId,
 			productId,
 		},
 	});
 };
 
-export const deleteProductFromWishlistById = async (productId: string) => {
+export const deleteProductFromWishlistById = async (
+	userId: string,
+	productId: string
+) => {
 	await prisma.wishlist.deleteMany({
 		where: {
+			userId,
 			productId,
 		},
 	});

@@ -16,9 +16,11 @@ const cartRouter = router({
 		const newProductInCart = await addProductToCart(userId, productId);
 		return newProductInCart;
 	}),
-	delete: protectedProcedure.input(z.string()).mutation(async (req) => {
-		const productId = req.input;
-		await deleteProductFromCartById(productId);
+	delete: protectedProcedure.input(z.string()).mutation(async (opts) => {
+		const user: any = opts.ctx.session?.user;
+		const userId = user?.id;
+		const productId = opts.input;
+		await deleteProductFromCartById(userId, productId);
 	}),
 });
 

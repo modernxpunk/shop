@@ -17,9 +17,11 @@ const wishlistRouter = router({
 		const newProductInCart = await addProductToWishlist(userId, productId);
 		return newProductInCart;
 	}),
-	delete: protectedProcedure.input(z.string()).mutation(async (req) => {
-		const productId = req.input;
-		await deleteProductFromWishlistById(productId);
+	delete: protectedProcedure.input(z.string()).mutation(async (opts) => {
+		const user: any = opts.ctx.session?.user;
+		const userId = user?.id;
+		const productId = opts.input;
+		await deleteProductFromWishlistById(userId, productId);
 	}),
 });
 

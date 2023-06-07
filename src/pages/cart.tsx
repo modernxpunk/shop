@@ -135,7 +135,7 @@ const Cart = () => {
 													<div className="flex items-center justify-center w-4 h-4">
 														<label
 															className="flex-1 cursor-pointer"
-															onClick={() => deleteCart.mutate(id)}
+															onClick={() => deleteCart.mutate(product.id)}
 														>
 															✕
 														</label>
