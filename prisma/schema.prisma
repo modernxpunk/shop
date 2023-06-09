@@ -78,6 +78,7 @@ model Cart {
   product   Product @relation(fields: [productId], references: [id])
   userId    String
   productId String
+  count     Int     @default(1)
 
   @@map("cart")
 }
@@ -88,6 +89,7 @@ model Wishlist {
   product   Product @relation(fields: [productId], references: [id])
   userId    String
   productId String
+  count     Int     @default(1)
 
   @@map("wishlist")
 }
