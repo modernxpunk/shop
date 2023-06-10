@@ -113,6 +113,7 @@ export const getCommentsByProductId = async (productId: string) => {
 				select: {
 					avatar: true,
 					username: true,
+					email: true,
 				},
 			},
 		},

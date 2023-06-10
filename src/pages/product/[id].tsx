@@ -474,9 +474,9 @@ const Product = ({ id }: any) => {
 												<div className="avatar online placeholder">
 													<div className="w-12 h-12 rounded-full bg-neutral-focus text-neutral-content">
 														<span className="text-xl">
-															{account.email
-																? account.email[0]
-																: account.username[0]}
+															{account.username
+																? account.username[0].toUpperCase()
+																: account.email[0].toUpperCase()}
 														</span>
 													</div>
 												</div>
@@ -580,13 +580,31 @@ const Product = ({ id }: any) => {
 								{comments.slice(0, 3).map((comment: any) => {
 									return (
 										<div key={comment.id} className="flex items-start gap-2">
-											<Image
-												className="object-cover mask mask-circle"
-												width="48"
-												height="48"
-												src={comment.User.avatar}
-												alt="avatar"
-											/>
+											<div>
+												{comment.User.avatar ? (
+													<div className="avatar online">
+														<div className="w-12 h-12 rounded-full bg-base-200">
+															<Image
+																src={comment.User.avatar}
+																width={40}
+																height={40}
+																alt={"avatar"}
+															/>
+														</div>
+													</div>
+												) : (
+													<div className="avatar online placeholder">
+														<div className="w-12 h-12 rounded-full bg-neutral-focus text-neutral-content">
+															<span className="text-xl">
+																{comment.User?.username
+																	? comment.User.username[0].toUpperCase()
+																	: comment.User.email[0].toUpperCase()}
+															</span>
+														</div>
+													</div>
+												)}
+											</div>
+
 											<div className="flex flex-col justify-center flex-1">
 												<div className="flex items-center gap-2">
 													<div>
