@@ -257,8 +257,9 @@ const Header = () => {
 													) / product.commented.length || 0
 												).toFixed(1);
 												return (
-													<div
+													<Link
 														className="flex items-center gap-4 p-2 transition-colors rounded-lg hover:bg-base-200"
+														href={`/product/${product.id}`}
 														key={product.id + product.catalogId}
 													>
 														<div className="flex bg-base-300 h-[100px] justify-center items-center rounded-lg overflow-hidden">
@@ -279,6 +280,13 @@ const Header = () => {
 															</h3>
 															<div className="flex items-center">
 																<div className="rating rating-sm">
+																	<input
+																		type="radio"
+																		name={"product_rank_" + product.id}
+																		className="hidden mask mask-star rating-hidden"
+																		readOnly
+																		checked={true}
+																	/>
 																	{Array(5)
 																		.fill(0x00)
 																		.map((_, i: number) => {
@@ -304,7 +312,7 @@ const Header = () => {
 																</div>
 															</div>
 														</div>
-													</div>
+													</Link>
 												);
 											})}
 									</div>
@@ -334,94 +342,101 @@ const Header = () => {
 										/>
 									)}
 								</div>
-								{account && (
-									<div
-										tabIndex={0}
-										className="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[420px] overflow-auto max-h-[800px] top-16"
-									>
-										<div className="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-10">
-											<h4 className="text-3xl font-bold">
-												My Cart
-												<span className="text-xs font-normal opacity-80">
-													({cart && cart.length})
-												</span>
-											</h4>
-											<Link href="/cart" className="text-primary">
-												View All
-											</Link>
-										</div>
-										<div className="flex flex-col flex-1 gap-2">
-											{cart && cart.length === 0 && (
-												<div className="flex items-center justify-center flex-1 py-4">
-													<h1 className="text-3xl font-bold">Go to shop</h1>
-												</div>
-											)}
-											{cart &&
-												cart.map(({ product }: any) => {
-													const rate = (
-														product.commented.reduce(
-															(a: number, b: any & { rate: number }) =>
-																a + b.rate,
-															0
-														) / product.commented.length || 0
-													).toFixed(1);
-													return (
-														<div
-															className="flex items-center gap-4 p-2 transition-colors rounded-lg hover:bg-base-200"
-															key={product.id + product.catalogId}
-														>
-															<div className="flex bg-base-300 h-[100px] justify-center items-center rounded-lg overflow-hidden">
-																<Image
-																	width="115"
-																	height="115"
-																	className="object-contain rounded-[inherit]"
-																	src={product.image}
-																	alt={product.name}
-																/>
-															</div>
-															<div className="flex-1">
-																<h4 className="text-sm font-bold opacity-80">
-																	{product.catalog_name.name}
-																</h4>
-																<h3 className="text-xl font-bold">
-																	{product.name}
-																</h3>
+							</label>
+
+							{account && (
+								<div
+									tabIndex={0}
+									className="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[420px] overflow-auto max-h-[800px] top-16"
+								>
+									<div className="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-10">
+										<h4 className="text-3xl font-bold">
+											My Cart
+											<span className="text-xs font-normal opacity-80">
+												({cart && cart.length})
+											</span>
+										</h4>
+										<Link href="/cart" className="text-primary">
+											View All
+										</Link>
+									</div>
+									<div className="flex flex-col flex-1 gap-2">
+										{cart && cart.length === 0 && (
+											<div className="flex items-center justify-center flex-1 py-4">
+												<h1 className="text-3xl font-bold">Go to shop</h1>
+											</div>
+										)}
+										{cart &&
+											cart.map(({ product }: any) => {
+												const rate = (
+													product.commented.reduce(
+														(a: number, b: any & { rate: number }) =>
+															a + b.rate,
+														0
+													) / product.commented.length || 0
+												).toFixed(1);
+												return (
+													<Link
+														className="flex items-center gap-4 p-2 transition-colors rounded-lg hover:bg-base-200"
+														href={`/product/${product.id}`}
+														key={product.id + product.catalog_name.id}
+													>
+														<div className="flex bg-base-300 h-[100px] justify-center items-center rounded-lg overflow-hidden">
+															<Image
+																width="115"
+																height="115"
+																className="object-contain rounded-[inherit]"
+																src={product.image}
+																alt={product.name}
+															/>
+														</div>
+														<div className="flex-1">
+															<h4 className="text-sm font-bold opacity-80">
+																{product.catalog_name.name}
+															</h4>
+															<h3 className="text-xl font-bold">
+																{product.name}
+															</h3>
+															<div className="flex items-center">
+																<div className="rating rating-sm">
+																	<input
+																		type="radio"
+																		name={"product_rank_" + product.id}
+																		className="hidden mask mask-star rating-hidden"
+																		readOnly
+																		checked={true}
+																	/>
+																	{Array(5)
+																		.fill(0x00)
+																		.map((_, i: number) => {
+																			return (
+																				<input
+																					type="radio"
+																					name={"product_rank_" + product.id}
+																					className="mask mask-star"
+																					key={`product_rank_${product.id}_${i}`}
+																					readOnly
+																					checked={i + 1 === Math.floor(+rate)}
+																				/>
+																			);
+																		})}
+																</div>
 																<div className="flex items-center">
-																	<div className="rating rating-sm">
-																		{Array(5)
-																			.fill(0x00)
-																			.map((_, i: number) => {
-																				return (
-																					<input
-																						type="radio"
-																						name={"product_rank_" + product.id}
-																						className="mask mask-star"
-																						key={`product_rank_${product.id}_${i}`}
-																						readOnly
-																						checked={
-																							i + 1 === Math.floor(+rate)
-																						}
-																					/>
-																				);
-																			})}
-																	</div>
-																	<div className="flex items-center">
-																		<p className="flex-1 ml-1 text-sm opacity-60">
-																			{product.view} view
-																		</p>
-																	</div>
-																	<div className="flex justify-end flex-1 text-2xl font-bold">
-																		${product.price}
-																	</div>
+																	<p className="flex-1 ml-1 text-sm opacity-60">
+																		{product.view} view
+																	</p>
+																</div>
+																<div className="flex justify-end flex-1 text-2xl font-bold">
+																	${product.price}
 																</div>
 															</div>
 														</div>
-													);
-												})}
-										</div>
+													</Link>
+												);
+											})}
 									</div>
-								)}
-							</label>
+								</div>
+							)}
 						</div>
 					</div>
 					<div className="flex items-center sm:hidden">
