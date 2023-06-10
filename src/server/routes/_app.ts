@@ -4,6 +4,7 @@ import productRouter from "./product";
 import catalogRouter from "./catalog";
 import wishlistRouter from "./wishlist";
 import cartRouter from "./cart";
+import commentRouter from "./comment";
 
 const appRouter = router({
 	user: userRouter,
@@ -11,6 +12,7 @@ const appRouter = router({
 	catalog: catalogRouter,
 	wishlist: wishlistRouter,
 	cart: cartRouter,
+	comment: commentRouter,
 });
 
 export default appRouter;

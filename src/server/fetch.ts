@@ -59,6 +59,7 @@ export const getWishlist = async (userId: string) => {
 	const wishlist = await prisma.wishlist.findMany({
 		select: {
 			id: true,
+			count: true,
 			product: {
 				select: {
 					id: true,
@@ -95,10 +96,106 @@ export const addProductToWishlist = async (
 	});
 };
 
+export const getCommentsByProductId = async (productId: string) => {
+	const comments = await prisma.comment.findMany({
+		select: {
+			id: true,
+			content: true,
+			createdAt: true,
+			rate: true,
+			Like: {
+				select: {
+					userId: true,
+					id: true,
+				},
+			},
+			User: {
+				select: {
+					avatar: true,
+					username: true,
+				},
+			},
+		},
+		where: {
+			productId,
+		},
+	});
+	const rating = await prisma.comment.aggregate({
+		_avg: {
+			rate: true,
+		},
+		_count: {
+			_all: true,
+		},
+		where: {
+			productId: productId,
+		},
+	});
+	const balling = await prisma.product.findUnique({
+		select: {
+			commented: {
+				select: {
+					rate: true,
+				},
+			},
+		},
+		where: {
+			id: productId,
+		},
+	});
+	return {
+		comments,
+		rate: rating._avg.rate,
+		rateAll: rating._count._all,
+		balling: balling?.commented,
+	};
+};
+
+export const addComment = async (
+	userId: string,
+	content: string,
+	rate: number,
+	productId: string
+) => {
+	await prisma.comment.create({
+		data: {
+			rate,
+			content,
+			userId,
+			productId,
+		},
+	});
+};
+
+export const likeComment = async (userId: string, commentId: string) => {
+	const like = await prisma.like.findMany({
+		where: {
+			commentId: commentId,
+			userId: userId,
+		},
+	});
+	if (like.length !== 0) {
+		await prisma.like.deleteMany({
+			where: {
+				userId: userId,
+				commentId: commentId,
+			},
+		});
+	} else {
+		await prisma.like.create({
+			data: {
+				userId: userId,
+				commentId: commentId,
+			},
+		});
+	}
+};
+
 export const getCart = async (userId: string) => {
 	const cart = await prisma.cart.findMany({
 		select: {
 			id: true,
+			count: true,
 			product: {
 				select: {
 					id: true,
@@ -132,26 +229,46 @@ export const addProductToCart = async (userId: string, productId: string) => {
 	});
 };
 
-export const deleteProductFromCartById = async (
-	userId: string,
-	productId: string
+export const editedCountProductToCart = async (
+	cartProductId: string,
+	newCount: number
 ) => {
-	await prisma.cart.deleteMany({
+	await prisma.cart.updateMany({
+		data: {
+			count: newCount,
+		},
 		where: {
-			userId,
-			productId,
+			id: cartProductId,
 		},
 	});
 };
 
-export const deleteProductFromWishlistById = async (
-	userId: string,
-	productId: string
-) => {
+export const deleteProductFromCartById = async (id: string) => {
+	await prisma.cart.deleteMany({
+		where: {
+			id,
+		},
+	});
+};
+
+export const deleteProductFromWishlistById = async (id: string) => {
 	await prisma.wishlist.deleteMany({
 		where: {
-			userId,
-			productId,
+			id,
+		},
+	});
+};
+
+export const editedCountProductToWishlist = async (
+	wishlistProductId: string,
+	newCount: number
+) => {
+	await prisma.wishlist.updateMany({
+		data: {
+			count: newCount,
+		},
+		where: {
+			id: wishlistProductId,
 		},
 	});
 };
@@ -217,6 +334,12 @@ export const getProduct = async (id: string) => {
 			poster: true,
 			price: true,
 			view: true,
+			Characteristic: {
+				select: {
+					attribute: true,
+					value: true,
+				},
+			},
 			catalog_name: {
 				select: {
 					name: true,
@@ -228,55 +351,28 @@ export const getProduct = async (id: string) => {
 					name: true,
 				},
 			},
-			commented: {
-				take: 3,
-				select: {
-					id: true,
-					content: true,
-					createdAt: true,
-					likes: true,
-					rate: true,
-					User: {
-						select: {
-							avatar: true,
-							username: true,
-						},
-					},
-				},
-			},
+			// commented: {
+			// 	take: 3,
+			// 	select: {
+			// 		id: true,
+			// 		content: true,
+			// 		createdAt: true,
+			// 		likes: true,
+			// 		rate: true,
+			// 		User: {
+			// 			select: {
+			// 				avatar: true,
+			// 				username: true,
+			// 			},
+			// 		},
+			// 	},
+			// },
 		},
 		where: {
 			id: id,
 		},
 	});
-	const rating = await prisma.comment.aggregate({
-		_avg: {
-			rate: true,
-		},
-		_count: {
-			_all: true,
-		},
-		where: {
-			productId: id,
-		},
-	});
-	const balling = await prisma.product.findUnique({
-		select: {
-			commented: {
-				select: {
-					rate: true,
-				},
-			},
-		},
-		where: {
-			id: id,
-		},
-	});
-	return {
-		...product,
-		...rating,
-		balling: balling?.commented,
-	};
+	return product;
 };
 
 export const getCatalogs = async () => {

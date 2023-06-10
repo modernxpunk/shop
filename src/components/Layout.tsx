@@ -7,7 +7,7 @@ import ModalAccount from "./ModalAccount";
 export default function Layout({ children }: any) {
 	return (
 		<>
-			<div className="drawer drawer-end">
+			<div className="drawer drawer-end bg-base-200">
 				<input
 					id="my-drawer"
 					type="checkbox"

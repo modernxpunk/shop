@@ -32,9 +32,9 @@ const Home = () => {
 
 	return (
 		<div className="container">
-			<div className="grid grid-rows-2 sm:grid-cols-[max-content,1fr] sm:grid-rows-1 gap-4 sm:h-[400px]">
-				<div className="order-1 sm:-order-none col-span-1 row-span-1 overflow-auto rounded-lg max-h-[250px] sm:max-h-none">
-					<ul className="menu bg-base-200 rounded-box">
+			<div className="grid grid-rows-2 sm:grid-cols-[minmax(200px,auto),1fr] sm:grid-rows-1 gap-4 sm:max-h-[400px]">
+				<div className="order-1 col-span-1 row-span-1 overflow-x-hidden rounded-lg sm:-order-none sm:max-h-none">
+					<ul className="menu bg-base-100 rounded-box">
 						{catalogs.data &&
 							catalogs.data.map((catalog: any, i: number) => {
 								return (
