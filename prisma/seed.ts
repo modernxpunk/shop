@@ -15,10 +15,12 @@ async function main() {
 		catalog: 10,
 		products: 100,
 		discount: 1,
-		tags: 20,
-		comments: 50,
+		tags: 1000,
+		comments: 100,
 		cart: 50,
 		wishlist: 50,
+		characteristics: 1000,
+		likes: 1000,
 	};
 
 	const users = faker.helpers
@@ -52,7 +54,7 @@ async function main() {
 
 	const discount = faker.helpers
 		.uniqueArray(productsIds, Math.floor(generate.discount))
-		.map((id) => ({
+		.map(() => ({
 			percent: faker.datatype.number({ min: 5, max: 40 }),
 			isActive: faker.datatype.boolean(),
 		}));
@@ -69,36 +71,52 @@ async function main() {
 		isInStock: faker.datatype.boolean(),
 	}));
 
+	const characteristics = Array(generate.characteristics)
+		.fill(0x00)
+		.map(() => ({
+			attribute: faker.lorem.word(),
+			value: faker.lorem.word(),
+			productId: faker.helpers.arrayElement(productsIds),
+		}));
+
 	const cart = Array(generate.cart)
 		.fill(0x00)
 		.map(() => ({
 			userId: faker.helpers.arrayElement(users).id,
-			productId: faker.helpers.arrayElement(products).id,
+			productId: faker.helpers.arrayElement(productsIds),
+			count: faker.datatype.number({ min: 1, max: 3 }),
 		}));
 
 	const wishlist = Array(generate.cart)
 		.fill(0x00)
 		.map(() => ({
 			userId: faker.helpers.arrayElement(users).id,
-			productId: faker.helpers.arrayElement(products).id,
+			productId: faker.helpers.arrayElement(productsIds),
+			count: faker.datatype.number({ min: 1, max: 3 }),
 		}));
 
 	const tags = Array(generate.tags)
 		.fill(0x00)
 		.map(() => ({
 			name: faker.commerce.productAdjective(),
-			productId: faker.helpers.arrayElement(products).id,
+			productId: faker.helpers.arrayElement(productsIds),
 		}));
 
 	const comments = faker.helpers
 		.uniqueArray(faker.lorem.paragraphs, generate.comments)
 		.map((comment) => ({
 			id: faker.datatype.uuid(),
-			productId: faker.helpers.arrayElement(products).id,
+			productId: faker.helpers.arrayElement(productsIds),
 			userId: faker.helpers.arrayElement(users).id,
 			content: comment,
-			likes: faker.datatype.number({ min: 0, max: 10 }),
 			rate: faker.datatype.number({ min: 0, max: 5 }),
+		}));
+
+	const likes = Array(generate.likes)
+		.fill(0x00)
+		.map(() => ({
+			userId: faker.helpers.arrayElement(users).id,
+			commentId: faker.helpers.arrayElement(comments).id,
 		}));
 
 	await prisma.user.createMany({
@@ -117,6 +135,10 @@ async function main() {
 		data: products,
 		skipDuplicates: true,
 	});
+	await prisma.characteristic.createMany({
+		data: characteristics,
+		skipDuplicates: true,
+	});
 	await prisma.cart.createMany({
 		data: cart,
 		skipDuplicates: true,
@@ -131,6 +153,10 @@ async function main() {
 	});
 	await prisma.comment.createMany({
 		data: comments,
+		skipDuplicates: true,
+	});
+	await prisma.like.createMany({
+		data: likes,
 		skipDuplicates: true,
 	});
 }

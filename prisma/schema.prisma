@@ -19,37 +19,55 @@ model User {
   createdAt DateTime   @default(now())
   Cart      Cart[]
   Wishlist  Wishlist[]
+  Like      Like[]
 }
 
 model Product {
-  id           String     @id @default(cuid())
-  name         String
-  price        Int
-  image        String
-  description  String
-  poster       String
-  commented    Comment[]
-  catalog_name Catalog    @relation(fields: [catalogId], references: [id])
-  discount     Discount?  @relation(fields: [discountId], references: [id])
-  tags_name    Tag[]
-  isInStock    Boolean    @default(true)
-  view         Int?       @default(0)
-  catalogId    String
-  discountId   String?    @unique
-  Cart         Cart[]
-  Wishlist     Wishlist[]
+  id             String           @id @default(cuid())
+  name           String
+  price          Int
+  image          String
+  description    String
+  poster         String
+  commented      Comment[]
+  catalog_name   Catalog          @relation(fields: [catalogId], references: [id])
+  discount       Discount?        @relation(fields: [discountId], references: [id])
+  tags_name      Tag[]
+  isInStock      Boolean          @default(true)
+  view           Int?             @default(0)
+  Characteristic Characteristic[]
+  catalogId      String
+  discountId     String?          @unique
+  Cart           Cart[]
+  Wishlist       Wishlist[]
+}
+
+model Characteristic {
+  id        String   @id @default(cuid())
+  attribute String
+  value     String
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String
 }
 
 model Comment {
   id        String   @id @default(cuid())
   content   String
-  likes     Int      @default(0)
   createdAt DateTime @default(now())
   rate      Int
   Product   Product? @relation(fields: [productId], references: [id])
   productId String?
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?
+  Like      Like[]
+}
+
+model Like {
+  id        String  @id @default(cuid())
+  user      User    @relation(fields: [userId], references: [id])
+  comment   Comment @relation(fields: [commentId], references: [id])
+  commentId String
+  userId    String
 }
 
 model Tag {
