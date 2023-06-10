@@ -16,11 +16,11 @@ const Card = ({ product }: { product: any }) => {
 		enabled: !!data?.user,
 	});
 
-	const isProdictInCart = cart?.some(
+	const isProductCart = cart?.some(
 		(cartProduct) => cartProduct.product.id === product.id
 	);
 
-	const isProdictInWishlist = wishlist?.some(
+	const isProductWishlist = wishlist?.some(
 		(wishlistProduct) => wishlistProduct.product.id === product.id
 	);
 
@@ -51,14 +51,14 @@ const Card = ({ product }: { product: any }) => {
 
 	const handleClickWishlist = async (e: any) => {
 		e.stopPropagation();
-		isProdictInWishlist
+		isProductWishlist
 			? removeProductFromWishlist(product.id)
 			: addProductToWishlist(product.id);
 	};
 
 	const handleClickCart = async (e: any) => {
 		e.stopPropagation();
-		isProdictInCart
+		isProductCart
 			? removeProductFromCart(product.id)
 			: addProductToCart(product.id);
 	};
@@ -72,7 +72,7 @@ const Card = ({ product }: { product: any }) => {
 
 	return (
 		<button
-			className="flex flex-col flex-1 w-full overflow-hidden transition-shadow rounded-lg shadow-lg bg-base-200 group hover:shadow-xl"
+			className="flex flex-col flex-1 w-full overflow-hidden transition-shadow rounded-lg shadow-lg bg-base-100 group hover:shadow-xl"
 			onClick={() => router.push("/product/" + product.id)}
 		>
 			<div className="relative flex items-center justify-center flex-1 w-full p-2 pb-0">
@@ -82,13 +82,13 @@ const Card = ({ product }: { product: any }) => {
 							<label htmlFor="modal-account">
 								<Icon
 									className="w-8 h-8 p-1 fill-current"
-									name={isProdictInWishlist ? "heart-fill" : "heart-outline"}
+									name={isProductWishlist ? "heart-fill" : "heart-outline"}
 								/>
 							</label>
 						) : (
 							<Icon
 								className="w-8 h-8 p-1 fill-current"
-								name={isProdictInWishlist ? "heart-fill" : "heart-outline"}
+								name={isProductWishlist ? "heart-fill" : "heart-outline"}
 							/>
 						)}
 					</div>
@@ -97,13 +97,13 @@ const Card = ({ product }: { product: any }) => {
 							<label htmlFor="modal-account">
 								<Icon
 									className="w-8 h-8 p-1 fill-current"
-									name={isProdictInCart ? "cart" : "cart-outline"}
+									name={isProductCart ? "cart" : "cart-outline"}
 								/>
 							</label>
 						) : (
 							<Icon
 								className="w-8 h-8 p-1 fill-current"
-								name={isProdictInCart ? "cart" : "cart-outline"}
+								name={isProductCart ? "cart" : "cart-outline"}
 							/>
 						)}
 					</div>
@@ -125,6 +125,13 @@ const Card = ({ product }: { product: any }) => {
 					<div className="flex items-center justify-between">
 						<div className="flex items-center items-">
 							<div className="rating">
+								<input
+									type="radio"
+									name={"product_rank_" + product.id}
+									className="hidden mask mask-star rating-hidden"
+									readOnly
+									checked
+								/>
 								{Array(5)
 									.fill(0x00)
 									.map((_, i: number) => {
