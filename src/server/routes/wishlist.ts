@@ -1,5 +1,9 @@
 import { router, protectedProcedure } from "../trpc";
-import { addProductToWishlist, getWishlist } from "../fetch";
+import {
+	addProductToWishlist,
+	editedCountProductToWishlist,
+	getWishlist,
+} from "../fetch";
 import { z } from "zod";
 import { deleteProductFromWishlistById } from "../fetch";
 
@@ -14,14 +18,26 @@ const wishlistRouter = router({
 		const user: any = opts.ctx.session?.user;
 		const userId = user?.id;
 		const productId = opts.input;
-		const newProductInCart = await addProductToWishlist(userId, productId);
-		return newProductInCart;
+		const newProductInWishlist = await addProductToWishlist(userId, productId);
+		return newProductInWishlist;
 	}),
+	editCount: protectedProcedure
+		.input(
+			z.object({
+				wishlistProductId: z.string(),
+				newCount: z.number(),
+			})
+		)
+		.mutation(async (opts) => {
+			const editedProductInWishlist = await editedCountProductToWishlist(
+				opts.input.wishlistProductId,
+				opts.input.newCount
+			);
+			return editedProductInWishlist;
+		}),
 	delete: protectedProcedure.input(z.string()).mutation(async (opts) => {
-		const user: any = opts.ctx.session?.user;
-		const userId = user?.id;
-		const productId = opts.input;
-		await deleteProductFromWishlistById(userId, productId);
+		const wishlistProductId = opts.input;
+		await deleteProductFromWishlistById(wishlistProductId);
 	}),
 });
 

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Icon from "src/components/Icon";
 import Link from "next/link";
 import { createServerSideHelpers } from "@trpc/react-query/server";
@@ -6,6 +5,7 @@ import appRouter from "src/server/routes/_app";
 import { createContext } from "src/server/context";
 import superjson from "superjson";
 import { trpc } from "src/utils/trpc";
+import WishlistProduct from "src/components/WishlistProduct";
 
 export const getServerSideProps = async (req: any) => {
 	const ssr = createServerSideHelpers({
@@ -25,18 +25,6 @@ export const getServerSideProps = async (req: any) => {
 
 const Wishlist = () => {
 	const { data: wishlist } = trpc.wishlist.get.useQuery();
-	const utils = trpc.useContext();
-
-	const { mutate: removeProductFromWishlist } =
-		trpc.wishlist.delete.useMutation({
-			onSuccess() {
-				utils.wishlist.get.invalidate();
-			},
-		});
-
-	const handleClickCross = (productId: string) => {
-		removeProductFromWishlist(productId);
-	};
 
 	return (
 		<div className="container">
@@ -64,70 +52,20 @@ const Wishlist = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{wishlist.map(({ product }) => {
-							console.log(product);
-							return (
-								<tr key={product.id} className="hover">
-									<th>
-										<label className="cursor-pointer">
-											<button
-												className="btn btn-sm btn-circle"
-												onClick={() => handleClickCross(product.id)}
-											>
-												<Icon
-													className="w-8 h-8 p-1 fill-current"
-													name="close"
-												/>
-											</button>
-										</label>
-									</th>
-									<td>
-										<div className="flex items-center space-x-3">
-											<div className="avatar">
-												<div className="w-12 h-12 mask mask-squircle">
-													<Image
-														width={48}
-														height={48}
-														src="https://fakeimg.pl/48x48/"
-														alt="avatar"
-													/>
-												</div>
-											</div>
-											<div>
-												<div className="font-bold">{product.name}</div>
-												<div className="text-sm opacity-50">
-													{product.catalog_name.name}
-												</div>
-											</div>
-										</div>
-									</td>
-									<td className="">
-										<div className="flex justify-center gap-2">
-											<button className="btn btn-square btn-xs">-</button>
-											<input
-												className="w-16 text-center input input-xs bg-base-200"
-												type="text"
-												// value="1"
-											/>
-											<button className="btn btn-square btn-xs">+</button>
-										</div>
-									</td>
-									<td>
-										<p className="text-3xl font-bold text-center">
-											${product.price}
-										</p>
-									</td>
-									<th>
-										<Link
-											href={`/product/${product.id}`}
-											className="btn btn-ghost btn-xs"
-										>
-											details
-										</Link>
-									</th>
-								</tr>
-							);
-						})}
+						{wishlist
+							.sort((a, b) => (a.id < b.id ? -1 : 1))
+							.map((wishlistProduct: any) => {
+								return (
+									<WishlistProduct
+										key={wishlistProduct.id}
+										product={{
+											...wishlistProduct.product,
+											count: wishlistProduct.count,
+										}}
+										wishlistProductId={wishlistProduct.id}
+									/>
+								);
+							})}
 					</tbody>
 					<tfoot>
 						<tr>

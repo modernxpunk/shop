@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Icon from "src/components/Icon";
 import Link from "next/link";
 import { createServerSideHelpers } from "@trpc/react-query/server";
@@ -6,6 +5,7 @@ import appRouter from "src/server/routes/_app";
 import { createContext } from "src/server/context";
 import { trpc } from "src/utils/trpc";
 import superjson from "superjson";
+import CartProduct from "../components/CartProduct";
 
 export const getServerSideProps = async (req: any) => {
 	const ssr = createServerSideHelpers({
@@ -24,14 +24,7 @@ export const getServerSideProps = async (req: any) => {
 };
 
 const Cart = () => {
-	const { data: cart, refetch: refetchCart } = trpc.cart.get.useQuery();
-
-	const deleteCart = trpc.cart.delete.useMutation({
-		onSuccess: async () => {
-			await refetchCart();
-		},
-	});
-
+	const { data: cart } = trpc.cart.get.useQuery();
 	return (
 		<div className="container">
 			<h1 className="text-5xl font-bold">Cart</h1>
@@ -128,61 +121,20 @@ const Cart = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{cart.map(({ id, product }: any) => {
-										return (
-											<tr key={id} className="hover">
-												<th>
-													<div className="flex items-center justify-center w-4 h-4">
-														<label
-															className="flex-1 cursor-pointer"
-															onClick={() => deleteCart.mutate(product.id)}
-														>
-															✕
-														</label>
-													</div>
-												</th>
-												<td>
-													<div className="flex items-center space-x-3">
-														<div className="avatar">
-															<div className="w-12 h-12 mask mask-squircle">
-																<Image
-																	width={48}
-																	height={48}
-																	src="https://fakeimg.pl/48x48/"
-																	alt="Avatar Tailwind CSS Component"
-																/>
-															</div>
-														</div>
-														<div className="flex-1">
-															<div className="font-bold">
-																{product.catalog_name.name}
-															</div>
-															<div className="text-sm opacity-50">
-																{product.name}
-															</div>
-														</div>
-													</div>
-												</td>
-												<td>
-													<div className="flex justify-center gap-2">
-														<button className="btn btn-square btn-xs">-</button>
-														<input
-															className="w-16 text-center input input-xs bg-base-200"
-															type="text"
-															readOnly
-															// value="1"
-														/>
-														<button className="btn btn-square btn-xs">+</button>
-													</div>
-												</td>
-												<td>
-													<p className="text-3xl font-bold text-right">
-														${product.price}
-													</p>
-												</td>
-											</tr>
-										);
-									})}
+									{cart
+										.sort((a, b) => (a.id < b.id ? -1 : 1))
+										.map((cartProduct: any) => {
+											return (
+												<CartProduct
+													key={cartProduct.id}
+													product={{
+														...cartProduct.product,
+														count: cartProduct.count,
+													}}
+													cartProductId={cartProduct.id}
+												/>
+											);
+										})}
 								</tbody>
 							</table>
 							<div className="mt-4">
@@ -190,7 +142,10 @@ const Cart = () => {
 									<p className="font-bold opacity-60">Total</p>
 									<p className="text-3xl font-bold">
 										$
-										{cart.reduce((a: number, b: any) => a + b.product.price, 0)}
+										{cart.reduce(
+											(a: number, b: any) => a + b.product.price * b.count,
+											0
+										)}
 									</p>
 								</div>
 							</div>
