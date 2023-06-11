@@ -160,7 +160,7 @@ const Cart = () => {
 				<div className="flex-1">
 					{cart && cart.length === 0 && (
 						<div className="flex flex-col items-center justify-center">
-							<Icon className="w-24 h-24 fill-current" name="heart" />
+							<Icon className="w-24 h-24 fill-current" name="cart" />
 							<h1 className="text-3xl font-bold text-center">
 								Oops, your cart is empty! Go to{" "}
 								<Link className="underline text-primary" href="/">
