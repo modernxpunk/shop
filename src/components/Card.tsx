@@ -12,6 +12,7 @@ const Card = ({ product }: { product: any }) => {
 	const { data: cart } = trpc.cart.get.useQuery(undefined, {
 		enabled: !!data?.user,
 	});
+	console.log(cart);
 	const { data: wishlist } = trpc.wishlist.get.useQuery(undefined, {
 		enabled: !!data?.user,
 	});
@@ -51,16 +52,24 @@ const Card = ({ product }: { product: any }) => {
 
 	const handleClickWishlist = async (e: any) => {
 		e.stopPropagation();
-		isProductWishlist
-			? removeProductFromWishlist(product.id)
-			: addProductToWishlist(product.id);
+		if (isProductWishlist) {
+			const wishlistId: any = wishlist?.find(
+				(x) => x.product.id === product.id
+			)?.id;
+			removeProductFromWishlist(wishlistId);
+		} else {
+			addProductToWishlist(product.id);
+		}
 	};
 
 	const handleClickCart = async (e: any) => {
 		e.stopPropagation();
-		isProductCart
-			? removeProductFromCart(product.id)
-			: addProductToCart(product.id);
+		if (isProductCart) {
+			const cartId: any = cart?.find((x) => x.product.id === product.id)?.id;
+			removeProductFromCart(cartId);
+		} else {
+			addProductToCart(product.id);
+		}
 	};
 
 	const rate = (
