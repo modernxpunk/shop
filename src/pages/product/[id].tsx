@@ -278,7 +278,7 @@ const Product = ({ id }: any) => {
 								)}
 							</div>
 						</div>
-						<div className="flex flex-col gap-4">
+						{/* <div className="flex flex-col gap-4">
 							{Array(1)
 								.fill(0)
 								.map((_, i) => {
@@ -315,7 +315,7 @@ const Product = ({ id }: any) => {
 										</div>
 									);
 								})}
-						</div>
+						</div> */}
 					</div>
 				</div>
 				<div className="flex flex-col gap-4 mt-8 md:flex-row">
