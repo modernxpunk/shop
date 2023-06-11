@@ -4,8 +4,6 @@ export default function Document() {
 	return (
 		<Html lang="en">
 			<Head>
-				<title>Shop</title>
-
 				<meta name="title" content="Shop" />
 				<meta name="description" content="My bachelour thesis" />
 
