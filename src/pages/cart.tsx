@@ -80,83 +80,89 @@ const Cart = () => {
 
 			<h1 className="text-5xl font-bold">Cart</h1>
 			<div className="flex flex-col justify-between gap-8 mt-4 lg:flex-row">
-				<div className="flex flex-col flex-1 gap-4">
-					<div>
-						<h2 className="mb-2 text-lg font-bold">Delivery Information</h2>
-						<div className="p-4 rounded-lg bg-base-200">
-							<form
-								id="confirm_order"
-								className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-4"
-								onSubmit={submitForm}
-							>
-								{[
-									{ state: fullName, change: setFullName, label: "Full name" },
-									{ state: phone, change: setPhone, label: "Phone" },
-									{ state: email, change: setEmail, label: "Email" },
-									{ state: where, change: setWhere, label: "Deliver to" },
-								].map(({ state, change, label }: any, i) => {
-									return (
-										<div key={i}>
-											<label
-												className="text-sm font-bold opacity-70"
-												htmlFor="password"
-											>
-												{label.toUpperCase()}
-											</label>
+				{cart?.length !== 0 && (
+					<div className="flex flex-col flex-1 gap-4">
+						<div>
+							<h2 className="mb-2 text-lg font-bold">Delivery Information</h2>
+							<div className="p-4 rounded-lg bg-base-200">
+								<form
+									id="confirm_order"
+									className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-4"
+									onSubmit={submitForm}
+								>
+									{[
+										{
+											state: fullName,
+											change: setFullName,
+											label: "Full name",
+										},
+										{ state: phone, change: setPhone, label: "Phone" },
+										{ state: email, change: setEmail, label: "Email" },
+										{ state: where, change: setWhere, label: "Deliver to" },
+									].map(({ state, change, label }: any, i) => {
+										return (
+											<div key={i}>
+												<label
+													className="text-sm font-bold opacity-70"
+													htmlFor="password"
+												>
+													{label.toUpperCase()}
+												</label>
 
+												<input
+													className="w-full input"
+													required
+													value={state}
+													type={
+														label === "Email"
+															? "email"
+															: label === "Phone"
+															? "tel"
+															: "text"
+													}
+													onChange={(e) => change(e.target.value)}
+												/>
+											</div>
+										);
+									})}
+								</form>
+							</div>
+						</div>
+						<div>
+							<h2 className="mb-2 text-lg font-bold">Payment Method</h2>
+							<div className="flex flex-col items-center justify-between gap-4 p-4 rounded-lg sm:flex-row bg-base-200">
+								{[
+									{ label: "Online Payment", id: "online_payment" },
+									{ label: "Cash on Delivery", id: "cash_on_delivery" },
+									{ label: "POS on Delivery", id: "POS_on_Delivery" },
+								].map(({ label, id }) => {
+									return (
+										<div
+											className="flex items-center gap-2"
+											key={id}
+											onClick={() => setPaymentMethod(id)}
+										>
+											<label htmlFor={id}>{label}</label>
 											<input
-												className="w-full input"
-												required
-												value={state}
-												type={
-													label === "Email"
-														? "email"
-														: label === "Phone"
-														? "tel"
-														: "text"
-												}
-												onChange={(e) => change(e.target.value)}
+												id={id}
+												type="radio"
+												className="radio"
+												name="payment_method"
+												checked={paymentMethod === id}
 											/>
 										</div>
 									);
 								})}
-							</form>
+							</div>
 						</div>
 					</div>
-					<div>
-						<h2 className="mb-2 text-lg font-bold">Payment Method</h2>
-						<div className="flex flex-col items-center justify-between gap-4 p-4 rounded-lg sm:flex-row bg-base-200">
-							{[
-								{ label: "Online Payment", id: "online_payment" },
-								{ label: "Cash on Delivery", id: "cash_on_delivery" },
-								{ label: "POS on Delivery", id: "POS_on_Delivery" },
-							].map(({ label, id }) => {
-								return (
-									<div
-										className="flex items-center gap-2"
-										key={id}
-										onClick={() => setPaymentMethod(id)}
-									>
-										<label htmlFor={id}>{label}</label>
-										<input
-											id={id}
-											type="radio"
-											className="radio"
-											name="payment_method"
-											checked={paymentMethod === id}
-										/>
-									</div>
-								);
-							})}
-						</div>
-					</div>
-				</div>
+				)}
 				<div className="flex-1">
 					{cart && cart.length === 0 && (
 						<div className="flex flex-col items-center justify-center">
-							<Icon className="w-32 h-32 fill-current" name="heart" />
+							<Icon className="w-24 h-24 fill-current" name="heart" />
 							<h1 className="text-3xl font-bold text-center">
-								Oops, your wishlist is empty! Go to
+								Oops, your cart is empty! Go to{" "}
 								<Link className="underline text-primary" href="/">
 									shop
 								</Link>
