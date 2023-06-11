@@ -6,6 +6,7 @@ import { createContext } from "src/server/context";
 import { trpc } from "src/utils/trpc";
 import superjson from "superjson";
 import CartProduct from "../components/CartProduct";
+import { useState } from "react";
 
 export const getServerSideProps = async (req: any) => {
 	const ssr = createServerSideHelpers({
@@ -24,75 +25,129 @@ export const getServerSideProps = async (req: any) => {
 };
 
 const Cart = () => {
+	const utils = trpc.useContext();
+
 	const { data: cart } = trpc.cart.get.useQuery();
+	const { mutate: confirmOrder } = trpc.cart.confirmOrder.useMutation({
+		onSuccess: async () => {
+			utils.cart.get.invalidate();
+		},
+	});
+
+	const [fullName, setFullName] = useState("");
+	const [phone, setPhone] = useState("");
+	const [email, setEmail] = useState("");
+	const [where, setWhere] = useState("");
+	const [paymentMethod, setPaymentMethod] = useState("online_payment");
+
+	const [isConfirmed, setIsConfirmed] = useState(false);
+
+	const submitForm = (e: any) => {
+		e.preventDefault();
+		setIsConfirmed(true);
+		setFullName("");
+		setPhone("");
+		setEmail("");
+		setWhere("");
+		confirmOrder();
+	};
+
 	return (
 		<div className="container">
+			<input
+				type="checkbox"
+				id="good"
+				checked={isConfirmed}
+				className="modal-toggle"
+			/>
+			<div className="modal">
+				<div className="modal-box">
+					<div className="flex items-center gap-2">
+						<Icon className="w-16 h-16 p-1.5 fill-current" name="logo" />
+						<h3 className="text-lg font-bold">Thank you for your purchase</h3>
+					</div>
+					<div className="modal-action">
+						<label
+							htmlFor="good"
+							onClick={() => setIsConfirmed(false)}
+							className="btn"
+						>
+							Close
+						</label>
+					</div>
+				</div>
+			</div>
+
 			<h1 className="text-5xl font-bold">Cart</h1>
 			<div className="flex flex-col justify-between gap-8 mt-4 lg:flex-row">
 				<div className="flex flex-col flex-1 gap-4">
 					<div>
 						<h2 className="mb-2 text-lg font-bold">Delivery Information</h2>
 						<div className="p-4 rounded-lg bg-base-200">
-							<form className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-4">
-								{Array(5)
-									.fill(0)
-									.map((_, i) => {
-										return (
-											<div key={i}>
-												<label
-													className="text-sm font-bold opacity-70"
-													htmlFor="password"
-												>
-													PASSWORD
-												</label>
-												<label className="input-group">
-													<span className="text-sm font-bold opacity-80">
-														<Icon
-															className="w-6 h-6 fill-current"
-															name="account"
-														/>
-													</span>
-													<input
-														className="w-full input input-bordered"
-														type="password"
-													/>
-												</label>
-											</div>
-										);
-									})}
+							<form
+								id="confirm_order"
+								className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-4"
+								onSubmit={submitForm}
+							>
+								{[
+									{ state: fullName, change: setFullName, label: "Full name" },
+									{ state: phone, change: setPhone, label: "Phone" },
+									{ state: email, change: setEmail, label: "Email" },
+									{ state: where, change: setWhere, label: "Deliver to" },
+								].map(({ state, change, label }: any, i) => {
+									return (
+										<div key={i}>
+											<label
+												className="text-sm font-bold opacity-70"
+												htmlFor="password"
+											>
+												{label.toUpperCase()}
+											</label>
+
+											<input
+												className="w-full input"
+												required
+												value={state}
+												type={
+													label === "Email"
+														? "email"
+														: label === "Phone"
+														? "tel"
+														: "text"
+												}
+												onChange={(e) => change(e.target.value)}
+											/>
+										</div>
+									);
+								})}
 							</form>
 						</div>
 					</div>
 					<div>
 						<h2 className="mb-2 text-lg font-bold">Payment Method</h2>
 						<div className="flex flex-col items-center justify-between gap-4 p-4 rounded-lg sm:flex-row bg-base-200">
-							<div className="flex items-center gap-2">
-								<label htmlFor="online_payment">Online Payment</label>
-								<input
-									id="online_payment"
-									type="radio"
-									className="radio"
-									name="payment_method"
-								/>
-							</div>
-							<div className="flex items-center gap-2">
-								<label htmlFor="cash_on_delivery">Cash on Delivery</label>
-								<input
-									id="cash_on_delivery"
-									type="radio"
-									className="radio"
-									name="payment_method"
-								/>
-							</div>
-							<div className="flex items-center gap-2">
-								<label htmlFor="POS_on_Delivery">POS on Delivery</label>
-								<input
-									id="POS_on_Delivery"
-									type="radio"
-									className="radio"
-									name="payment_method"
-								/>
-							</div>
+							{[
+								{ label: "Online Payment", id: "online_payment" },
+								{ label: "Cash on Delivery", id: "cash_on_delivery" },
+								{ label: "POS on Delivery", id: "POS_on_Delivery" },
+							].map(({ label, id }) => {
+								return (
+									<div
+										className="flex items-center gap-2"
+										key={id}
+										onClick={() => setPaymentMethod(id)}
+									>
+										<label htmlFor={id}>{label}</label>
+										<input
+											id={id}
+											type="radio"
+											className="radio"
+											name="payment_method"
+											checked={paymentMethod === id}
+										/>
+									</div>
+								);
+							})}
 						</div>
 					</div>
 				</div>
@@ -149,7 +204,9 @@ const Cart = () => {
 									</p>
 								</div>
 							</div>
-							<button className="w-full mt-4 btn">Confirm Order</button>
+							<button className="w-full mt-4 btn" form="confirm_order">
+								Confirm Order
+							</button>
 						</div>
 					)}
 				</div>

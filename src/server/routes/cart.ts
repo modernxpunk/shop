@@ -4,6 +4,7 @@ import {
 	addProductToCart,
 	deleteProductFromCartById,
 	editedCountProductToCart,
+	deleteAllFromCartByUserId,
 } from "../fetch";
 import z from "zod";
 
@@ -35,6 +36,11 @@ const cartRouter = router({
 			);
 			return editedProductInCart;
 		}),
+	confirmOrder: protectedProcedure.mutation(async (opts) => {
+		const user: any = opts.ctx.session?.user;
+		const userId = user?.id;
+		await deleteAllFromCartByUserId(userId);
+	}),
 	delete: protectedProcedure.input(z.string()).mutation(async (opts) => {
 		const cartProductId = opts.input;
 		await deleteProductFromCartById(cartProductId);
