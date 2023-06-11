@@ -31,9 +31,9 @@ const Wishlist = () => {
 			<h1 className="text-5xl font-bold">Wishlist</h1>
 			{wishlist && wishlist.length === 0 && (
 				<div className="flex flex-col items-center justify-center">
-					<Icon className="w-32 h-32 fill-current" name="heart" />
+					<Icon className="w-24 h-24 fill-current" name="heart" />
 					<h1 className="text-3xl font-bold text-center">
-						Oops, your wishlist is empty! Go to
+						Oops, your wishlist is empty! Go to{" "}
 						<Link className="underline text-primary" href="/">
 							shop
 						</Link>
