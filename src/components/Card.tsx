@@ -12,7 +12,7 @@ const Card = ({ product }: { product: any }) => {
 	const { data: cart } = trpc.cart.get.useQuery(undefined, {
 		enabled: !!data?.user,
 	});
-	console.log(cart);
+
 	const { data: wishlist } = trpc.wishlist.get.useQuery(undefined, {
 		enabled: !!data?.user,
 	});
