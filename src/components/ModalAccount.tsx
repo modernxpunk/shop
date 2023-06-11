@@ -88,11 +88,11 @@ const ModalAccount = () => {
 								})
 							}
 						/>
-						<div className="divider">or</div>
+						{/* <div className="divider">or</div>
 						<button className="w-full gap-2 btn btn-outline">
 							<Icon className="w-6 h-6 fill-current" name="account" />
 							Continue with Google
-						</button>
+						</button> */}
 					</form>
 				</label>
 			</label>
