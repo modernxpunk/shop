@@ -294,6 +294,45 @@ export const getProducts = async () => {
 	return products;
 };
 
+// export const getProductsInfinity = async (
+// 	category: string,
+// 	limit: number,
+// 	cursor: any,
+// 	skip: number | undefined
+// ) => {
+// 	const products = await prisma.product.findMany({
+// 		take: limit + 1,
+// 		skip: skip,
+// 		cursor: cursor ? { id: cursor } : undefined,
+// 		orderBy: { id: "asc" },
+// 		select: {
+// 			catalog_name: {
+// 				select: {
+// 					name: true,
+// 				},
+// 			},
+// 			id: true,
+// 			image: true,
+// 			price: true,
+// 			view: true,
+// 			name: true,
+// 			commented: {
+// 				select: {
+// 					rate: true,
+// 				},
+// 			},
+// 		},
+// 		...(category && {
+// 			where: {
+// 				catalog_name: {
+// 					name: category,
+// 				},
+// 			},
+// 		}),
+// 	});
+// 	return products;
+// };
+
 export const getCatalogProducts = async (category: string) => {
 	const products = await prisma.product.findMany({
 		select: {

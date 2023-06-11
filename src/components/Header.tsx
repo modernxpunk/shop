@@ -46,7 +46,7 @@ const Header = () => {
 					<Link href="/">
 						<Icon
 							className="w-16 h-8 fill-current btn btn-sm btn-primary"
-							name="skull"
+							name="logo"
 						/>
 					</Link>
 					<div className="flex items-center gap-2">

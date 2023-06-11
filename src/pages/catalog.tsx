@@ -33,6 +33,16 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 	const [selectedCatalog, setSelectedCatalog] = useState(catalog);
 	const [selectedFilter, setSelectedFilter] = useState("sort by");
 
+	// const { data: infinit } = trpc.catalog.infinityAll.useInfiniteQuery(
+	// 	{
+	// 		limit: 10,
+	// 		category: catalog,
+	// 	},
+	// 	{
+	// 		getNextPageParam: (lastPage) => lastPage.nextCursor,
+	// 	}
+	// );
+
 	const { data: catalogs } = trpc.catalog.getAll.useQuery();
 	const { data: products, isLoading: isLoadingProducts } =
 		trpc.catalog.getProductByCatalogName.useQuery(selectedCatalog);
