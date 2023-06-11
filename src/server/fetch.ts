@@ -252,6 +252,14 @@ export const deleteProductFromCartById = async (id: string) => {
 	});
 };
 
+export const deleteAllFromCartByUserId = async (userId: string) => {
+	await prisma.cart.deleteMany({
+		where: {
+			userId: userId,
+		},
+	});
+};
+
 export const deleteProductFromWishlistById = async (id: string) => {
 	await prisma.wishlist.deleteMany({
 		where: {
