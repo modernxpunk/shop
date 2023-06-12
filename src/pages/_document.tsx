@@ -58,7 +58,7 @@ export default function Document() {
 
 				<meta
 					http-equiv="Content-Security-Policy"
-					content="default-src 'self'; img-src https://vitals.vercel-insights.com; child-src 'none';"
+					content="default-src 'self'; img-src https://*; child-src 'none';"
 				/>
 			</Head>
 			<body>
