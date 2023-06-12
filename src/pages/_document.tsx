@@ -55,11 +55,6 @@ export default function Document() {
 					content="/images/favicon/browserconfig.xml"
 				/>
 				<meta name="theme-color" content="#ffffff" />
-
-				<meta
-					http-equiv="Content-Security-Policy"
-					content="default-src 'self'; img-src https://*; child-src 'none';"
-				/>
 			</Head>
 			<body>
 				<Main />
