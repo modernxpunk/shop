@@ -161,11 +161,15 @@ const Product = ({ id }: any) => {
 				<div className="container py-2 pb-0 my-4 mb-4">
 					<div className="overflow-auto tabs flex-nowrap">
 						<a className="tab tab-bordered tab-active">All</a>
-						<a className="tab tab-bordered">Сharacteristics</a>
-						<a className="tab tab-bordered">Reviews</a>
-						<a className="tab tab-bordered">Questions</a>
+						<a className="tab tab-bordered" href="#characteristics">
+							Сharacteristics
+						</a>
+						<a className="tab tab-bordered" href="#reviews">
+							Reviews
+						</a>
+						{/* <a className="tab tab-bordered">Questions</a>
 						<a className="tab tab-bordered">Video</a>
-						<a className="tab tab-bordered">Images</a>
+						<a className="tab tab-bordered">Images</a> */}
 					</div>
 				</div>
 			</div>
@@ -320,7 +324,7 @@ const Product = ({ id }: any) => {
 				</div>
 				<div className="flex flex-col gap-4 mt-8 md:flex-row">
 					<div className="flex-1">
-						<div>
+						<div id="characteristics">
 							<h3 className="text-4xl font-bold">Characteristics</h3>
 						</div>
 						<div className="relative grid flex-1 grid-cols-1 gap-8 p-4 mt-2 border shadow-lg sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 bg-base-100 rounded-xl border-base-200">
@@ -350,7 +354,7 @@ const Product = ({ id }: any) => {
 					<div className="flex flex-1">
 						<div className="flex-1">
 							<div className="flex items-center">
-								<div className="flex-1">
+								<div className="flex-1" id="reviews">
 									<h3 className="text-4xl font-bold">Reviews</h3>
 								</div>
 								{/* <div>

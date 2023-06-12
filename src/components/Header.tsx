@@ -49,7 +49,7 @@ const Header = () => {
 							name="logo"
 						/>
 					</Link>
-					<div className="flex items-center gap-2">
+					{/* <div className="flex items-center gap-2">
 						<div className="flex items-center dropdown dropdown-end">
 							<div tabIndex={0} className="gap-2 btn btn-sm btn-ghost">
 								<Icon name="translate" className="w-6 h-6 fill-current" />
@@ -80,7 +80,7 @@ const Header = () => {
 								</ul>
 							</div>
 						</div>
-					</div>
+					</div> */}
 				</nav>
 			</div>
 
