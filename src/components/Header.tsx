@@ -86,17 +86,21 @@ const Header = () => {
 
 			<div className="sticky top-0 z-20 bg-base-200">
 				<div className="container flex items-center justify-between gap-2 py-2">
-					<div className="flex flex-1">
-						<label className="input-group">
-							<span className="border-r-2 border-r-base-200">
+					<div className="relative flex flex-1">
+						<label className="z-50 input-group">
+							<span className="z-[inherit]">
 								<Icon name="magnify" className="w-6 h-6 fill-current" />
 							</span>
 							<input
 								type="text"
 								placeholder="Search..."
-								className="w-full input"
+								className="w-full input z-[inherit] rounded-lg"
 							/>
 						</label>
+						{/* <div className="absolute z-50 w-full top-14">
+							<div className="p-2 rounded-lg bg-base-300">asd</div>
+						</div>
+						<div className="fixed inset-0 z-40 bg-black opacity-60"></div> */}
 					</div>
 					<div className="items-center hidden gap-1 sm:flex">
 						<div
@@ -146,7 +150,7 @@ const Header = () => {
 								{account && (
 									<div
 										tabIndex={0}
-										className="flex flex-col overflow-auto shadow-2xl top-16 dropdown-content bg-base-100 rounded-box"
+										className="flex flex-col overflow-auto shadow-2xl top-14 dropdown-content bg-base-100 rounded-box"
 									>
 										<div className="flex z-10 items-center sticky  w-full -top-4 -mt-0 bg-[inherit] justify-between">
 											<ul className="menu bg-base-100 rounded-box">
@@ -228,7 +232,7 @@ const Header = () => {
 							{account && (
 								<div
 									tabIndex={0}
-									className="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[420px] min-h-[150px] overflow-auto max-h-[800px] top-16"
+									className="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[420px] min-h-[150px] overflow-auto max-h-[800px] top-14"
 								>
 									<div className="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-10">
 										<h4 className="text-3xl font-bold">
@@ -347,7 +351,7 @@ const Header = () => {
 							{account && (
 								<div
 									tabIndex={0}
-									className="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[420px] overflow-auto max-h-[800px] top-16"
+									className="flex flex-col dropdown-content p-4 bg-base-100 shadow-2xl rounded-box min-w-[420px] overflow-auto max-h-[800px] top-14"
 								>
 									<div className="flex items-center sticky w-full -top-4 -mt-4 py-4 bg-[inherit] justify-between z-10">
 										<h4 className="text-3xl font-bold">
