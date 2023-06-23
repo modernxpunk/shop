@@ -100,7 +100,7 @@ model Cart {
   productId String
   count     Int     @default(1)
 
-  @@map("cart")
+  @@unique([userId, productId])
 }
 
 model Wishlist {
@@ -110,6 +110,4 @@ model Wishlist {
   userId    String
   productId String
   count     Int     @default(1)
-
-  @@map("wishlist")
 }
