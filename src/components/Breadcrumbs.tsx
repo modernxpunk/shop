@@ -45,6 +45,12 @@ const Breadcrumbs = () => {
 				label: "Home",
 				iconName: "home",
 			};
+		} else if (path === "account") {
+			return {
+				href: "/account",
+				label: "Account",
+				iconName: "account",
+			};
 		} else {
 			return {
 				href: "",
