@@ -6,8 +6,11 @@ import { createContext } from "src/server/context";
 import appRouter from "src/server/routes/_app";
 import { trpc } from "src/utils/trpc";
 import superjson from "superjson";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardSkeleton from "src/components/CardSkeleton";
+import { useInView } from "react-intersection-observer";
+
+const LIMIT = 20;
 
 export const getServerSideProps = async (req: any) => {
 	const catalog = req.query.catalog || "";
@@ -20,6 +23,10 @@ export const getServerSideProps = async (req: any) => {
 
 	await ssr.catalog.getAll.prefetch();
 	await ssr.catalog.getProductByCatalogName.prefetch(catalog);
+	await ssr.catalog.infinityAll.prefetch({
+		limit: LIMIT,
+		category: catalog,
+	});
 
 	return {
 		props: {
@@ -33,19 +40,40 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 	const [selectedCatalog, setSelectedCatalog] = useState(catalog);
 	const [selectedFilter, setSelectedFilter] = useState("sort by");
 
-	// const { data: infinit } = trpc.catalog.infinityAll.useInfiniteQuery(
-	// 	{
-	// 		limit: 10,
-	// 		category: catalog,
-	// 	},
-	// 	{
-	// 		getNextPageParam: (lastPage) => lastPage.nextCursor,
-	// 	}
-	// );
+	const { ref, inView } = useInView();
+	const {
+		data: productsResponse,
+		isLoading: isLoadingProducts,
+		isFetchingNextPage: isFetchingNextPageProducts,
+		isSuccess: isSuccessProducts,
+		hasNextPage,
+		fetchNextPage,
+	} = trpc.catalog.infinityAll.useInfiniteQuery(
+		{
+			limit: LIMIT,
+			category: selectedCatalog,
+		},
+		{
+			getNextPageParam: (lastPage) => {
+				return lastPage.nextCursor;
+			},
+		}
+	);
+	let products: any = productsResponse?.pages.reduce(
+		(allProducts: any, currentPage: any) => [
+			...allProducts,
+			...currentPage.items,
+		],
+		[]
+	);
+
+	useEffect(() => {
+		if (inView && hasNextPage) {
+			fetchNextPage();
+		}
+	}, [inView, fetchNextPage, hasNextPage]);
 
 	const { data: catalogs } = trpc.catalog.getAll.useQuery();
-	const { data: products, isLoading: isLoadingProducts } =
-		trpc.catalog.getProductByCatalogName.useQuery(selectedCatalog);
 
 	return (
 		<>
@@ -146,9 +174,11 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 						<div className="flex items-center justify-between backdrop-blur-lg">
 							<h1 className="text-[2.5rem] font-bold">
 								Catalog
-								<span className="text-sm opacity-60">
-									({products && products.length})
-								</span>
+								{products && (
+									<span className="text-sm opacity-60">
+										({products && products.length})
+									</span>
+								)}
 							</h1>
 							<div className="flex items-center justify-end gap-2">
 								<div className="hidden btn-group md:inline-flex">
@@ -175,13 +205,17 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 					</div>
 					<div>
 						<div className="grid gap-4 grid-cols-item">
-							{!isLoadingProducts &&
-								products &&
-								products.map((product: any) => (
-									<Card product={product} key={product.id} />
-								))}
-							{isLoadingProducts &&
-								Array(12)
+							{isSuccessProducts &&
+								products.map((product: any, i: number) => {
+									if (products.length === i + 1) {
+										return (
+											<Card ref={ref} product={product} key={product.id} />
+										);
+									}
+									return <Card product={product} key={product.id} />;
+								})}
+							{(isFetchingNextPageProducts || isLoadingProducts) &&
+								Array(LIMIT)
 									.fill(0x00)
 									.map((_, i) => (
 										<CardSkeleton key={`product_skeleton_${i}`} />
