@@ -68,6 +68,12 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 	);
 
 	useEffect(() => {
+		if (typeof window !== "undefined" && typeof document !== "undefined") {
+			document.querySelector(".drawer-content")?.scrollTo({ top: 0 });
+		}
+	}, [selectedCatalog]);
+
+	useEffect(() => {
 		if (inView && hasNextPage) {
 			fetchNextPage();
 		}
