@@ -119,11 +119,11 @@ const Card: any = React.forwardRef<any>(({ product }: any, ref) => {
 						)}
 					</div>
 				</div>
-				<div className="flex bg-base-300 h-[150px] justify-center items-center rounded-lg overflow-hidden">
+				<div className="flex items-center justify-center flex-1 overflow-hidden rounded-lg bg-base-300">
 					<Image
-						width={400}
-						height={400}
-						className="object-contain rounded-[inherit]"
+						width={200}
+						height={150}
+						className="object-contain flex-1 h-[150px] w-[200px] rounded-[inherit]"
 						src={product.image}
 						alt={product.name}
 					/>
