@@ -9,11 +9,13 @@ import superjson from "superjson";
 import { useEffect, useState } from "react";
 import CardSkeleton from "src/components/CardSkeleton";
 import { useInView } from "react-intersection-observer";
+import { useRouter } from "next/router";
 
-const LIMIT = 20;
+const LIMIT = 15;
 
 export const getServerSideProps = async (req: any) => {
 	const catalog = req.query.catalog || "";
+	const sortBy = req.query.sortBy || "";
 
 	const ssr = createServerSideHelpers({
 		router: appRouter,
@@ -26,19 +28,38 @@ export const getServerSideProps = async (req: any) => {
 	await ssr.catalog.infinityAll.prefetch({
 		limit: LIMIT,
 		category: catalog,
+		sortBy: sortBy,
 	});
 
 	return {
 		props: {
 			catalog,
+			sortBy,
 			trpcState: ssr.dehydrate(),
 		},
 	};
 };
 
-const Catalogs = ({ catalog }: { catalog: string }) => {
+const Catalogs = ({ catalog, sortBy }: { catalog: string; sortBy: string }) => {
+	const router = useRouter();
+
 	const [selectedCatalog, setSelectedCatalog] = useState(catalog);
-	const [selectedFilter, setSelectedFilter] = useState("sort by");
+	const [selectedSort, setSelectedSort] = useState(sortBy);
+
+	useEffect(() => {
+		router.replace(
+			"/catalog",
+			{
+				query: {
+					...(selectedCatalog && { catalog: selectedCatalog }),
+					...(selectedSort && { sortBy: selectedSort }),
+				},
+			},
+			{
+				shallow: true,
+			}
+		);
+	}, [selectedCatalog, selectedSort]);
 
 	const { ref, inView } = useInView();
 	const {
@@ -52,11 +73,14 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 		{
 			limit: LIMIT,
 			category: selectedCatalog,
+			sortBy: selectedSort,
 		},
 		{
 			getNextPageParam: (lastPage) => {
 				return lastPage.nextCursor;
 			},
+			refetchOnWindowFocus: false,
+			refetchOnMount: false,
 		}
 	);
 	let products: any = productsResponse?.pages.reduce(
@@ -68,7 +92,7 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 	);
 
 	useEffect(() => {
-		if (typeof window !== "undefined" && typeof document !== "undefined") {
+		if (typeof window !== "undefined") {
 			document.querySelector(".drawer-content")?.scrollTo({ top: 0 });
 		}
 	}, [selectedCatalog]);
@@ -90,7 +114,7 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 							<input
 								type="checkbox"
 								className="peer"
-								defaultChecked={!!catalog}
+								defaultChecked={!!selectedCatalog}
 							/>
 							<div className="collapse-title">Categories</div>
 							<div className="collapse-content">
@@ -197,14 +221,14 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 								</div>
 								<select
 									className="hidden max-w-xs select select-sm select-bordered md:inline-flex"
-									value={selectedFilter}
-									onChange={(e) => setSelectedFilter(e.target.value)}
+									value={selectedSort}
+									onChange={(e) => setSelectedSort(e.target.value)}
 								>
-									<option value={"sort by"} disabled>
+									<option value={""} disabled>
 										Sort by
 									</option>
-									<option value={"popular"}>Popular</option>
-									<option value={"rank"}>Rank</option>
+									<option value={"view"}>Views</option>
+									<option value={"price"}>Price</option>
 								</select>
 							</div>
 						</div>

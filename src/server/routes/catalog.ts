@@ -12,14 +12,21 @@ const catalogRouter = router({
 		.input(
 			z.object({
 				category: z.string(),
+				sortBy: z.string(),
 				limit: z.number().min(1).max(100),
 				cursor: z.string().nullish(),
 				skip: z.number().optional(),
 			})
 		)
 		.query(async (opts) => {
-			const { category, limit, cursor, skip } = opts.input;
-			const items = await getProductsInfinity(category, limit, cursor, skip);
+			const { category, sortBy, limit, cursor, skip } = opts.input;
+			const items = await getProductsInfinity(
+				category,
+				sortBy,
+				limit,
+				cursor,
+				skip
+			);
 			let nextCursor: any = undefined;
 			if (items.length > limit) {
 				const nextItem = items.pop();

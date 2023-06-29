@@ -6,29 +6,41 @@ const prisma = new PrismaClient();
 
 async function main() {
 	const generate = {
-		// iam: {
-		// 	id: faker.datatype.uuid(),
-		// 	avatar: faker.internet.avatar(),
-		// 	email: "modernpunk@gmail.com",
-		// 	username: "modernpunk",
-		// 	password: "123",
-		// },
-		users: 100,
-		catalog: 10,
+		iam: {
+			id: faker.datatype.uuid(),
+			avatar: faker.internet.avatar(),
+			email: "modernpunk@gmail.com",
+			username: "modernpunk",
+			password: "123",
+		},
+		users: 1000,
+		catalog: 8,
 		products: 10000,
 	};
 
 	const usersIds = Array(generate.users)
 		.fill(0x00)
 		.map(() => faker.datatype.uuid());
+	usersIds.push(generate.iam.id);
 
-	const users = usersIds.map((userId) => ({
-		id: userId,
-		email: faker.internet.email(),
-		username: faker.internet.userName(),
-		avatar: faker.internet.avatar(),
-		password: faker.internet.password(),
-	}));
+	const users = usersIds.map((userId) => {
+		if (userId !== generate.iam.id) {
+			return {
+				id: userId,
+				email: faker.internet.email(),
+				username: faker.internet.userName(),
+				avatar: faker.internet.avatar(),
+				password: faker.internet.password(),
+			};
+		}
+		return {
+			id: userId,
+			avatar: generate.iam.avatar,
+			email: generate.iam.email,
+			username: generate.iam.username,
+			password: generate.iam.password,
+		};
+	});
 
 	const catalogs = faker.helpers
 		.uniqueArray(faker.commerce.product, generate.catalog)

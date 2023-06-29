@@ -304,6 +304,7 @@ export const getProducts = async () => {
 
 export const getProductsInfinity = async (
 	category: string,
+	sortBy: string,
 	limit: number,
 	cursor: any,
 	skip: number | undefined
@@ -312,7 +313,9 @@ export const getProductsInfinity = async (
 		take: limit + 1,
 		skip: skip,
 		cursor: cursor ? { id: cursor } : undefined,
-		orderBy: { id: "asc" },
+		orderBy: {
+			[sortBy === "" ? "id" : sortBy]: "desc",
+		},
 		select: {
 			catalog_name: {
 				select: {

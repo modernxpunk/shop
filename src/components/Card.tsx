@@ -123,7 +123,7 @@ const Card: any = React.forwardRef<any>(({ product }: any, ref) => {
 					<Image
 						width={200}
 						height={150}
-						className="object-contain flex-1 h-[150px] w-[200px] rounded-[inherit]"
+						className="object-contain p-2 flex-1 h-[150px] w-[200px]"
 						src={product.image}
 						alt={product.name}
 					/>
