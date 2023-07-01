@@ -13,7 +13,7 @@ const catalogRouter = router({
 			z.object({
 				category: z.string(),
 				sortBy: z.string(),
-				limit: z.number().min(1).max(100),
+				limit: z.number().min(1).max(200),
 				cursor: z.string().nullish(),
 				skip: z.number().optional(),
 			})

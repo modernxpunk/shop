@@ -47,18 +47,18 @@ const Catalogs = ({ catalog, sortBy }: { catalog: string; sortBy: string }) => {
 	const [selectedSort, setSelectedSort] = useState(sortBy);
 
 	useEffect(() => {
-		router.replace(
-			"/catalog",
-			{
-				query: {
-					...(selectedCatalog && { catalog: selectedCatalog }),
-					...(selectedSort && { sortBy: selectedSort }),
+		if (router.isReady) {
+			router.replace(
+				"/catalog",
+				{
+					query: {
+						...(selectedCatalog && { catalog: selectedCatalog }),
+						...(selectedSort && { sortBy: selectedSort }),
+					},
 				},
-			},
-			{
-				shallow: true,
-			}
-		);
+				{ shallow: true }
+			);
+		}
 	}, [selectedCatalog, selectedSort]);
 
 	const { ref, inView } = useInView();
