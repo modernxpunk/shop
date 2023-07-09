@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { useId } from "react";
 import Icon from "./Icon";
 
 const CardSkeleton = () => {
+	const id = useId();
 	return (
 		<Link
 			href={"#"}
@@ -18,30 +20,36 @@ const CardSkeleton = () => {
 				</div>
 				<div className="flex bg-base-300 flex-1 h-[150px] justify-center items-center rounded-lg overflow-hidden w-full"></div>
 			</div>
-			<div className="flex items-stretch p-2">
+			<div className="flex items-stretch p-2 mt-2">
 				<div className="flex-1">
 					<p className="w-3/4 h-4 rounded-lg line-clamp-1 animate-pulse bg-base-300"></p>
 					<p className="w-1/2 h-4 mt-2 font-bold rounded-lg line-clamp-2 animate-pulse bg-base-300"></p>
 					<div className="flex items-center justify-between">
-						<div className="flex items-center">
+						<div className="flex items-center flex-1 mt-2">
 							<div className="rating">
+								<input
+									type="radio"
+									name={id}
+									className="rating-hidden"
+									checked
+									hidden
+								/>
 								{Array(5)
 									.fill(0x00)
 									.map((_, i: number) => {
 										return (
 											<input
 												type="radio"
-												name={"product_rank_" + i}
+												name={id}
 												className="mask mask-star"
 												key={`product_rank_${i}_${i}`}
 												readOnly
-												checked={i + 1 === 3}
 											/>
 										);
 									})}
 							</div>
 							<div className="flex items-center">
-								<p className="flex-1 w-16 h-4 ml-1 text-sm rounded-lg bg-base-300 animate-pulse"></p>
+								<p className="flex-1 w-8 h-4 ml-1 text-sm rounded-lg bg-base-300 animate-pulse"></p>
 							</div>
 						</div>
 						<div className="flex justify-end flex-1">

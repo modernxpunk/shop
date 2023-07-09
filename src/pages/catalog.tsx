@@ -6,11 +6,16 @@ import { createContext } from "src/server/context";
 import appRouter from "src/server/routes/_app";
 import { trpc } from "src/utils/trpc";
 import superjson from "superjson";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardSkeleton from "src/components/CardSkeleton";
+import { useInView } from "react-intersection-observer";
+import { useRouter } from "next/router";
+
+const LIMIT = 15;
 
 export const getServerSideProps = async (req: any) => {
 	const catalog = req.query.catalog || "";
+	const sortBy = req.query.sortBy || "";
 
 	const ssr = createServerSideHelpers({
 		router: appRouter,
@@ -20,32 +25,85 @@ export const getServerSideProps = async (req: any) => {
 
 	await ssr.catalog.getAll.prefetch();
 	await ssr.catalog.getProductByCatalogName.prefetch(catalog);
+	await ssr.catalog.infinityAll.prefetch({
+		limit: LIMIT,
+		category: catalog,
+		sortBy: sortBy,
+	});
 
 	return {
 		props: {
 			catalog,
+			sortBy,
 			trpcState: ssr.dehydrate(),
 		},
 	};
 };
 
-const Catalogs = ({ catalog }: { catalog: string }) => {
-	const [selectedCatalog, setSelectedCatalog] = useState(catalog);
-	const [selectedFilter, setSelectedFilter] = useState("sort by");
+const Catalogs = ({ catalog, sortBy }: { catalog: string; sortBy: string }) => {
+	const router = useRouter();
 
-	// const { data: infinit } = trpc.catalog.infinityAll.useInfiniteQuery(
-	// 	{
-	// 		limit: 10,
-	// 		category: catalog,
-	// 	},
-	// 	{
-	// 		getNextPageParam: (lastPage) => lastPage.nextCursor,
-	// 	}
-	// );
+	const [selectedCatalog, setSelectedCatalog] = useState(catalog);
+	const [selectedSort, setSelectedSort] = useState(sortBy);
+
+	useEffect(() => {
+		if (router.isReady) {
+			router.replace(
+				"/catalog",
+				{
+					query: {
+						...(selectedCatalog && { catalog: selectedCatalog }),
+						...(selectedSort && { sortBy: selectedSort }),
+					},
+				},
+				{ shallow: true }
+			);
+		}
+	}, [selectedCatalog, selectedSort]);
+
+	const { ref, inView } = useInView();
+	const {
+		data: productsResponse,
+		isLoading: isLoadingProducts,
+		isFetchingNextPage: isFetchingNextPageProducts,
+		isSuccess: isSuccessProducts,
+		hasNextPage,
+		fetchNextPage,
+	} = trpc.catalog.infinityAll.useInfiniteQuery(
+		{
+			limit: LIMIT,
+			category: selectedCatalog,
+			sortBy: selectedSort,
+		},
+		{
+			getNextPageParam: (lastPage) => {
+				return lastPage.nextCursor;
+			},
+			refetchOnWindowFocus: false,
+			refetchOnMount: false,
+		}
+	);
+	let products: any = productsResponse?.pages.reduce(
+		(allProducts: any, currentPage: any) => [
+			...allProducts,
+			...currentPage.items,
+		],
+		[]
+	);
+
+	useEffect(() => {
+		if (typeof window !== "undefined") {
+			document.querySelector(".drawer-content")?.scrollTo({ top: 0 });
+		}
+	}, [selectedCatalog]);
+
+	useEffect(() => {
+		if (inView && hasNextPage) {
+			fetchNextPage();
+		}
+	}, [inView, fetchNextPage, hasNextPage]);
 
 	const { data: catalogs } = trpc.catalog.getAll.useQuery();
-	const { data: products, isLoading: isLoadingProducts } =
-		trpc.catalog.getProductByCatalogName.useQuery(selectedCatalog);
 
 	return (
 		<>
@@ -56,7 +114,7 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 							<input
 								type="checkbox"
 								className="peer"
-								defaultChecked={!!catalog}
+								defaultChecked={!!selectedCatalog}
 							/>
 							<div className="collapse-title">Categories</div>
 							<div className="collapse-content">
@@ -146,9 +204,11 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 						<div className="flex items-center justify-between backdrop-blur-lg">
 							<h1 className="text-[2.5rem] font-bold">
 								Catalog
-								<span className="text-sm opacity-60">
-									({products && products.length})
-								</span>
+								{products && (
+									<span className="text-sm opacity-60">
+										({products && products.length})
+									</span>
+								)}
 							</h1>
 							<div className="flex items-center justify-end gap-2">
 								<div className="hidden btn-group md:inline-flex">
@@ -161,27 +221,31 @@ const Catalogs = ({ catalog }: { catalog: string }) => {
 								</div>
 								<select
 									className="hidden max-w-xs select select-sm select-bordered md:inline-flex"
-									value={selectedFilter}
-									onChange={(e) => setSelectedFilter(e.target.value)}
+									value={selectedSort}
+									onChange={(e) => setSelectedSort(e.target.value)}
 								>
-									<option value={"sort by"} disabled>
+									<option value={""} disabled>
 										Sort by
 									</option>
-									<option value={"popular"}>Popular</option>
-									<option value={"rank"}>Rank</option>
+									<option value={"view"}>Views</option>
+									<option value={"price"}>Price</option>
 								</select>
 							</div>
 						</div>
 					</div>
 					<div>
 						<div className="grid gap-4 grid-cols-item">
-							{!isLoadingProducts &&
-								products &&
-								products.map((product: any) => (
-									<Card product={product} key={product.id} />
-								))}
-							{isLoadingProducts &&
-								Array(12)
+							{isSuccessProducts &&
+								products.map((product: any, i: number) => {
+									if (products.length === i + 1) {
+										return (
+											<Card ref={ref} product={product} key={product.id} />
+										);
+									}
+									return <Card product={product} key={product.id} />;
+								})}
+							{(isFetchingNextPageProducts || isLoadingProducts) &&
+								Array(LIMIT)
 									.fill(0x00)
 									.map((_, i) => (
 										<CardSkeleton key={`product_skeleton_${i}`} />

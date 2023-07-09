@@ -8,11 +8,15 @@ import { trpc } from "src/utils/trpc";
 import appRouter from "src/server/routes/_app";
 import { createContext } from "src/server/context";
 import superjson from "superjson";
+import { GetServerSidePropsContext } from "next";
+import { CreateNextContextOptions } from "@trpc/server/adapters/next";
 
-export const getServerSideProps = async (req: any) => {
+export const getServerSideProps = async (
+	context: GetServerSidePropsContext & CreateNextContextOptions
+) => {
 	const ssr = createServerSideHelpers({
 		router: appRouter,
-		ctx: await createContext(req),
+		ctx: await createContext(context),
 		transformer: superjson,
 	});
 

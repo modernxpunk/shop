@@ -4,8 +4,9 @@ import { trpc } from "src/utils/trpc";
 import Icon from "./Icon";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import React from "react";
 
-const Card = ({ product }: { product: any }) => {
+const Card: any = React.forwardRef<any>(({ product }: any, ref) => {
 	const router = useRouter();
 	const { data } = useSession();
 
@@ -83,6 +84,7 @@ const Card = ({ product }: { product: any }) => {
 		<button
 			className="flex flex-col flex-1 w-full overflow-hidden transition-shadow rounded-lg shadow-lg bg-base-100 group hover:shadow-xl"
 			onClick={() => router.push("/product/" + product.id)}
+			ref={ref}
 		>
 			<div className="relative flex items-center justify-center flex-1 w-full p-2 pb-0">
 				<div className="absolute top-0 right-0 hidden p-2 rounded-box group-hover:flex animate-appear btn-group btn-group-vertical">
@@ -117,11 +119,11 @@ const Card = ({ product }: { product: any }) => {
 						)}
 					</div>
 				</div>
-				<div className="flex bg-base-300 h-[150px] justify-center items-center rounded-lg overflow-hidden">
+				<div className="flex items-center justify-center flex-1 overflow-hidden rounded-lg bg-base-300">
 					<Image
-						width={400}
-						height={400}
-						className="object-contain rounded-[inherit]"
+						width={200}
+						height={150}
+						className="object-contain p-2 flex-1 h-[150px] w-[200px]"
 						src={product.image}
 						alt={product.name}
 					/>
@@ -170,6 +172,8 @@ const Card = ({ product }: { product: any }) => {
 			</div>
 		</button>
 	);
-};
+});
+
+Card.displayName = "Card";
 
 export default Card;

@@ -13,12 +13,7 @@ export default function Layout({ children }: any) {
 					type="checkbox"
 					className="drawer-toggle rating"
 				/>
-				<div
-					className="flex flex-col min-h-screen drawer-content"
-					// style={{
-					// 	overflow: "overlay",
-					// }}
-				>
+				<div className="flex flex-col min-h-screen drawer-content">
 					<Header />
 					<Breadcrumbs />
 					<main className="flex-1 pb-8">{children}</main>
