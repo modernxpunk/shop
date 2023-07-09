@@ -140,7 +140,7 @@ const Catalogs = ({ catalog, sortBy }: { catalog: string; sortBy: string }) => {
 									})}
 							</div>
 						</div>
-						<div className="collapse collapse-arrow">
+						{/* <div className="collapse collapse-arrow">
 							<input type="checkbox" className="peer" />
 							<div className="collapse-title">Price</div>
 							<div className="collapse-content">
@@ -196,7 +196,7 @@ const Catalogs = ({ catalog, sortBy }: { catalog: string; sortBy: string }) => {
 										})}
 								</div>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 				<div className="flex-1 rounded-box">
