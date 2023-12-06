@@ -111,6 +111,7 @@ export const getCommentsByProductId = async (productId: string) => {
 			},
 			User: {
 				select: {
+					id: true,
 					avatar: true,
 					username: true,
 					email: true,

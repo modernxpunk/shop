@@ -9,8 +9,10 @@ import { createContext } from "src/server/context";
 import superjson from "superjson";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
-export const getServerSideProps = async (req: any) => {
+// @ts-ignore
+export const getServerSideProps = async (req) => {
 	const { id } = req.query;
 
 	const ssr = createServerSideHelpers({
@@ -31,7 +33,8 @@ export const getServerSideProps = async (req: any) => {
 	};
 };
 
-const Product = ({ id }: any) => {
+// @ts-ignore
+const Product = ({ id }) => {
 	const [activeTab, setActiveTab] = useState<string>("All");
 
 	useEffect(() => {
@@ -344,7 +347,8 @@ const Product = ({ id }: any) => {
 									<h3 className="text-4xl font-bold">Characteristics</h3>
 								</div>
 								<div className="relative grid flex-1 grid-cols-1 gap-8 p-4 mt-2 border shadow-lg sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 bg-base-100 rounded-xl border-base-200">
-									{product.Characteristic.map(({ attribute, value }: any) => {
+									{/* @ts-ignore */}
+									{product.Characteristic.map(({ attribute, value }) => {
 										return (
 											<div key={attribute + value} className="flex gap-4">
 												<div>
@@ -601,7 +605,8 @@ const Product = ({ id }: any) => {
 												Be first
 											</div>
 										)}
-										{comments.slice(0, 3).map((comment: any) => {
+										{/* @ts-ignore */}
+										{comments.slice(0, 3).map((comment) => {
 											return (
 												<div
 													key={comment.id}
@@ -609,16 +614,18 @@ const Product = ({ id }: any) => {
 												>
 													<div>
 														{comment.User.avatar ? (
-															<div className="avatar online">
-																<div className="w-12 h-12 rounded-full bg-base-200">
-																	<Image
-																		src={comment.User.avatar}
-																		width={40}
-																		height={40}
-																		alt={"avatar"}
-																	/>
+															<Link href={`/account/${comment.User.id}`}>
+																<div className="avatar online">
+																	<div className="w-12 h-12 rounded-full bg-base-200">
+																		<Image
+																			src={comment.User.avatar}
+																			width={40}
+																			height={40}
+																			alt={"avatar"}
+																		/>
+																	</div>
 																</div>
-															</div>
+															</Link>
 														) : (
 															<div className="avatar online placeholder">
 																<div className="w-12 h-12 rounded-full bg-neutral-focus text-neutral-content">
@@ -636,9 +643,11 @@ const Product = ({ id }: any) => {
 														<div className="flex items-center gap-2">
 															<div>
 																<div className="flex items-baseline gap-2">
-																	<h4 className="text-lg font-bold">
-																		{comment.User.username}
-																	</h4>
+																	<Link href={`/account/${comment.User.id}`}>
+																		<h4 className="text-lg font-bold">
+																			{comment.User.username}
+																		</h4>
+																	</Link>
 																	<span className="text-sm opacity-60 whitespace-nowrap">
 																		{new Date(comment.createdAt).toDateString()}
 																	</span>
@@ -728,7 +737,8 @@ const Product = ({ id }: any) => {
 						<div className="mt-4">
 							<h3 className="text-4xl font-bold">Popular products</h3>
 							<div className="grid gap-4 mt-4 grid-cols-item">
-								{products.map((product: any) => {
+								{/* @ts-ignore */}
+								{products.map((product) => {
 									return <Card product={product} key={product.id} />;
 								})}
 							</div>
@@ -740,7 +750,8 @@ const Product = ({ id }: any) => {
 						<div className="flex-1">
 							{activeTab === "Сharacteristics" && (
 								<div className="relative grid flex-1 grid-cols-1 gap-8 p-4 border shadow-lg md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-base-100 rounded-xl border-base-200">
-									{product.Characteristic.map(({ attribute, value }: any) => {
+									{/* @ts-ignore */}
+									{product.Characteristic.map(({ attribute, value }) => {
 										return (
 											<div key={attribute + value} className="flex gap-4">
 												<div>
@@ -966,7 +977,8 @@ const Product = ({ id }: any) => {
 												Be first
 											</div>
 										)}
-										{comments.map((comment: any) => {
+										{/* @ts-ignore */}
+										{comments.map((comment) => {
 											return (
 												<div
 													key={comment.id}
@@ -1058,8 +1070,8 @@ const Product = ({ id }: any) => {
 																		className="w-8 h-8 p-1.5 fill-current"
 																		name={
 																			comment.Like.some(
-																				(like: any) =>
-																					like.userId === account.id
+																				// @ts-ignore
+																				(like) => like.userId === account.id
 																			)
 																				? "thumb-up"
 																				: "thumb-up-outline"

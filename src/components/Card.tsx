@@ -6,7 +6,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const Card: any = React.forwardRef<any>(({ product }: any, ref) => {
+// @ts-ignore
+const Card: any = React.forwardRef(({ product }, ref) => {
 	const router = useRouter();
 	const { data } = useSession();
 
@@ -84,6 +85,7 @@ const Card: any = React.forwardRef<any>(({ product }: any, ref) => {
 		<button
 			className="flex flex-col flex-1 w-full overflow-hidden transition-shadow rounded-lg shadow-lg bg-base-100 group hover:shadow-xl"
 			onClick={() => router.push("/product/" + product.id)}
+			// @ts-ignore
 			ref={ref}
 		>
 			<div className="relative flex items-center justify-center flex-1 w-full p-2 pb-0">
