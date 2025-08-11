@@ -47,7 +47,7 @@ export function middleware(req: NextRequest) {
 	const country = req.headers.get("cf-ipcountry") || "";
 	const region = req.headers.get("cf-region-code") || "";
 
-	console.log(`Country: ${country}, Region: ${region}`, [...req.headers.entries()]);
+	console.log(`Country: ${country}, Region: ${region}`, req);
 
 	if (BLOCKED_COUNTRIES.includes(country) || BLOCKED_REGIONS.includes(region)) {
 		const pathname = new URL(req.url).pathname;
