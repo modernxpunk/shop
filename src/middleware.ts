@@ -17,7 +17,7 @@ const BLOCKED_REGIONS = [
 	"US-GU", // Guam
 	"US-PR", // Puerto Rico
 	"US-MP", // Northern Mariana Islands
-	"US-VI",  // U.S. Virgin Islands
+	"US-VI", // US Virgin Islands
 ];
 
 const BLOCKED_COUNTRIES = [
@@ -40,7 +40,7 @@ const BLOCKED_COUNTRIES = [
 	"SD", // Sudan
 	"SY", // Syria (Syrian Arab Republic)
 	"YE", // Yemen
-	"ZW",  // Zimbabwe
+	"ZW", // Zimbabwe
 ];
 
 export function middleware(req: NextRequest) {
