@@ -49,6 +49,7 @@ export function middleware(req: NextRequest) {
 
 	console.log(`Country: ${country}, Region: ${region}`);
 
+
 	if (BLOCKED_COUNTRIES.includes(country) || BLOCKED_REGIONS.includes(region)) {
 		const pathname = new URL(req.url).pathname;
 
